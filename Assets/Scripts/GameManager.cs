@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
+        Lander.Instance.OnCratePickup += Lander_OnCratePickup;
         Lander.Instance.OnLanded += Lander_OnLanded;
         Lander.Instance.OnStateChanged += Lander_OnStateChanged;
 
@@ -94,6 +95,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void Lander_OnCoinPickup(object sender, System.EventArgs e)
+    {
+        AddScore(100);
+    }
+
+    private void Lander_OnCratePickup(object sender, System.EventArgs e)
     {
         AddScore(500);
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class Lander : MonoBehaviour
 {
-    private const float GRAVITY_NORMAL = 0.7f;
+    private const float GRAVITY_NORMAL = 0.8f;
 
     public static Lander Instance { get; private set; }
 
@@ -16,6 +17,7 @@ public class Lander : MonoBehaviour
     public event EventHandler OnBeforeForce;
     public event EventHandler OnCoinPickup;
     public event EventHandler OnFuelPickup;
+    public event EventHandler OnCratePickup;
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
     public class OnStateChangedEventArgs : EventArgs
     {
@@ -48,7 +50,12 @@ public class Lander : MonoBehaviour
     private Rigidbody2D landerRigidBody2D;
     private float fuelAmount;
     private float fuelAmountMax = 10f;
+    private float timerForCratePickup = 0f;
+    private float delayForCratePickup = 3f;
+    private bool isInsideOfCrateCollider = false;
     private State state;
+
+    private Coroutine cratePickupCoroutine;
 
     private void Awake()
     {
@@ -94,7 +101,7 @@ public class Lander : MonoBehaviour
                 float gamepadDeadZone = .4f;
                 if (GameInput.Instance.IsUpActionPressed() || GameInput.Instance.GetMovementInputVector2().y > gamepadDeadZone)
                 {
-                    float force = 15f;
+                    float force = 20f;
                     landerRigidBody2D.AddForce(force * transform.up);
                     OnUpForce?.Invoke(this, EventArgs.Empty);
                 }
@@ -212,6 +219,47 @@ public class Lander : MonoBehaviour
             OnCoinPickup?.Invoke(this, EventArgs.Empty);
             coinPickup.DestroySelf();
         }
+        if (collider2D.gameObject.TryGetComponent(out CratePickup cratePickup))
+        {
+            isInsideOfCrateCollider = true;
+            if (cratePickupCoroutine != null)
+            {
+                StopCoroutine(cratePickupCoroutine);
+            }
+            cratePickupCoroutine = StartCoroutine(PickupCrateAfterDelay(cratePickup));
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider2D)
+    {
+        if (collider2D.gameObject.TryGetComponent(out CratePickup cratePickup))
+        {
+            isInsideOfCrateCollider = false;
+            timerForCratePickup = 0f;
+            if (cratePickupCoroutine != null)
+            {
+                StopCoroutine(cratePickupCoroutine);
+                cratePickupCoroutine = null;
+            }
+        }
+    }
+
+    private IEnumerator PickupCrateAfterDelay(CratePickup cratePickup)
+    {
+        while (timerForCratePickup < delayForCratePickup)
+        {
+            if (!isInsideOfCrateCollider)
+            {
+                yield break;
+            }
+            timerForCratePickup += Time.deltaTime;
+            yield return null;
+        }
+
+        OnCratePickup?.Invoke(this, EventArgs.Empty);
+        cratePickup.DestroySelf();
+
+        cratePickupCoroutine = null;
     }
 
     private void SetState(State state)
@@ -244,5 +292,10 @@ public class Lander : MonoBehaviour
     public float GetSpeedY()
     {
         return landerRigidBody2D.linearVelocityY;
+    }
+
+    public float GetTimerForCratePickupNormalized()
+    {
+        return timerForCratePickup / delayForCratePickup;
     }
 }

@@ -33,10 +33,10 @@ public class SoundManager : MonoBehaviour
         switch (e.landingType)
         {
             case Lander.LandingType.Success:
-                AudioSource.PlayClipAtPoint(landingSuccessAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+                AudioSource.PlayClipAtPoint(landingSuccessAudioClip, Camera.main.transform.position, GetSoundVolumeNormalized());
                 break;
             default:
-                AudioSource.PlayClipAtPoint(crashAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+                AudioSource.PlayClipAtPoint(crashAudioClip, Camera.main.transform.position, GetSoundVolumeNormalized());
                 break;
         }
     }
@@ -54,6 +54,7 @@ public class SoundManager : MonoBehaviour
     public void ChangeSoundVolume()
     {
         soundVolume = (soundVolume + 1) % SOUND_VOLUME_MAX;
+        AudioSource.PlayClipAtPoint(coinPickupAudioClip, Camera.main.transform.position, GetSoundVolumeNormalized());
         OnSoundVolumeChanged?.Invoke(this, EventArgs.Empty);
     }
 

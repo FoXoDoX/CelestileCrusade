@@ -5,6 +5,7 @@ public class LanderAudio : MonoBehaviour
     [SerializeField] private AudioSource thrusterAudioSource;
 
     private Lander lander;
+    private bool isThrusting = false;
 
     private void Awake()
     {
@@ -27,35 +28,47 @@ public class LanderAudio : MonoBehaviour
 
     private void SoundManager_OnSoundVolumeChanged(object sender, System.EventArgs e)
     {
-        thrusterAudioSource.volume = SoundManager.Instance.GetSoundVolumeNormalized();
+        if (isThrusting)
+        {
+            thrusterAudioSource.volume = SoundManager.Instance.GetSoundVolumeNormalized();
+        }
     }
 
     private void Lander_OnLeftForce(object sender, System.EventArgs e)
     {
-        if (thrusterAudioSource.volume == 0f)
-        {
-            thrusterAudioSource.volume = SoundManager.Instance.GetSoundVolumeNormalized();
-        }
+        StartThrusting();
     }
 
     private void Lander_OnRightForce(object sender, System.EventArgs e)
     {
-        if (thrusterAudioSource.volume == 0f)
-        {
-            thrusterAudioSource.volume = SoundManager.Instance.GetSoundVolumeNormalized();
-        }
+        StartThrusting();
     }
 
     private void Lander_OnUpForce(object sender, System.EventArgs e)
     {
-        if (thrusterAudioSource.volume == 0f)
-        {
-            thrusterAudioSource.volume = SoundManager.Instance.GetSoundVolumeNormalized();
-        }
+        StartThrusting();
     }
 
     private void Lander_OnBeforeForce(object sender, System.EventArgs e)
     {
-        thrusterAudioSource.volume = 0f;
+        StopThrusting();
+    }
+
+    private void StartThrusting()
+    {
+        if (!isThrusting)
+        {
+            isThrusting = true;
+            thrusterAudioSource.volume = SoundManager.Instance.GetSoundVolumeNormalized();
+        }
+    }
+
+    private void StopThrusting()
+    {
+        if (isThrusting)
+        {
+            isThrusting = false;
+            thrusterAudioSource.volume = 0f;
+        }
     }
 }

@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 946706220690791016}
   - component: {fileID: 3144211764906264031}
   - component: {fileID: 6789821477619855298}
-  - component: {fileID: 4414826919727014509}
+  - component: {fileID: 7582829910160158605}
   m_Layer: 0
   m_Name: CratePickup
   m_TagString: Untagged
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35f0669679a5ba4d801e246adb7b95f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CratePickup
---- !u!114 &4414826919727014509
+--- !u!114 &7582829910160158605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -335,8 +335,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e06ce80cdeb6ef44da327477db948631, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CrateUI
+  m_EditorClassIdentifier: Assembly-CSharp::CratePickupUI
   crateFilledImage: {fileID: 2960811433487450434}
+  cratePickup: {fileID: 6789821477619855298}
 --- !u!1 &8324747845767060718
 GameObject:
   m_ObjectHideFlags: 0

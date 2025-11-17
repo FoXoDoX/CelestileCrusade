@@ -51,6 +51,22 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(fuelPickupAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
     }
 
+    private void CrateOnRope_OnFuelPickup(object sender, EventArgs e)
+    {
+        AudioSource.PlayClipAtPoint(fuelPickupAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+    }
+
+    private void CrateOnRope_OnCoinPickup(object sender, EventArgs e)
+    {
+        AudioSource.PlayClipAtPoint(coinPickupAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+    }
+
+    public void RopeWithCrateSpawned()
+    {
+        CrateOnRope.Instance.OnCoinPickup += CrateOnRope_OnCoinPickup;
+        CrateOnRope.Instance.OnFuelPickup += CrateOnRope_OnFuelPickup;
+    }
+
     public void ChangeSoundVolume()
     {
         soundVolume = (soundVolume + 1) % SOUND_VOLUME_MAX;

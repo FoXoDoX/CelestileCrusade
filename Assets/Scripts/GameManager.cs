@@ -36,11 +36,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
-        Lander.Instance.OnCratePickup += Lander_OnCratePickup;
         Lander.Instance.OnLanded += Lander_OnLanded;
         Lander.Instance.OnStateChanged += Lander_OnStateChanged;
 
         GameInput.Instance.OnMenuButtonPressed += GameInput_OnMenuButtonPressed;
+
         LoadCurrentLevel();
     }
 
@@ -99,7 +99,12 @@ public class GameManager : MonoBehaviour
         AddScore(100);
     }
 
-    private void Lander_OnCratePickup(object sender, System.EventArgs e)
+    private void CrateOnRope_OnCoinPickup(object sender, System.EventArgs e)
+    {
+        AddScore(100);
+    }
+
+    private void CrateOnRope_OnCrateDrop(object sender, System.EventArgs e)
     {
         AddScore(500);
     }
@@ -108,6 +113,12 @@ public class GameManager : MonoBehaviour
     {
         score += addScoreAmount;
         Debug.Log(score);
+    }
+
+    public void RopeWithCrateSpawned()
+    {
+        CrateOnRope.Instance.OnCoinPickup += CrateOnRope_OnCoinPickup;
+        CrateOnRope.Instance.OnCrateDrop += CrateOnRope_OnCrateDrop;
     }
 
     public int GetScore()

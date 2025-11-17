@@ -1426,7 +1426,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000047683716, y: 3.1000001, z: -10}
+  m_LocalPosition: {x: -0.0000009536743, y: 0.0000009536743, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4089,7 +4089,7 @@ Transform:
   m_GameObject: {fileID: 1719064500}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000047683716, y: 3.1000001, z: -10}
+  m_LocalPosition: {x: -0.0000009536743, y: 0.0000009536743, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4273,7 +4273,7 @@ Transform:
   m_GameObject: {fileID: 1780317549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 3.1, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4342,6 +4342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1557943c295ac034d90d0c78c1b1813c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lander
+  ropeWithCrate: {fileID: 9160686567755914486, guid: d44302fe8594aae488cbb6af1c9152d6, type: 3}
 --- !u!114 &1780317554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4491,7 +4492,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 484dfe2ec7cb08047b216f2dd52796d5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5319,10 +5320,10 @@ SceneRoots:
   - {fileID: 1780317551}
   - {fileID: 1719064503}
   - {fileID: 480024611}
+  - {fileID: 804805233}
   - {fileID: 2070414461}
+  - {fileID: 5725597888937898454}
   - {fileID: 1206014808}
   - {fileID: 438430089}
   - {fileID: 525411007}
   - {fileID: 2145945653}
-  - {fileID: 804805233}
-  - {fileID: 5725597888937898454}

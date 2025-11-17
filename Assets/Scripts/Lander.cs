@@ -9,6 +9,8 @@ public class Lander : MonoBehaviour
 {
     private const float GRAVITY_NORMAL = 0.8f;
 
+    [SerializeField] private RopeWithCrate ropeWithCrate;
+
     public static Lander Instance { get; private set; }
 
     public event EventHandler OnUpForce;
@@ -33,7 +35,8 @@ public class Lander : MonoBehaviour
         public float scoreMultiplier;
     }
 
-    public enum LandingType { 
+    public enum LandingType
+    {
         Success,
         WrongLandingArea,
         TooSteepAngle,
@@ -49,13 +52,11 @@ public class Lander : MonoBehaviour
 
     private Rigidbody2D landerRigidBody2D;
     private float fuelAmount;
-    private float fuelAmountMax = 10f;
-    private float timerForCratePickup = 0f;
-    private float delayForCratePickup = 3f;
-    private bool isInsideOfCrateCollider = false;
+    private float fuelAmountMax = 30f;
     private State state;
+    private RopeWithCrate currentRopeWithCrate;
 
-    private Coroutine cratePickupCoroutine;
+    public bool HasCrate => currentRopeWithCrate != null;
 
     private void Awake()
     {
@@ -79,7 +80,7 @@ public class Lander : MonoBehaviour
                     GameInput.Instance.IsLeftActionPressed() ||
                     GameInput.Instance.IsRightActionPressed() ||
                     GameInput.Instance.GetMovementInputVector2() != Vector2.zero)
-                {                   
+                {
                     landerRigidBody2D.gravityScale = GRAVITY_NORMAL;
                     SetState(State.Normal);
                 }
@@ -95,7 +96,7 @@ public class Lander : MonoBehaviour
                     GameInput.Instance.IsRightActionPressed() ||
                     GameInput.Instance.GetMovementInputVector2() != Vector2.zero)
                 {
-                    ConsumeFuel();                    
+                    ConsumeFuel();
                 }
 
                 float gamepadDeadZone = .4f;
@@ -139,8 +140,10 @@ public class Lander : MonoBehaviour
             SetState(State.GameOver);
             return;
         }
+
         float softLandingVelocityMagnitude = 4f;
         float relativeVelocityMagnitude = collision2D.relativeVelocity.magnitude;
+
         if (relativeVelocityMagnitude > softLandingVelocityMagnitude)
         {
             Debug.Log("Landed too hard!");
@@ -158,6 +161,7 @@ public class Lander : MonoBehaviour
 
         float dotVector = Vector2.Dot(Vector2.up, transform.up);
         float minDDotVector = .90f;
+
         if (dotVector < minDDotVector)
         {
             Debug.Log("Landed on a too steep angle!");
@@ -189,13 +193,13 @@ public class Lander : MonoBehaviour
 
         Debug.Log("score - " + score);
 
-        OnLanded?.Invoke(this, new OnLandedEventArgs 
+        OnLanded?.Invoke(this, new OnLandedEventArgs
         {
             landingType = LandingType.Success,
             dotVector = dotVector,
             landingSpeed = relativeVelocityMagnitude,
             scoreMultiplier = landingPad.ScoreMultiplier,
-            score = score 
+            score = score
         });
         SetState(State.GameOver);
     }
@@ -204,12 +208,8 @@ public class Lander : MonoBehaviour
     {
         if (collider2D.gameObject.TryGetComponent(out FuelPickup fuelPickup))
         {
-            float addFuelAmount = 10f;
-            fuelAmount += addFuelAmount;
-            if (fuelAmount > fuelAmountMax)
-            {
-                fuelAmount = fuelAmountMax;
-            }
+            float addFuelAmountAfterFuelPickup = 15f;
+            SetFuel(addFuelAmountAfterFuelPickup);
             OnFuelPickup?.Invoke(this, EventArgs.Empty);
             fuelPickup.DestroySelf();
         }
@@ -219,47 +219,20 @@ public class Lander : MonoBehaviour
             OnCoinPickup?.Invoke(this, EventArgs.Empty);
             coinPickup.DestroySelf();
         }
-        if (collider2D.gameObject.TryGetComponent(out CratePickup cratePickup))
-        {
-            isInsideOfCrateCollider = true;
-            if (cratePickupCoroutine != null)
-            {
-                StopCoroutine(cratePickupCoroutine);
-            }
-            cratePickupCoroutine = StartCoroutine(PickupCrateAfterDelay(cratePickup));
-        }
     }
 
-    private void OnTriggerExit2D(Collider2D collider2D)
+    public void HandleCratePickup()
     {
-        if (collider2D.gameObject.TryGetComponent(out CratePickup cratePickup))
-        {
-            isInsideOfCrateCollider = false;
-            timerForCratePickup = 0f;
-            if (cratePickupCoroutine != null)
-            {
-                StopCoroutine(cratePickupCoroutine);
-                cratePickupCoroutine = null;
-            }
-        }
-    }
-
-    private IEnumerator PickupCrateAfterDelay(CratePickup cratePickup)
-    {
-        while (timerForCratePickup < delayForCratePickup)
-        {
-            if (!isInsideOfCrateCollider)
-            {
-                yield break;
-            }
-            timerForCratePickup += Time.deltaTime;
-            yield return null;
-        }
+        if (HasCrate) return;
 
         OnCratePickup?.Invoke(this, EventArgs.Empty);
-        cratePickup.DestroySelf();
 
-        cratePickupCoroutine = null;
+        currentRopeWithCrate = Instantiate(ropeWithCrate, transform.position, Quaternion.identity);
+    }
+
+    public void ReleaseCrate()
+    {
+        currentRopeWithCrate = null;
     }
 
     private void SetState(State state)
@@ -272,6 +245,15 @@ public class Lander : MonoBehaviour
     {
         float fuelConsumtionAmount = 1f;
         fuelAmount -= fuelConsumtionAmount * Time.deltaTime;
+    }
+
+    public void SetFuel(float addFuelAmount)
+    {
+        fuelAmount += addFuelAmount;
+        if (fuelAmount > fuelAmountMax)
+        {
+            fuelAmount = fuelAmountMax;
+        }
     }
 
     public float GetFuel()
@@ -292,10 +274,5 @@ public class Lander : MonoBehaviour
     public float GetSpeedY()
     {
         return landerRigidBody2D.linearVelocityY;
-    }
-
-    public float GetTimerForCratePickupNormalized()
-    {
-        return timerForCratePickup / delayForCratePickup;
     }
 }

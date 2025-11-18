@@ -20,7 +20,12 @@ public class Lander : MonoBehaviour
     public event EventHandler OnCoinPickup;
     public event EventHandler OnFuelPickup;
     public event EventHandler OnCratePickup;
+    public event EventHandler<KeyDeliverEventArgs> OnKeyDeliver;
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
+    public class KeyDeliverEventArgs : EventArgs
+    {
+        public Key.KeyType DeliveredKeyType { get; set; }
+    }
     public class OnStateChangedEventArgs : EventArgs
     {
         public State state;
@@ -228,6 +233,11 @@ public class Lander : MonoBehaviour
         OnCratePickup?.Invoke(this, EventArgs.Empty);
 
         currentRopeWithCrate = Instantiate(ropeWithCrate, transform.position, Quaternion.identity);
+    }
+
+    public void HandleKeyDeliver(Key.KeyType keyType)
+    {
+        OnKeyDeliver?.Invoke(this, new KeyDeliverEventArgs { DeliveredKeyType = keyType });
     }
 
     public void ReleaseCrate()

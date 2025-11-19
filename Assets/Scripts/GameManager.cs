@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
@@ -141,6 +142,8 @@ public class GameManager : MonoBehaviour
         levelNumber++;
         totalScore += score;
 
+        DOTween.KillAll();
+
         if (GetGameLevel() == null)
         {
             SceneLoader.LoadScene(SceneLoader.Scene.GameOverScene);
@@ -153,6 +156,8 @@ public class GameManager : MonoBehaviour
 
     public void RetryLevel()
     {
+        DOTween.KillAll();
+
         SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
     }
 

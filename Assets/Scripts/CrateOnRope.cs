@@ -18,7 +18,7 @@ public class CrateOnRope : MonoBehaviour
     private CrateLandingArea currentLandingArea;
 
     private Coroutine crateDropCoroutine;
-
+    
     private void Awake()
     {
         Instance = this;

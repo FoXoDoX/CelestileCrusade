@@ -57,8 +57,6 @@ public class CrateOnRope : MonoBehaviour
             crateDropCoroutine = StartCoroutine(DropCrateAfterDelay());
             return;
         }
-
-        OnCrateCollider?.Invoke(collider2D);
     }
 
     private void OnTriggerExit2D(Collider2D collider2D)
@@ -82,6 +80,14 @@ public class CrateOnRope : MonoBehaviour
                     crateDropCoroutine = null;
                 }
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision2D)
+    {
+        if (!collision2D.collider.gameObject.TryGetComponent(out CrateLandingPad crateLandingPad))
+        {
+            OnCrateCollider?.Invoke(collision2D.collider);
         }
     }
 

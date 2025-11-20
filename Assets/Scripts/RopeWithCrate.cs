@@ -34,10 +34,21 @@ public class RopeWithCrate : MonoBehaviour
             }
 
             CrateOnRope.Instance.OnCrateDrop += CrateOnRope_OnCrateDrop;
+
+            Lander.Instance.OnStateChanged += Lander_OnStateChanged;
         }
 
         SoundManager.Instance.RopeWithCrateSpawned();
+
         GameManager.Instance.RopeWithCrateSpawned();
+    }
+
+    private void Lander_OnStateChanged(object sender, Lander.OnStateChangedEventArgs e)
+    {
+        if (e.state == Lander.State.GameOver)
+        {
+            DestroySelf();
+        }
     }
 
     private void AddCrateCollisionHandler()
@@ -109,6 +120,16 @@ public class RopeWithCrate : MonoBehaviour
             {
                 collider.enabled = false;
             }
+        }
+
+        if (CrateOnRope.Instance != null)
+        {
+            CrateOnRope.Instance.OnCrateDrop -= CrateOnRope_OnCrateDrop;
+        }
+
+        if (Lander.Instance != null)
+        {
+            Lander.Instance.OnStateChanged -= Lander_OnStateChanged;
         }
 
         Destroy(gameObject);

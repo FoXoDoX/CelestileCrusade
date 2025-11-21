@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameInput.Instance.IsRestartActionPressed())
+        {
+            RetryLevel();
+        }
         if (isTimerActive)
         {
             time += Time.deltaTime;

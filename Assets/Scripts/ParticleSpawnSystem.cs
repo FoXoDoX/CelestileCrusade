@@ -62,7 +62,10 @@ public class ParticleSpawnSystem : MonoBehaviour
         Vector2 spawnPosition = GetRandomPointInCollider(spawnCollider);
 
         // —оздаем частицу
-        GameObject particle = Instantiate(particlePrefab, spawnPosition, Quaternion.identity, transform);
+        GameObject particle = Instantiate(particlePrefab, spawnPosition, Quaternion.identity);
+
+        particle.transform.SetParent(transform, true);
+        particle.transform.localRotation = Quaternion.identity;
 
         // ”ничтожаем частицу через заданное врем€
         Destroy(particle, particleLifetime);

@@ -45,6 +45,11 @@ public class GameInput : MonoBehaviour
         return inputActions.Player.LanderRight.IsPressed();
     }
 
+    public bool IsRestartActionPressed()
+    {
+        return inputActions.Player.RestartLevel.IsPressed();
+    }
+
     public Vector2 GetMovementInputVector2()
     {
         return inputActions.Player.Movement.ReadValue<Vector2>();

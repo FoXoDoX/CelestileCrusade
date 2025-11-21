@@ -40,6 +40,8 @@ public class RopeWithCrate : MonoBehaviour
 
         SoundManager.Instance.RopeWithCrateSpawned();
 
+        CinemachineCameraZoom2D.Instance.RopeWithCrateSpawned();
+
         GameManager.Instance.RopeWithCrateSpawned();
     }
 

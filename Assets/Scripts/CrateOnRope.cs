@@ -14,7 +14,9 @@ public class CrateOnRope : MonoBehaviour
 
     private float timerForCrateDrop = 0f;
     private float delayForCrateDrop = 3f;
+    private int CrateHealth = 5;
     private bool isInCrateLandingAreaCollider = false;
+
     private CrateLandingArea currentLandingArea;
 
     private Coroutine crateDropCoroutine;
@@ -86,6 +88,11 @@ public class CrateOnRope : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision2D)
     {
         if (!collision2D.collider.gameObject.TryGetComponent(out CrateLandingPad crateLandingPad))
+        {
+            Debug.Log(CrateHealth);
+            CrateHealth--;
+        }
+        if (CrateHealth <= 0)
         {
             OnCrateCollider?.Invoke(collision2D.collider);
         }

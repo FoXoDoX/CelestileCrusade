@@ -10,21 +10,21 @@ public class CinemachineCameraZoom2D : MonoBehaviour
     [SerializeField] private CinemachineCamera cinemachineCamera;
 
     private float targetOrthographicSize = 12f;
+    private Lander.State currentLanderState;
 
     private void Awake()
     {
         Instance = this; 
     }
 
-    public void RopeWithCrateSpawned()
+    private void Start()
     {
-        SetTargetOrthographicSize(16f);
-        CrateOnRope.Instance.OnCrateDrop += CrateOnRope_OnCrateDrop;
+        Lander.Instance.OnStateChanged += Lander_OnStateChanged;
     }
 
-    private void CrateOnRope_OnCrateDrop(object sender, System.EventArgs e)
+    private void Lander_OnStateChanged(object sender, Lander.OnStateChangedEventArgs e)
     {
-        SetNormalOrthographicSize();
+        currentLanderState = e.state;
     }
 
     private void Update()
@@ -32,6 +32,18 @@ public class CinemachineCameraZoom2D : MonoBehaviour
         float zoomSpeed = 2f;
         cinemachineCamera.Lens.OrthographicSize = 
             Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, targetOrthographicSize, Time.deltaTime * zoomSpeed);
+
+        if (currentLanderState == Lander.State.Normal)
+        {
+            if (CrateOnRope.Instance != null)
+            {
+                SetTargetOrthographicSize(18f);
+            }
+            else
+            {
+                SetNormalOrthographicSize();
+            }
+        }
     }
 
     public void SetTargetOrthographicSize(float targetOrthographicSize)

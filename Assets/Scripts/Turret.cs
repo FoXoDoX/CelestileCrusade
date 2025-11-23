@@ -22,6 +22,9 @@ public class Turret : MonoBehaviour
     private Vector2 initialForward; // Фиксированное начальное направление
     private float initialRotation; // Начальный угол поворота
 
+    // Добавляем свойство для получения текущего направления
+    private Vector2 CurrentForward => rotatingPivot.up;
+
     private void Start()
     {
         // Настройка триггерного коллайдера
@@ -78,8 +81,8 @@ public class Turret : MonoBehaviour
         // Получаем направление к игроку относительно турели
         Vector2 directionToPlayer = playerTransform.position - transform.position;
 
-        // Используем фиксированное начальное направление для определения зоны обстрела
-        Vector2 turretForward = initialForward;
+        // Используем ТЕКУЩЕЕ направление турели для определения зоны обстрела
+        Vector2 turretForward = CurrentForward;
 
         // Вычисляем угол между направлением турели и направлением к игроку
         float angle = Vector2.SignedAngle(turretForward, directionToPlayer);
@@ -93,8 +96,14 @@ public class Turret : MonoBehaviour
         // Преобразуем угол в диапазон -180 до 180
         targetAngle = NormalizeAngle(targetAngle);
 
-        // Проверяем, находится ли угол в пределах -90 до 90 градусов
-        return Mathf.Abs(targetAngle) <= 90f;
+        // Получаем текущий угол турели
+        float currentTurretAngle = NormalizeAngle(rotatingPivot.eulerAngles.z);
+
+        // Вычисляем разницу между целевым углом и текущим углом турели
+        float angleDifference = NormalizeAngle(targetAngle - currentTurretAngle);
+
+        // Проверяем, находится ли угол в пределах -90 до 90 градусов ОТНОСИТЕЛЬНО ТЕКУЩЕГО НАПРАВЛЕНИЯ
+        return Mathf.Abs(angleDifference) <= 90f;
     }
 
     private float NormalizeAngle(float angle)
@@ -139,12 +148,9 @@ public class Turret : MonoBehaviour
         }
 
         Vector2 direction = playerTarget.position - rotatingPivot.position;
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
 
-        // Добавляем смещение на 90 градусов
-        targetAngle -= 90f;
-
-        // Ограничиваем угол зоной обстрела
+        // Ограничиваем угол зоной обстрела ОТНОСИТЕЛЬНО ТЕКУЩЕГО ПОЛОЖЕНИЯ
         targetAngle = ClampAngleToFiringArc(targetAngle);
 
         rotationTween = rotatingPivot.DORotate(
@@ -165,8 +171,17 @@ public class Turret : MonoBehaviour
         // Нормализуем угол
         targetAngle = NormalizeAngle(targetAngle);
 
-        // Ограничиваем угол зоной обстрела (-90 до 90 градусов)
-        return Mathf.Clamp(targetAngle, -90f, 90f);
+        // Получаем текущий угол турели
+        float currentAngle = NormalizeAngle(rotatingPivot.eulerAngles.z);
+
+        // Вычисляем разницу между целевым углом и текущим углом
+        float angleDifference = NormalizeAngle(targetAngle - currentAngle);
+
+        // Ограничиваем разницу углов зоной обстрела (-90 до 90 градусов)
+        angleDifference = Mathf.Clamp(angleDifference, -90f, 90f);
+
+        // Возвращаем ограниченный угол относительно текущего положения
+        return NormalizeAngle(currentAngle + angleDifference);
     }
 
     private void Update()
@@ -211,8 +226,8 @@ public class Turret : MonoBehaviour
             Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.up * 2f);
         }
 
-        // Визуализация зоны обстрела
-        Vector2 forward = Application.isPlaying ? initialForward : (Vector2)rotatingPivot.up;
+        // Визуализация зоны обстрела - используем ТЕКУЩЕЕ направление
+        Vector2 forward = Application.isPlaying ? CurrentForward : (Vector2)rotatingPivot.up;
 
         Gizmos.color = Color.cyan;
         Vector2 leftBound = Quaternion.Euler(0, 0, 90) * forward;

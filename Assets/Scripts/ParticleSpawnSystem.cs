@@ -115,7 +115,7 @@ public class ParticleSpawnSystem : MonoBehaviour
         spawnInterval = baseArea / area;
 
         // Ограничим минимальный интервал, чтобы не спавнить слишком много частиц
-        if (spawnInterval < 0.1f) spawnInterval = 0.1f;
+        if (spawnInterval < 0.8f) spawnInterval = 0.8f;
 
         Debug.Log($"WindParticleSpawner: Area = {area}, Spawn Interval = {spawnInterval}s");
     }
@@ -153,15 +153,10 @@ public class ParticleSpawnSystem : MonoBehaviour
         {
             float area = GetColliderArea(col);
             float interval = baseArea / area;
-            if (interval < 0.1f) interval = 0.1f;
-
-            // Это просто для информации в редакторе, реальный расчет будет в Start
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (interval < 0.8f)
             {
-                Debug.Log($"WindParticleSpawner Preview: Area = {area}, Estimated Spawn Interval = {interval}s");
-            }
-#endif
+                interval = 0.8f;
+            }  
         }
     }
 

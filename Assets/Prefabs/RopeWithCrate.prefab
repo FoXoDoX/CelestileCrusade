@@ -866,6 +866,7 @@ GameObject:
   - component: {fileID: 4919844131796578149}
   - component: {fileID: 3385426643873352008}
   - component: {fileID: 8891068635470057119}
+  - component: {fileID: 3491014998768507791}
   m_Layer: 0
   m_Name: Crate
   m_TagString: Untagged
@@ -988,6 +989,20 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 180
+--- !u!114 &3491014998768507791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4820030492336854411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe4d7eb3fd7fe742854aa3e906dc81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrateOnRope
+  crackedCrate: {fileID: -329623048172348665, guid: 4e6c0e05e2c990241a3770b878ba8534, type: 3}
+  veryCrackedCrate: {fileID: -2699617827137059956, guid: cc7040538e1256c4db00c6632734e30d, type: 3}
 --- !u!1 &5035474907517003428
 GameObject:
   m_ObjectHideFlags: 0

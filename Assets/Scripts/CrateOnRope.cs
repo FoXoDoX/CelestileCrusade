@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CrateOnRope : MonoBehaviour
 {
+    [SerializeField] private Sprite crackedCrate;
+    [SerializeField] private Sprite veryCrackedCrate;
+
+    private SpriteRenderer spriteRenderer;
+
     public System.Action<Collider2D> OnCrateCollider;
 
     public static CrateOnRope Instance { get; private set; }
@@ -14,16 +19,21 @@ public class CrateOnRope : MonoBehaviour
 
     private float timerForCrateDrop = 0f;
     private float delayForCrateDrop = 3f;
-    private int CrateHealth = 5;
+    private int CrateHealth = 3;
     private bool isInCrateLandingAreaCollider = false;
 
     private CrateLandingArea currentLandingArea;
 
     private Coroutine crateDropCoroutine;
-    
+
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void Start()
+    {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D)
@@ -89,8 +99,16 @@ public class CrateOnRope : MonoBehaviour
     {
         if (!collision2D.collider.gameObject.TryGetComponent(out CrateLandingPad crateLandingPad))
         {
-            Debug.Log(CrateHealth);
             CrateHealth--;
+            Debug.Log(CrateHealth);
+        }
+        if (CrateHealth == 2)
+        {
+            spriteRenderer.sprite = crackedCrate;
+        }
+        if (CrateHealth == 1)
+        {
+            spriteRenderer.sprite = veryCrackedCrate;
         }
         if (CrateHealth <= 0)
         {

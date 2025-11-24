@@ -33,15 +33,18 @@ public class CinemachineCameraZoom2D : MonoBehaviour
         cinemachineCamera.Lens.OrthographicSize = 
             Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, targetOrthographicSize, Time.deltaTime * zoomSpeed);
 
-        if (currentLanderState == Lander.State.Normal)
+        if (GetComponent<Level10CameraZoomOut>() != null)
         {
-            if (CrateOnRope.Instance != null)
+            if (currentLanderState == Lander.State.Normal)
             {
-                SetTargetOrthographicSize(18f);
-            }
-            else
-            {
-                SetNormalOrthographicSize();
+                if (CrateOnRope.Instance != null)
+                {
+                    SetTargetOrthographicSize(18f);
+                }
+                else
+                {
+                    SetNormalOrthographicSize();
+                }
             }
         }
     }

@@ -17,7 +17,17 @@ public class RopeWithCrate : MonoBehaviour
 
     private void Start()
     {
-        AddCrateCollisionHandler();
+        // Получаем CrateOnRope компонент, который уже должен быть прикреплен к crate
+        CrateOnRope crateOnRope = crate.GetComponent<CrateOnRope>();
+        if (crateOnRope == null)
+        {
+            Debug.LogError("CrateOnRope component not found on crate! Please attach it in the editor.");
+            return;
+        }
+
+        // Подписываемся на события
+        crateOnRope.OnCrateCollider += HandleCrateCollision;
+        CrateOnRope.Instance.OnCrateDrop += CrateOnRope_OnCrateDrop;
 
         if (!isDestroyed)
         {
@@ -33,13 +43,10 @@ public class RopeWithCrate : MonoBehaviour
                 Physics2D.IgnoreCollision(crateCollider, ropeChainColliders);
             }
 
-            CrateOnRope.Instance.OnCrateDrop += CrateOnRope_OnCrateDrop;
-
             Lander.Instance.OnStateChanged += Lander_OnStateChanged;
         }
 
         SoundManager.Instance.RopeWithCrateSpawned();
-
         GameManager.Instance.RopeWithCrateSpawned();
     }
 
@@ -48,15 +55,6 @@ public class RopeWithCrate : MonoBehaviour
         if (e.state == Lander.State.GameOver)
         {
             DestroySelf();
-        }
-    }
-
-    private void AddCrateCollisionHandler()
-    {
-        if (crate != null)
-        {
-            var crateCollisionHandler = crate.AddComponent<CrateOnRope>();
-            crateCollisionHandler.OnCrateCollider += HandleCrateCollision;
         }
     }
 
@@ -90,8 +88,6 @@ public class RopeWithCrate : MonoBehaviour
         if (anchor == null) return false;
         if (isDestroyed) return false;
 
-        if (anchor == null) return false;
-
         HingeJoint2D joint = anchor.GetComponent<HingeJoint2D>();
         return joint != null;
     }
@@ -122,8 +118,10 @@ public class RopeWithCrate : MonoBehaviour
             }
         }
 
+        // Отписываемся от событий
         if (CrateOnRope.Instance != null)
         {
+            CrateOnRope.Instance.OnCrateCollider -= HandleCrateCollision;
             CrateOnRope.Instance.OnCrateDrop -= CrateOnRope_OnCrateDrop;
         }
 

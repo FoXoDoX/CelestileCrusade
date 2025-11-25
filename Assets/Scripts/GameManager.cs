@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -9,15 +10,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
-    private static int levelNumber = 1;
-    private static int totalScore = 0;
-
-    public static void ResetStaticData()
-    {
-        levelNumber = 1;
-        totalScore = 0;
-    }
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
@@ -86,7 +78,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameLevel gameLevel in gameLevelList)
         {
-            if (gameLevel.GetLevelNumber() == levelNumber)
+            if (gameLevel.GetLevelNumber() == GameData.CurrentLevel)
             {
                 return gameLevel;                
             }
@@ -97,6 +89,11 @@ public class GameManager : MonoBehaviour
     private void Lander_OnLanded(object sender, Lander.OnLandedEventArgs e)
     {
         AddScore(e.score);
+
+        if (e.landingType == Lander.LandingType.Success)
+        {
+            GameData.MarkLevelCompleted(GameData.CurrentLevel);
+        }
     }
 
     private void Lander_OnCoinPickup(object sender, System.EventArgs e)
@@ -138,13 +135,13 @@ public class GameManager : MonoBehaviour
 
     public int GetTotalScore()
     {
-        return totalScore;
+        return GameData.TotalScore;
     }
 
     public void GoToNextLevel()
     {
-        levelNumber++;
-        totalScore += score;
+        GameData.CurrentLevel++;
+        GameData.TotalScore += score;
 
         DOTween.KillAll();
 
@@ -163,11 +160,6 @@ public class GameManager : MonoBehaviour
         DOTween.KillAll();
 
         SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
-    }
-
-    public int GetLevelNumber()
-    {
-        return levelNumber;
     }
 
     public void PauseUnpauseGame()
@@ -194,4 +186,78 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
     }
+}
+
+public static class GameData
+{
+    private static int currentLevel = 1;
+    private static int totalScore = 0;
+    private static int highestCompletedLevel = 0;
+
+    public static int CurrentLevel
+    {
+        get => currentLevel;
+        set
+        {
+            if (value > 0)
+                currentLevel = value;
+        }
+    }
+
+    public static int TotalScore
+    {
+        get => totalScore;
+        set
+        {
+            if (value >= 0)
+                totalScore = value;
+        }
+    }
+
+    public static void MarkLevelCompleted(int completedLevelNumber)
+    {
+        if (completedLevelNumber > highestCompletedLevel)
+        {
+            highestCompletedLevel = completedLevelNumber;
+        }
+
+        SaveSystem.Save();
+    }
+
+    public static bool IsLevelAvailable(int levelNumber)
+    {
+        return levelNumber == 1 || levelNumber <= highestCompletedLevel + 1;
+    }
+
+    public static void ResetStaticData()
+    {
+        currentLevel = 1;
+        totalScore = 0;
+    }
+
+    public static int GetHighestCompletedLevel()
+    {
+        return highestCompletedLevel;
+    }
+
+    public static void SetHighestCompletedLevel(int _highestCompletedLevel)
+    {
+         highestCompletedLevel = _highestCompletedLevel;
+    }
+
+    public static void Save(ref GameSaveData data)
+    {
+        data.highestCompletedLevel = highestCompletedLevel;
+    }
+
+    public static void Load(GameSaveData data)
+    {
+        highestCompletedLevel = data.highestCompletedLevel;
+    }
+}
+
+[System.Serializable]
+public struct GameSaveData
+{
+    public int highestCompletedLevel;
 }

@@ -182,8 +182,6 @@ public class Lander : MonoBehaviour
             return;
         }
 
-        // landerRigidBody2D.gravityScale = 0f;
-
         Destroy(landerRigidBody2D);
 
         Debug.Log("Successful landing!");

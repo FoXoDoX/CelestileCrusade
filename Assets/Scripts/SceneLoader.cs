@@ -6,6 +6,7 @@ public static class SceneLoader
     public enum Scene
     {
         MainMenuScene,
+        LevelsMenuScene,
         GameScene,
         GameOverScene,
     }

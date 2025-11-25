@@ -29,7 +29,7 @@ public class StatsUI : MonoBehaviour
     private void UpdateStatsTextMesh()
     {
         statsTextMesh.text =
-            GameManager.Instance.GetLevelNumber() + "\n" +
+            GameData.CurrentLevel + "\n" +
             GameManager.Instance.GetScore() + "\n" +
             Mathf.Round(GameManager.Instance.GetTime());
 

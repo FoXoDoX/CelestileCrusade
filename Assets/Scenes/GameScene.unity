@@ -1428,7 +1428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Background
   target: {fileID: 1719064503}
-  offset: {x: 0, y: 0, z: 10}
+  offset: {x: 0, y: 0, z: 0}
+  parallaxFactor: 0.025
 --- !u!1 &497105957
 GameObject:
   m_ObjectHideFlags: 0

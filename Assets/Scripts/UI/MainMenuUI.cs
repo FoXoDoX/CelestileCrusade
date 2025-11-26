@@ -11,6 +11,12 @@ public class MainMenuUI : MonoBehaviour
     {
         Time.timeScale = 1f;
 
+        if (!SaveSystem.SaveFileExists)
+        {
+            Debug.Log("No save file exists, creating initial save");
+            SaveSystem.Save();
+        }
+
         playButton.onClick.AddListener(() =>
         {
             GameData.ResetStaticData();
@@ -32,14 +38,5 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         playButton.Select();
-    }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    private static void InitializeOnGameStart()
-    {
-        if (SaveSystem.IsSaveFileExists())
-        {
-            SaveSystem.Load();
-        }
     }
 }

@@ -146,12 +146,11 @@ public class Lander : MonoBehaviour
             return;
         }
 
-        float softLandingVelocityMagnitude = 4f;
+        float softLandingVelocityMagnitude = 5f;
         float relativeVelocityMagnitude = collision2D.relativeVelocity.magnitude;
 
         if (relativeVelocityMagnitude > softLandingVelocityMagnitude)
         {
-            Debug.Log("Landed too hard!");
             OnLanded?.Invoke(this, new OnLandedEventArgs
             {
                 landingType = LandingType.TooFastLanding,
@@ -169,7 +168,6 @@ public class Lander : MonoBehaviour
 
         if (dotVector < minDDotVector)
         {
-            Debug.Log("Landed on a too steep angle!");
             OnLanded?.Invoke(this, new OnLandedEventArgs
             {
                 landingType = LandingType.TooSteepAngle,
@@ -184,8 +182,6 @@ public class Lander : MonoBehaviour
 
         Destroy(landerRigidBody2D);
 
-        Debug.Log("Successful landing!");
-
         float maxScoreAmountLandingAngle = 100f;
         float scoreDotLandingMultiplier = 10f;
         float landingAngleScore = maxScoreAmountLandingAngle - Mathf.Abs(dotVector - 1f) * scoreDotLandingMultiplier * maxScoreAmountLandingAngle;
@@ -193,12 +189,9 @@ public class Lander : MonoBehaviour
         float maxScoreAmountLandingSpeed = 100f;
         float landingSpeedScore = (softLandingVelocityMagnitude - relativeVelocityMagnitude) * maxScoreAmountLandingSpeed;
 
-        Debug.Log("Landing Angle Score - " + landingAngleScore);
-        Debug.Log("Landing Speed Score - " + landingSpeedScore);
-
         int score = Mathf.RoundToInt((landingAngleScore + landingSpeedScore) * landingPad.ScoreMultiplier);
 
-        Debug.Log("score - " + score);
+        Debug.Log("Score:" + score);
 
         OnLanded?.Invoke(this, new OnLandedEventArgs
         {

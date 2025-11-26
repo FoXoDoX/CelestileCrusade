@@ -86,13 +86,21 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    public GameLevel GetCurrentLevelObject()
+    {
+        return GetGameLevel();
+    }
+
     private void Lander_OnLanded(object sender, Lander.OnLandedEventArgs e)
     {
         AddScore(e.score);
 
         if (e.landingType == Lander.LandingType.Success)
         {
-            GameData.MarkLevelCompleted(GameData.CurrentLevel);
+            GameLevel currentLevel = GetCurrentLevelObject();
+            int starsEarned = currentLevel.GetEarnedStarsCount(score);
+
+            GameData.MarkLevelCompleted(GameData.CurrentLevel, starsEarned);
         }
     }
 
@@ -193,6 +201,7 @@ public static class GameData
     private static int currentLevel = 1;
     private static int totalScore = 0;
     private static int highestCompletedLevel = 0;
+    private static Dictionary<int, int> levelStars = new Dictionary<int, int>();
 
     public static int CurrentLevel
     {
@@ -214,11 +223,25 @@ public static class GameData
         }
     }
 
-    public static void MarkLevelCompleted(int completedLevelNumber)
+    public static void MarkLevelCompleted(int completedLevelNumber, int starsEarned)
     {
+        Debug.Log($"MarkLevelCompleted called: level={completedLevelNumber}, stars={starsEarned}");
+
         if (completedLevelNumber > highestCompletedLevel)
         {
             highestCompletedLevel = completedLevelNumber;
+            Debug.Log($"New highest completed level: {highestCompletedLevel}");
+        }
+
+        // Сохраняем максимальное количество звёзд для уровня
+        if (!levelStars.ContainsKey(completedLevelNumber) || starsEarned > levelStars[completedLevelNumber])
+        {
+            levelStars[completedLevelNumber] = starsEarned;
+            Debug.Log($"Updated stars for level {completedLevelNumber}: {starsEarned}");
+        }
+        else
+        {
+            Debug.Log($"Stars for level {completedLevelNumber} already at maximum: {levelStars[completedLevelNumber]}");
         }
 
         SaveSystem.Save();
@@ -229,10 +252,18 @@ public static class GameData
         return levelNumber == 1 || levelNumber <= highestCompletedLevel + 1;
     }
 
+    public static int GetStarsForLevel(int levelNumber)
+    {
+        int stars = levelStars.ContainsKey(levelNumber) ? levelStars[levelNumber] : 0;
+        Debug.Log($"GetStarsForLevel: level={levelNumber}, stars={stars}");
+        return stars;
+    }
+
     public static void ResetStaticData()
     {
         currentLevel = 1;
         totalScore = 0;
+        // Не сбрасываем levelStars и highestCompletedLevel, так как это постоянный прогресс
     }
 
     public static int GetHighestCompletedLevel()
@@ -242,17 +273,48 @@ public static class GameData
 
     public static void SetHighestCompletedLevel(int _highestCompletedLevel)
     {
-         highestCompletedLevel = _highestCompletedLevel;
+        highestCompletedLevel = _highestCompletedLevel;
     }
 
     public static void Save(ref GameSaveData data)
     {
         data.highestCompletedLevel = highestCompletedLevel;
+
+        // Преобразуем Dictionary в List для сериализации
+        data.levelStarsData = new List<LevelStarData>();
+        foreach (var kvp in levelStars)
+        {
+            data.levelStarsData.Add(new LevelStarData
+            {
+                levelNumber = kvp.Key,
+                starsCount = kvp.Value
+            });
+        }
+
+        Debug.Log($"Saved {levelStars.Count} level stars entries");
+        Debug.Log($"Saved highest completed level: {highestCompletedLevel}");
     }
 
     public static void Load(GameSaveData data)
     {
         highestCompletedLevel = data.highestCompletedLevel;
+
+        // Преобразуем List обратно в Dictionary
+        levelStars = new Dictionary<int, int>();
+        if (data.levelStarsData != null)
+        {
+            foreach (var starData in data.levelStarsData)
+            {
+                levelStars[starData.levelNumber] = starData.starsCount;
+            }
+            Debug.Log($"Loaded {levelStars.Count} level stars entries");
+        }
+        else
+        {
+            Debug.Log("No level stars data found in save file");
+        }
+
+        Debug.Log($"Loaded highest completed level: {highestCompletedLevel}");
     }
 }
 
@@ -260,4 +322,12 @@ public static class GameData
 public struct GameSaveData
 {
     public int highestCompletedLevel;
+    public List<LevelStarData> levelStarsData;
+}
+
+[System.Serializable]
+public struct LevelStarData
+{
+    public int levelNumber;
+    public int starsCount;
 }

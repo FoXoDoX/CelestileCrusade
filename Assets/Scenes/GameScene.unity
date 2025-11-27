@@ -1335,6 +1335,7 @@ GameObject:
   - component: {fileID: 480024611}
   - component: {fileID: 480024610}
   - component: {fileID: 480024612}
+  - component: {fileID: 480024613}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -1388,7 +1389,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 713532449
   m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: cccc02034d4897942ac823bbb13db65b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1430,6 +1431,27 @@ MonoBehaviour:
   target: {fileID: 1719064503}
   offset: {x: 0, y: 0, z: 0}
   parallaxFactor: 0.025
+--- !u!114 &480024613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480024609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac6342a0e2fcd74ea0da7bcd5d518a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackgroundParticles
+  particlePrefabs:
+  - {fileID: 8591288390446454101, guid: 2b8ffa522b3e5834d80e6672736a85a7, type: 3}
+  - {fileID: 8591288390446454101, guid: d26ba9322bf77414e935de4eef2cb7a6, type: 3}
+  - {fileID: 8591288390446454101, guid: 39270d0f1d3f7b7449d542871a5f6704, type: 3}
+  spawnRateRange: {x: 0.05, y: 0.12}
+  particleSpeedRange: {x: 30, y: 40}
+  debugMode: 1
+  spawnDistance: 1
+  targetCamera: {fileID: 519420031}
 --- !u!1 &497105957
 GameObject:
   m_ObjectHideFlags: 0
@@ -5340,6 +5362,63 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5626142120532356289, guid: 491bc9f68306cad40a65002e796205eb, type: 3}
   m_PrefabInstance: {fileID: 2025322468}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2041235066
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7087290249616371906, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_Name
+      value: TwinklingStarsParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017917474502571259, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 695f22b40b7e5ed44b0a07d65896fa37, type: 3}
 --- !u!1 &2070414459
 GameObject:
   m_ObjectHideFlags: 0
@@ -5772,3 +5851,4 @@ SceneRoots:
   - {fileID: 438430089}
   - {fileID: 525411007}
   - {fileID: 2145945653}
+  - {fileID: 2041235066}

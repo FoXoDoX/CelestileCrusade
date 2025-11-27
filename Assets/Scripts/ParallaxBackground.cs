@@ -4,9 +4,10 @@ public class ParallaxBackground : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset;
-    [SerializeField] private float parallaxFactor = 0.03f;
+    [SerializeField] private float parallaxFactor = 0.025f;
 
     private Material backgroundMaterial;
+    private Material particleMaterial;
     private Vector3 startTargetPosition;
     private Vector3 startBackgroundPosition;
     private static readonly int ParallaxOffset = Shader.PropertyToID("_ParallaxOffset");
@@ -15,6 +16,13 @@ public class ParallaxBackground : MonoBehaviour
     {
         Renderer renderer = GetComponent<Renderer>();
         backgroundMaterial = renderer.material;
+
+        // Получаем материал системы частиц
+        ParticleSystemRenderer particleRenderer = GetComponentInChildren<ParticleSystemRenderer>();
+        if (particleRenderer != null)
+        {
+            particleMaterial = particleRenderer.material;
+        }
 
         startTargetPosition = target.position;
         startBackgroundPosition = transform.position;
@@ -33,9 +41,16 @@ public class ParallaxBackground : MonoBehaviour
             targetDelta.y * parallaxFactor
         );
 
+        // Применяем к фону
         if (backgroundMaterial.HasProperty(ParallaxOffset))
         {
             backgroundMaterial.SetVector(ParallaxOffset, parallaxOffset);
+        }
+
+        // Применяем к частицам
+        if (particleMaterial != null && particleMaterial.HasProperty(ParallaxOffset))
+        {
+            particleMaterial.SetVector(ParallaxOffset, parallaxOffset);
         }
     }
 
@@ -47,6 +62,11 @@ public class ParallaxBackground : MonoBehaviour
         if (backgroundMaterial.HasProperty(ParallaxOffset))
         {
             backgroundMaterial.SetVector(ParallaxOffset, Vector2.zero);
+        }
+
+        if (particleMaterial != null && particleMaterial.HasProperty(ParallaxOffset))
+        {
+            particleMaterial.SetVector(ParallaxOffset, Vector2.zero);
         }
     }
 }

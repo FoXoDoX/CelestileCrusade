@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8538943668265382869}
   - component: {fileID: 4334233264994686051}
   m_Layer: 0
-  m_Name: WindParticles0
+  m_Name: WindParticleSystem0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

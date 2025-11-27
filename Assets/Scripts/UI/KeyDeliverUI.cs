@@ -23,7 +23,7 @@ public class KeyDeliverUI : MonoBehaviour
         UpdateKeySprites();
     }
 
-    private void Lander_OnKeyDeliver(object sender, Lander.KeyDeliverEventArgs e)
+    private void Lander_OnKeyDeliver(object sender, Lander.OnKeyDeliverEventArgs e)
     {
         UpdateKeySprites();
     }

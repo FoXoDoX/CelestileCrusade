@@ -9,6 +9,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public const int SCORE_PER_COIN = 100;
+    public const int SCORE_PER_CRATE = 500;
+
     public static GameManager Instance { get; private set; }
 
     public event EventHandler OnGamePaused;
@@ -106,17 +109,17 @@ public class GameManager : MonoBehaviour
 
     private void Lander_OnCoinPickup(object sender, System.EventArgs e)
     {
-        AddScore(100);
+        AddScore(SCORE_PER_COIN);
     }
 
     private void CrateOnRope_OnCoinPickup(object sender, System.EventArgs e)
     {
-        AddScore(100);
+        AddScore(SCORE_PER_COIN);
     }
 
     private void CrateOnRope_OnCrateDrop(object sender, System.EventArgs e)
     {
-        AddScore(500);
+        AddScore(SCORE_PER_CRATE);
     }
 
     public void AddScore(int addScoreAmount)

@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
         Instance.OnKeyDeliver += Lander_OnKeyDeliver;
     }
 
-    private void Lander_OnKeyDeliver(object sender, KeyDeliverEventArgs e)
+    private void Lander_OnKeyDeliver(object sender, OnKeyDeliverEventArgs e)
     {
         if (e.DeliveredKeyType == keyType)
         {

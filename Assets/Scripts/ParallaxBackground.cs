@@ -37,8 +37,8 @@ public class ParallaxBackground : MonoBehaviour
 
         Vector3 targetDelta = target.position - startTargetPosition;
         Vector2 parallaxOffset = new Vector2(
-            targetDelta.x * parallaxFactor,
-            targetDelta.y * parallaxFactor
+            -targetDelta.x * parallaxFactor,
+            -targetDelta.y * parallaxFactor
         );
 
         // Применяем к фону

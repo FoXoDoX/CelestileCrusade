@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 6393142932695356194}
   - component: {fileID: 1934179814968968186}
   - component: {fileID: 5967700252696157369}
+  - component: {fileID: 8536460634239424466}
   m_Layer: 0
   m_Name: FuelPickup
   m_TagString: Untagged
@@ -172,3 +173,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73e1c2855de06c4097b10ca263cfe54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FuelPickup
+--- !u!114 &8536460634239424466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944807272527760726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2183090d4237f549aaabc6746932ed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupVisuals
+  stretchDuration: 0.5
+  minTimeBetweenAnimations: 3
+  maxTimeBetweenAnimations: 6
+  circleRadius: 0.1
+  circleDuration: 2
+  blinkDuration: 0.3

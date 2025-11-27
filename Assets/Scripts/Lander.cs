@@ -20,12 +20,12 @@ public class Lander : MonoBehaviour
     public event EventHandler OnCoinPickup;
     public event EventHandler OnFuelPickup;
     public event EventHandler OnCratePickup;
-    public event EventHandler<KeyDeliverEventArgs> OnKeyDeliver;
-    public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
-    public class KeyDeliverEventArgs : EventArgs
+    public event EventHandler<OnKeyDeliverEventArgs> OnKeyDeliver;
+    public class OnKeyDeliverEventArgs : EventArgs
     {
         public Key.KeyType DeliveredKeyType { get; set; }
     }
+    public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
     public class OnStateChangedEventArgs : EventArgs
     {
         public State state;
@@ -232,7 +232,7 @@ public class Lander : MonoBehaviour
 
     public void HandleKeyDeliver(Key.KeyType keyType)
     {
-        OnKeyDeliver?.Invoke(this, new KeyDeliverEventArgs { DeliveredKeyType = keyType });
+        OnKeyDeliver?.Invoke(this, new OnKeyDeliverEventArgs { DeliveredKeyType = keyType });
     }
 
     public void ReleaseCrate()

@@ -48,6 +48,7 @@ public class RopeWithCrate : MonoBehaviour
 
         SoundManager.Instance.RopeWithCrateSpawned();
         GameManager.Instance.RopeWithCrateSpawned();
+        VisualGameManager.Instance.RopeWithCrateSpawned();
     }
 
     private void Lander_OnStateChanged(object sender, Lander.OnStateChangedEventArgs e)

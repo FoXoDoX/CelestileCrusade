@@ -35,7 +35,7 @@ public class KeyHolder : MonoBehaviour
         Instance.OnKeyDeliver += Lander_OnKeyDeliver;
     }
 
-    private void Lander_OnKeyDeliver(object sender, KeyDeliverEventArgs e)
+    private void Lander_OnKeyDeliver(object sender, OnKeyDeliverEventArgs e)
     {
         RemoveKey(e.DeliveredKeyType);
 

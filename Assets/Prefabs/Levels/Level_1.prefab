@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e52bce8d4da9449f757623ed6ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
-  levelNumber: 1
+  levelNumber: 99
   landerStartPositionTransform: {fileID: 8888277193072619499}
   cameraStartTargetTransform: {fileID: 1382785582288456747}
   zoomedOutOrthographicSize: 25
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 454145550415634456}
   - component: {fileID: 6170579465389559112}
   m_Layer: 0
-  m_Name: Layer-0
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

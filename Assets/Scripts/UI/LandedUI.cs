@@ -32,7 +32,7 @@ public class LandedUI : MonoBehaviour
     {
         if (e.landingType == Lander.LandingType.Success)
         {
-            titleTextMesh.text = "SUCCESSFUL LANDING!";
+            titleTextMesh.text = "<wave amplitude=5>SUCCESSFUL LANDING!</wave>";
             nextButtonTextMesh.text = "CONTINUE";
             nextButtonClickAction = GameManager.Instance.GoToNextLevel;
 
@@ -40,7 +40,7 @@ public class LandedUI : MonoBehaviour
         }
         else
         {
-            titleTextMesh.text = "<color=#ff0000>CRASH!</color>";
+            titleTextMesh.text = "<color=#ff0000><shake minxamplitude=2 minyamplitude=2 maxxamplitude=2 maxyamplitude=2>CRASH!</shake></color>";
             nextButtonTextMesh.text = "RESTART";
             nextButtonClickAction = GameManager.Instance.RetryLevel;
 

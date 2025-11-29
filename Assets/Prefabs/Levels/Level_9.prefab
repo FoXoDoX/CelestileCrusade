@@ -135,6 +135,7 @@ MonoBehaviour:
   levelNumber: 9
   landerStartPositionTransform: {fileID: 8888277193072619499}
   cameraStartTargetTransform: {fileID: 5461951159502678277}
+  normalOrthographicSize: 12
   zoomedOutOrthographicSize: 85
   starThresholds: 88130000c8190000581b0000
 --- !u!1 &5499129489696913982

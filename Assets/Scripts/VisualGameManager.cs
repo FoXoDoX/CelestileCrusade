@@ -37,7 +37,8 @@ public class VisualGameManager : MonoBehaviour
         }
         else
         {
-            Transform confettiVfxTransform = Instantiate(confettiVfxPrefab, Lander.Instance.transform.position, Quaternion.identity);
+            Transform confettiVfxTransform = 
+                Instantiate(confettiVfxPrefab, Lander.Instance.transform.position, Quaternion.identity, Lander.Instance.transform);
         }
     }
 

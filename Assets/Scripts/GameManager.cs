@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private float time;
     private bool isTimerActive;
 
+    GameLevel gameLevel;
+
     private void Awake()
     {
         Instance = this;
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour
         Lander.Instance.OnStateChanged += Lander_OnStateChanged;
 
         GameInput.Instance.OnMenuButtonPressed += GameInput_OnMenuButtonPressed;
+
+        gameLevel = GetGameLevel();
 
         LoadCurrentLevel();
     }
@@ -52,7 +56,7 @@ public class GameManager : MonoBehaviour
         if (e.state == Lander.State.Normal)
         {
             cinemachineCamera.Target.TrackingTarget = Lander.Instance.transform;
-            CinemachineCameraZoom2D.Instance.SetNormalOrthographicSize();
+            CinemachineCameraZoom2D.Instance.SetNormalOrthographicSize(gameLevel.GetNormalOrthographicSize());
         }
     }
 
@@ -70,7 +74,6 @@ public class GameManager : MonoBehaviour
 
     private void LoadCurrentLevel()
     {
-        GameLevel gameLevel = GetGameLevel();
         GameLevel spawnedGameLevel = Instantiate(gameLevel, Vector3.zero, Quaternion.identity);
         Lander.Instance.transform.position = spawnedGameLevel.GetLanderStartPosition();
         cinemachineCamera.Target.TrackingTarget = spawnedGameLevel.GetCameraStartTargetTransform();
@@ -120,6 +123,8 @@ public class GameManager : MonoBehaviour
     private void CrateOnRope_OnCrateDrop(object sender, System.EventArgs e)
     {
         AddScore(SCORE_PER_CRATE);
+
+        CinemachineCameraZoom2D.Instance.SetNormalOrthographicSize(gameLevel.GetNormalOrthographicSize());
     }
 
     public void AddScore(int addScoreAmount)
@@ -130,6 +135,8 @@ public class GameManager : MonoBehaviour
 
     public void RopeWithCrateSpawned()
     {
+        CinemachineCameraZoom2D.Instance.SetNormalOrthographicSize(gameLevel.GetNormalOrthographicSize() + 6f);
+
         CrateOnRope.Instance.OnCoinPickup += CrateOnRope_OnCoinPickup;
         CrateOnRope.Instance.OnCrateDrop += CrateOnRope_OnCrateDrop;
     }

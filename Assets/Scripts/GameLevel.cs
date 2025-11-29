@@ -5,6 +5,7 @@ public class GameLevel : MonoBehaviour
     [SerializeField] private int levelNumber;
     [SerializeField] private Transform landerStartPositionTransform;
     [SerializeField] private Transform cameraStartTargetTransform;
+    [SerializeField] private float normalOrthographicSize;
     [SerializeField] private float zoomedOutOrthographicSize;
     [SerializeField] private int[] starThresholds = new int[3];
 
@@ -21,6 +22,11 @@ public class GameLevel : MonoBehaviour
     public Transform GetCameraStartTargetTransform()
     {
         return cameraStartTargetTransform;
+    }
+
+    public float GetNormalOrthographicSize()
+    {
+        return normalOrthographicSize; 
     }
 
     public float GetZoomedOutOrthographicSize()

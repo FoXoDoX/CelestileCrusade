@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class CinemachineCameraZoom2D : MonoBehaviour
 {
-    private const float NORMAL_ORTHOGRAPHIC_SIZE = 12f;
-
     public static CinemachineCameraZoom2D Instance { get; private set; }
 
     [SerializeField] private CinemachineCamera cinemachineCamera;
@@ -32,18 +30,6 @@ public class CinemachineCameraZoom2D : MonoBehaviour
         float zoomSpeed = 2f;
         cinemachineCamera.Lens.OrthographicSize = 
             Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, targetOrthographicSize, Time.deltaTime * zoomSpeed);
-
-        if (currentLanderState == Lander.State.Normal && GetComponent<Level10CameraZoomOut>() == null)
-        {
-            if (CrateOnRope.Instance != null)
-            {
-                SetTargetOrthographicSize(18f);
-            }
-            else
-            {
-                SetNormalOrthographicSize();
-            }
-        }
     }
 
     public void SetTargetOrthographicSize(float targetOrthographicSize)
@@ -51,8 +37,8 @@ public class CinemachineCameraZoom2D : MonoBehaviour
         this.targetOrthographicSize = targetOrthographicSize;
     }
 
-    public void SetNormalOrthographicSize()
+    public void SetNormalOrthographicSize(float normalOrthographicSize)
     {
-        SetTargetOrthographicSize(NORMAL_ORTHOGRAPHIC_SIZE);
+        SetTargetOrthographicSize(normalOrthographicSize);
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class Turret : MonoBehaviour
 {
@@ -14,55 +15,47 @@ public class Turret : MonoBehaviour
     [SerializeField] private float triggerRadius = 25f;
     [SerializeField] private Ease rotationEase = Ease.OutBack;
 
+    public static event EventHandler OnTurretShoot;
+
     private Transform playerTarget;
     private bool isActive = false;
     private float fireTimer;
     private Tween rotationTween;
     private CircleCollider2D triggerCollider;
+    private float initialRotation;
     private Vector2 initialForward; // Фиксированное начальное направление
-    private float initialRotation; // Начальный угол поворота
-
-    // Добавляем свойство для получения текущего направления
-    private Vector2 CurrentForward => rotatingPivot.up;
 
     private void Start()
     {
-        // Настройка триггерного коллайдера
         triggerCollider = gameObject.AddComponent<CircleCollider2D>();
         triggerCollider.isTrigger = true;
         triggerCollider.radius = triggerRadius;
 
-        // Сохраняем начальное направление и угол поворота турели
-        initialForward = rotatingPivot.up;
         initialRotation = rotatingPivot.eulerAngles.z;
+        initialForward = rotatingPivot.up; // Сохраняем начальное направление
 
-        // Получаем игрока через синглтон
         playerTarget = Lander.Instance?.transform;
 
         if (playerTarget == null)
         {
             Debug.LogError("Player (Lander) not found!");
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<Lander>(out _) && IsPlayerInFiringArc(other.transform))
+        if (other.TryGetComponent<Lander>(out _))
         {
-            ActivateTurret();
+            CheckPlayerPosition();
         }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        // Постоянно проверяем, находится ли игрок в зоне обстрела
-        if (isActive && other.TryGetComponent<Lander>(out _) && !IsPlayerInFiringArc(other.transform))
+        if (other.TryGetComponent<Lander>(out _))
         {
-            DeactivateTurret();
-        }
-        else if (!isActive && other.TryGetComponent<Lander>(out _) && IsPlayerInFiringArc(other.transform))
-        {
-            ActivateTurret();
+            CheckPlayerPosition();
         }
     }
 
@@ -74,48 +67,41 @@ public class Turret : MonoBehaviour
         }
     }
 
+    private void CheckPlayerPosition()
+    {
+        if (playerTarget == null) return;
+
+        bool inFiringArc = IsPlayerInFiringArc(playerTarget);
+
+        if (inFiringArc && !isActive)
+        {
+            ActivateTurret();
+        }
+        else if (!inFiringArc && isActive)
+        {
+            DeactivateTurret();
+        }
+    }
+
     private bool IsPlayerInFiringArc(Transform playerTransform)
     {
         if (playerTransform == null) return false;
 
-        // Получаем направление к игроку относительно турели
-        Vector2 directionToPlayer = playerTransform.position - transform.position;
+        Vector2 directionToPlayer = (Vector2)(playerTransform.position - transform.position);
 
-        // Используем ТЕКУЩЕЕ направление турели для определения зоны обстрела
-        Vector2 turretForward = CurrentForward;
+        // Используем ФИКСИРОВАННОЕ начальное направление, а не текущее
+        Vector2 turretForward = initialForward;
 
-        // Вычисляем угол между направлением турели и направлением к игроку
         float angle = Vector2.SignedAngle(turretForward, directionToPlayer);
+        bool inArc = Mathf.Abs(angle) <= 90f;
 
-        // Игрок находится в зоне обстрела, если угол между -90 и 90 градусами
-        return Mathf.Abs(angle) <= 90f;
-    }
-
-    private bool IsAngleInFiringArc(float targetAngle)
-    {
-        // Преобразуем угол в диапазон -180 до 180
-        targetAngle = NormalizeAngle(targetAngle);
-
-        // Получаем текущий угол турели
-        float currentTurretAngle = NormalizeAngle(rotatingPivot.eulerAngles.z);
-
-        // Вычисляем разницу между целевым углом и текущим углом турели
-        float angleDifference = NormalizeAngle(targetAngle - currentTurretAngle);
-
-        // Проверяем, находится ли угол в пределах -90 до 90 градусов ОТНОСИТЕЛЬНО ТЕКУЩЕГО НАПРАВЛЕНИЯ
-        return Mathf.Abs(angleDifference) <= 90f;
-    }
-
-    private float NormalizeAngle(float angle)
-    {
-        // Приводим угол к диапазону -180 до 180
-        while (angle > 180f) angle -= 360f;
-        while (angle < -180f) angle += 360f;
-        return angle;
+        return inArc;
     }
 
     private void ActivateTurret()
     {
+        if (isActive) return;
+
         isActive = true;
         fireTimer = fireRate;
         StartContinuousAiming();
@@ -123,10 +109,10 @@ public class Turret : MonoBehaviour
 
     private void DeactivateTurret()
     {
+        if (!isActive) return;
+
         isActive = false;
         rotationTween?.Kill();
-
-        // Возвращаем турель в исходное положение
         ReturnToInitialPosition();
     }
 
@@ -141,7 +127,13 @@ public class Turret : MonoBehaviour
 
     private void StartContinuousAiming()
     {
-        if (!isActive || playerTarget == null || !IsPlayerInFiringArc(playerTarget))
+        if (!isActive || playerTarget == null)
+        {
+            return;
+        }
+
+        // Проверяем, находится ли игрок в зоне обстрела перед началом прицеливания
+        if (!IsPlayerInFiringArc(playerTarget))
         {
             DeactivateTurret();
             return;
@@ -150,7 +142,7 @@ public class Turret : MonoBehaviour
         Vector2 direction = playerTarget.position - rotatingPivot.position;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
 
-        // Ограничиваем угол зоной обстрела ОТНОСИТЕЛЬНО ТЕКУЩЕГО ПОЛОЖЕНИЯ
+        // Ограничиваем угол поворота фиксированной зоной обстрела
         targetAngle = ClampAngleToFiringArc(targetAngle);
 
         rotationTween = rotatingPivot.DORotate(
@@ -168,26 +160,40 @@ public class Turret : MonoBehaviour
 
     private float ClampAngleToFiringArc(float targetAngle)
     {
-        // Нормализуем угол
+        // Нормализуем углы
         targetAngle = NormalizeAngle(targetAngle);
+        float currentInitialRotation = NormalizeAngle(initialRotation);
 
-        // Получаем текущий угол турели
-        float currentAngle = NormalizeAngle(rotatingPivot.eulerAngles.z);
-
-        // Вычисляем разницу между целевым углом и текущим углом
-        float angleDifference = NormalizeAngle(targetAngle - currentAngle);
+        // Вычисляем разницу между целевым углом и начальным направлением
+        float angleDifference = NormalizeAngle(targetAngle - currentInitialRotation);
 
         // Ограничиваем разницу углов зоной обстрела (-90 до 90 градусов)
         angleDifference = Mathf.Clamp(angleDifference, -90f, 90f);
 
-        // Возвращаем ограниченный угол относительно текущего положения
-        return NormalizeAngle(currentAngle + angleDifference);
+        // Возвращаем ограниченный угол относительно начального положения
+        return NormalizeAngle(currentInitialRotation + angleDifference);
+    }
+
+    private float NormalizeAngle(float angle)
+    {
+        // Приводим угол к диапазону -180 до 180
+        while (angle > 180f) angle -= 360f;
+        while (angle < -180f) angle += 360f;
+        return angle;
     }
 
     private void Update()
     {
-        if (!isActive || playerTarget == null || !IsPlayerInFiringArc(playerTarget)) return;
+        if (!isActive) return;
 
+        // Постоянно проверяем, находится ли игрок в зоне обстрела
+        if (playerTarget == null || !IsPlayerInFiringArc(playerTarget))
+        {
+            DeactivateTurret();
+            return;
+        }
+
+        // Стрельба
         fireTimer -= Time.deltaTime;
         if (fireTimer <= 0)
         {
@@ -200,10 +206,6 @@ public class Turret : MonoBehaviour
     {
         if (projectilePrefab == null || firePoint == null) return;
 
-        // Проверяем, что турель смотрит в допустимом направлении
-        float currentAngle = NormalizeAngle(rotatingPivot.eulerAngles.z);
-        if (!IsAngleInFiringArc(currentAngle)) return;
-
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         TurretProjectile projectileScript = projectile.GetComponent<TurretProjectile>();
 
@@ -212,6 +214,8 @@ public class Turret : MonoBehaviour
             Vector2 direction = firePoint.up;
             projectileScript.LaunchTowards(direction);
         }
+
+        OnTurretShoot?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnDrawGizmosSelected()
@@ -219,15 +223,13 @@ public class Turret : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, triggerRadius);
 
-        // Визуализация направления пушки
         if (firePoint != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.up * 2f);
         }
 
-        // Визуализация зоны обстрела - используем ТЕКУЩЕЕ направление
-        Vector2 forward = Application.isPlaying ? CurrentForward : (Vector2)rotatingPivot.up;
+        Vector2 forward = Application.isPlaying ? initialForward : (Vector2)rotatingPivot.up;
 
         Gizmos.color = Color.cyan;
         Vector2 leftBound = Quaternion.Euler(0, 0, 90) * forward;
@@ -237,7 +239,6 @@ public class Turret : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)(leftBound * triggerRadius));
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)(rightBound * triggerRadius));
 
-        // Рисуем дугу для визуализации 180 градусов
         DrawArc(transform.position, forward, triggerRadius, 180f, 20);
     }
 

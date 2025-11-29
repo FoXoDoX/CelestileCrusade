@@ -24,12 +24,10 @@ public class TurretProjectile : MonoBehaviour
 
         movementTween = transform.DOMove(targetPosition, moveDuration)
             .SetEase(movementEase)
-            .OnUpdate(() => {
-            })
             .OnComplete(() => {
                 DestroyProjectile();
             })
-            .SetLink(gameObject);
+            .SetLink(gameObject); // Автоматическая отмена при уничтожении объекта
 
         lifeTimer = lifetime;
     }
@@ -55,26 +53,15 @@ public class TurretProjectile : MonoBehaviour
         if (isDestroying) return;
         isDestroying = true;
 
+        // Останавливаем движение
         movementTween?.Kill();
 
-        if (gameObject != null)
-        {
-            scaleTween = transform.DOScale(Vector3.zero, 0.2f)
-                .OnComplete(() => {
-                    if (gameObject != null)
-                        Destroy(gameObject);
-                })
-                .SetLink(gameObject);
-        }
-        else
-        {
-            DestroyImmediate(gameObject);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        movementTween?.Kill();
-        scaleTween?.Kill();
+        // Анимация исчезновения
+        scaleTween = transform.DOScale(Vector3.zero, 0.2f)
+            .OnComplete(() => {
+                if (gameObject != null)
+                    Destroy(gameObject);
+            })
+            .SetLink(gameObject);
     }
 }

@@ -80,7 +80,7 @@ public class LandedUI : MonoBehaviour
                     bool isStarEarned = i < earnedStars;
 
                     earnedImage.enabled = isStarEarned;
-                    unearnedImage.enabled = !isStarEarned;
+                    unearnedImage.enabled = true;
                 }
             }
         }
@@ -116,6 +116,12 @@ public class LandedUI : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
+
+        LandedUIAnimation anim = GetComponent<LandedUIAnimation>();
+    if (anim != null)
+    {
+        anim.PlayEnterAnimation();
+    }
 
         nextButton.Select();
     }

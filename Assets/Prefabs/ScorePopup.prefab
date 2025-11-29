@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScorePopup
   textMeshPro: {fileID: 5967072832663841599}
+  background: {fileID: 250756988473450603}
 --- !u!114 &9037390257473489747
 MonoBehaviour:
   m_ObjectHideFlags: 0

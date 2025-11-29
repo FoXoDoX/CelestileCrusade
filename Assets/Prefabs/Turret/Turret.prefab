@@ -78,7 +78,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -539579915749326718, guid: 0ac5b40fa24edf647a6a40e74959ff4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -179,7 +179,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4787635183281232889}
-  - component: {fileID: 8080416190338241058}
   m_Layer: 0
   m_Name: GunPivot
   m_TagString: Untagged
@@ -203,25 +202,6 @@ Transform:
   - {fileID: 5328999360565930463}
   m_Father: {fileID: 7214086376291871657}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8080416190338241058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872030142961114748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1c232ea9546e8844af642ed95d9c54f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turret
-  rotatingPivot: {fileID: 4787635183281232889}
-  firePoint: {fileID: 6658678693135329401}
-  projectilePrefab: {fileID: 3050231105287071545, guid: 998d48c9a249ba7428e6825508f27c7d, type: 3}
-  rotationSpeed: 0.2
-  fireRate: 2
-  triggerRadius: 50
-  rotationEase: 27
 --- !u!1 &3259491346270581793
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +301,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7214086376291871657}
+  - component: {fileID: 4996114427658523165}
+  - component: {fileID: 3209035635283121458}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -345,6 +327,46 @@ Transform:
   - {fileID: 4787635183281232889}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4996114427658523165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602587036209580161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c232ea9546e8844af642ed95d9c54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turret
+  rotatingPivot: {fileID: 4787635183281232889}
+  firePoint: {fileID: 6658678693135329401}
+  projectilePrefab: {fileID: 3050231105287071545, guid: 998d48c9a249ba7428e6825508f27c7d, type: 3}
+  rotationSpeed: 0.4
+  fireRate: 2
+  triggerRadius: 50
+  rotationEase: 27
+--- !u!114 &3209035635283121458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602587036209580161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8805535b4421a384088e1dcc39af67c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurretVisuals
+  gunTransform: {fileID: 5328999360565930463}
+  turretShootSmokeParticleSystem: {fileID: 585474654255461190, guid: af518cd4ff0ec0c49830036aed0127f4, type: 3}
+  firePoint: {fileID: 6658678693135329401}
+  gunPivot: {fileID: 4787635183281232889}
+  recoilDuration: 0.1
+  returnDuration: 1
+  recoilDistance: -3
+  shakeIntensity: 0.5
+  shakeVibrato: 15
 --- !u!1 &7301962283845152597
 GameObject:
   m_ObjectHideFlags: 0

@@ -2127,6 +2127,7 @@ MonoBehaviour:
   confettiVfxPrefab: {fileID: 7393509719450474256, guid: 13d068905149e4c4cb5ab4aefd8bb386, type: 3}
   cinemachineImpulseSourceForPickup: {fileID: 929562618}
   cinemachineImpulseSourceForLanderCrash: {fileID: 406228780}
+  globalVolume: {fileID: 176613413}
 --- !u!4 &569618453
 Transform:
   m_ObjectHideFlags: 0

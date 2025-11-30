@@ -1,5 +1,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class VisualGameManager : MonoBehaviour
 {
@@ -10,11 +12,15 @@ public class VisualGameManager : MonoBehaviour
     [SerializeField] private Transform confettiVfxPrefab;
     [SerializeField] private CinemachineImpulseSource cinemachineImpulseSourceForPickup;
     [SerializeField] private CinemachineImpulseSource cinemachineImpulseSourceForLanderCrash;
+    [SerializeField] private Volume globalVolume;
 
     private Vector3 spawnPositionForPopup;
     private Quaternion rotationForPopup = Quaternion.Euler(0, 0, -20);
     private float pickupImpulsePower = 0.5f;
     private float landerCrashImpulsePower = 50f;
+
+    private ChromaticAberration chromaticAberration;
+    private bool isGameOver = false;
 
     private void Awake()
     {
@@ -26,7 +32,43 @@ public class VisualGameManager : MonoBehaviour
         Lander.Instance.OnCoinPickup += Lander_OnCoinPickup;
         Lander.Instance.OnFuelPickup += Lander_OnFuelPickup;
         Lander.Instance.OnLanded += Lander_OnLanded;
+        Lander.Instance.OnStateChanged += Lander_OnStateChanged;
         KeyHolder.OnKeyPickup += KeyHolder_OnKeyPickup;
+
+        globalVolume.profile.TryGet(out chromaticAberration);
+    }
+
+    private void Update()
+    {
+        UpdateChromaticAberration();
+    }
+
+    private void Lander_OnStateChanged(object sender, Lander.OnStateChangedEventArgs e)
+    {
+        if (e.state == Lander.State.GameOver && chromaticAberration != null)
+        {
+            isGameOver = true;
+        }
+    }
+
+    private void UpdateChromaticAberration()
+    {
+        if (isGameOver) 
+        {
+            chromaticAberration.intensity.value = 0f;
+            return; 
+        }
+
+        bool isLowFuel = Lander.Instance.GetFuelAmountNormalized() < 0.25f;
+
+        if (isLowFuel)
+        {
+            chromaticAberration.intensity.value = Mathf.PingPong(Time.time, 0.8f);
+        }
+        else if (!isLowFuel)
+        {
+            chromaticAberration.intensity.value = 0f;
+        }
     }
 
     private void Lander_OnLanded(object sender, Lander.OnLandedEventArgs e)
@@ -59,8 +101,6 @@ public class VisualGameManager : MonoBehaviour
         spawnPositionForPopup = Lander.Instance.transform.position + new Vector3(1.5f, 2f, 0f);
         Instantiate(scorePopupPrefab, spawnPositionForPopup, rotationForPopup)
             .Setup("+" + GameManager.SCORE_PER_CRATE, Color.gold, Color.black, true);
-        Transform pickupVfxTransform = Instantiate(pickupVfxPrefab, CrateOnRope.Instance.transform.position, Quaternion.identity);
-        Destroy(pickupVfxTransform.gameObject, 1.5f);
     }
 
     private void CrateOnRope_OnFuelPickup(object sender, System.EventArgs e)

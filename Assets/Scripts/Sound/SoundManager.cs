@@ -11,6 +11,8 @@ public class SoundManager : MonoBehaviour
 
     public event EventHandler OnSoundVolumeChanged;
 
+    [SerializeField] private AudioSource soundEffectsSource;
+
     [SerializeField] private AudioClip fuelPickupAudioClip;
     [SerializeField] private AudioClip coinPickupAudioClip;
     [SerializeField] private AudioClip crashAudioClip;
@@ -33,32 +35,32 @@ public class SoundManager : MonoBehaviour
         switch (e.landingType)
         {
             case Lander.LandingType.Success:
-                AudioSource.PlayClipAtPoint(landingSuccessAudioClip, Camera.main.transform.position, GetSoundVolumeNormalized());
+                soundEffectsSource.PlayOneShot(landingSuccessAudioClip, GetSoundVolumeNormalized());
                 break;
             default:
-                AudioSource.PlayClipAtPoint(crashAudioClip, Camera.main.transform.position, GetSoundVolumeNormalized());
+                soundEffectsSource.PlayOneShot(crashAudioClip, GetSoundVolumeNormalized());
                 break;
         }
     }
 
     private void Lander_OnCoinPickup(object sender, System.EventArgs e)
     {
-        AudioSource.PlayClipAtPoint(coinPickupAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+        soundEffectsSource.PlayOneShot(coinPickupAudioClip, GetSoundVolumeNormalized());
     }
 
     private void Lander_OnFuelPickup(object sender, System.EventArgs e)
     {
-        AudioSource.PlayClipAtPoint(fuelPickupAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+        soundEffectsSource.PlayOneShot(fuelPickupAudioClip, GetSoundVolumeNormalized());
     }
 
     private void CrateOnRope_OnFuelPickup(object sender, EventArgs e)
     {
-        AudioSource.PlayClipAtPoint(fuelPickupAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+        soundEffectsSource.PlayOneShot(fuelPickupAudioClip, GetSoundVolumeNormalized());
     }
 
     private void CrateOnRope_OnCoinPickup(object sender, EventArgs e)
     {
-        AudioSource.PlayClipAtPoint(coinPickupAudioClip, Lander.Instance.transform.position, GetSoundVolumeNormalized());
+        soundEffectsSource.PlayOneShot(coinPickupAudioClip, GetSoundVolumeNormalized());
     }
 
     public void RopeWithCrateSpawned()
@@ -70,7 +72,7 @@ public class SoundManager : MonoBehaviour
     public void ChangeSoundVolume()
     {
         soundVolume = (soundVolume + 1) % SOUND_VOLUME_MAX;
-        AudioSource.PlayClipAtPoint(coinPickupAudioClip, Camera.main.transform.position, GetSoundVolumeNormalized());
+        soundEffectsSource.PlayOneShot(coinPickupAudioClip, GetSoundVolumeNormalized());
         OnSoundVolumeChanged?.Invoke(this, EventArgs.Empty);
     }
 

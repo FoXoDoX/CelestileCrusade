@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4059366961299164775}
   - component: {fileID: -7640745756527960139}
+  - component: {fileID: 2910177630246473576}
   m_Layer: 0
   m_Name: Test
   m_TagString: Untagged
@@ -69,12 +70,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e52bce8d4da9449f757623ed6ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
-  levelNumber: 1
+  levelNumber: 99
   landerStartPositionTransform: {fileID: 8888277193072619499}
   cameraStartTargetTransform: {fileID: 1382785582288456747}
   normalOrthographicSize: 12
   zoomedOutOrthographicSize: 30
   starThresholds: c80000009001000058020000
+--- !u!114 &2910177630246473576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069332513892790257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a97071e6e62be46954c00b54190ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSoundInitializer
 --- !u!1 &5499129489696913982
 GameObject:
   m_ObjectHideFlags: 0

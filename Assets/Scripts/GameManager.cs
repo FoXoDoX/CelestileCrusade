@@ -139,6 +139,12 @@ public class GameManager : MonoBehaviour
 
         CrateOnRope.Instance.OnCoinPickup += CrateOnRope_OnCoinPickup;
         CrateOnRope.Instance.OnCrateDrop += CrateOnRope_OnCrateDrop;
+        CrateOnRope.Instance.OnCrateDestroyed += CrateOnRope_OnCrateDestroyed;
+    }
+
+    private void CrateOnRope_OnCrateDestroyed(object sender, EventArgs e)
+    {
+        CinemachineCameraZoom2D.Instance.SetNormalOrthographicSize(gameLevel.GetNormalOrthographicSize());
     }
 
     public int GetScore()

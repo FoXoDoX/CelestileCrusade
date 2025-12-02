@@ -16,11 +16,14 @@ public class CrateOnRope : MonoBehaviour
     public event EventHandler OnCoinPickup;
     public event EventHandler OnFuelPickup;
     public event EventHandler OnCrateDrop;
+    public event EventHandler OnCrateCracked;
+    public event EventHandler OnCrateDestroyed;
 
     private float timerForCrateDrop = 0f;
     private float delayForCrateDrop = 3f;
     private int CrateHealth = 3;
     private bool isInCrateLandingAreaCollider = false;
+    private bool isSoundPlaying = false;
 
     private CrateLandingArea currentLandingArea;
 
@@ -62,10 +65,13 @@ public class CrateOnRope : MonoBehaviour
 
             currentLandingArea = crateLandingArea;
             isInCrateLandingAreaCollider = true;
+
             if (crateDropCoroutine != null)
             {
                 StopCoroutine(crateDropCoroutine);
+                StopProgressBarSound();
             }
+
             crateDropCoroutine = StartCoroutine(DropCrateAfterDelay());
             return;
         }
@@ -80,14 +86,18 @@ public class CrateOnRope : MonoBehaviour
                 Debug.Log("Drop canceled");
                 isInCrateLandingAreaCollider = false;
                 CrateLandingPad landingPad = currentLandingArea?.GetLandingPad();
+
                 if (landingPad != null)
                 {
                     landingPad.ResetDeliveryProgress();
                 }
+
                 currentLandingArea = null;
                 timerForCrateDrop = 0f;
+
                 if (crateDropCoroutine != null)
                 {
+                    StopProgressBarSound();
                     StopCoroutine(crateDropCoroutine);
                     crateDropCoroutine = null;
                 }
@@ -100,7 +110,7 @@ public class CrateOnRope : MonoBehaviour
         if (!collision2D.collider.gameObject.TryGetComponent(out CrateLandingPad crateLandingPad))
         {
             CrateHealth--;
-            Debug.Log(CrateHealth);
+            OnCrateCracked?.Invoke(this, EventArgs.Empty);
         }
         if (CrateHealth == 2)
         {
@@ -112,6 +122,7 @@ public class CrateOnRope : MonoBehaviour
         }
         if (CrateHealth <= 0)
         {
+            OnCrateDestroyed?.Invoke(this, EventArgs.Empty);
             OnCrateCollider?.Invoke(collision2D.collider);
         }
     }
@@ -124,6 +135,8 @@ public class CrateOnRope : MonoBehaviour
         CrateLandingPad landingPad = landingArea?.GetLandingPad();
 
         if (landingPad == null) yield break;
+
+        StartProgressBarSound();
 
         while (timerForCrateDrop < delayForCrateDrop)
         {
@@ -148,6 +161,24 @@ public class CrateOnRope : MonoBehaviour
 
         crateDropCoroutine = null;
         currentLandingArea = null;
+    }
+
+    private void StartProgressBarSound()
+    {
+        if (!isSoundPlaying && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayProgressBarSound();
+            isSoundPlaying = true;
+        }
+    }
+
+    private void StopProgressBarSound()
+    {
+        if (isSoundPlaying && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopProgressBarSound();
+            isSoundPlaying = false;
+        }
     }
 
     public float GetTimerForCrateDropNormalized()

@@ -6,6 +6,7 @@ public class CratePickup : MonoBehaviour
     private float pickupProgress = 0f;
     private bool isPlayerInside = false;
     private Coroutine pickupCoroutine;
+    private bool isSoundPlaying = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,6 +25,9 @@ public class CratePickup : MonoBehaviour
         {
             isPlayerInside = false;
             pickupProgress = 0f;
+
+            StopProgressBarSound();
+
             if (pickupCoroutine != null)
             {
                 StopCoroutine(pickupCoroutine);
@@ -37,12 +41,16 @@ public class CratePickup : MonoBehaviour
         float pickupTime = 3f;
         float timer = 0f;
 
+        StartProgressBarSound();
+
         while (timer < pickupTime && isPlayerInside && !Lander.Instance.HasCrate)
         {
             timer += Time.deltaTime;
             pickupProgress = timer / pickupTime;
             yield return null;
         }
+
+        StopProgressBarSound();
 
         if (pickupProgress >= 1f && !Lander.Instance.HasCrate)
         {
@@ -55,8 +63,27 @@ public class CratePickup : MonoBehaviour
         }
     }
 
+    private void StartProgressBarSound()
+    {
+        if (!isSoundPlaying && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayProgressBarSound();
+            isSoundPlaying = true;
+        }
+    }
+
+    private void StopProgressBarSound()
+    {
+        if (isSoundPlaying && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopProgressBarSound();
+            isSoundPlaying = false;
+        }
+    }
+
     public void DestroySelf()
     {
+        StopProgressBarSound();
         Destroy(gameObject);
     }
 

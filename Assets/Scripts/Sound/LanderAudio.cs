@@ -71,4 +71,9 @@ public class LanderAudio : MonoBehaviour
             thrusterAudioSource.volume = 0f;
         }
     }
+
+    private void OnDestroy()
+    {
+        SoundManager.Instance.OnSoundVolumeChanged -= SoundManager_OnSoundVolumeChanged;
+    }
 }

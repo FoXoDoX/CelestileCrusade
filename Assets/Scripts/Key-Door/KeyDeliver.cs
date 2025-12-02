@@ -12,6 +12,7 @@ public class KeyDeliver : MonoBehaviour
 
     private float deliverProgress = 0f;
     private bool isPlayerInside = false;
+    private bool isSoundPlaying = false;
     private Coroutine deliverCoroutine;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -35,6 +36,9 @@ public class KeyDeliver : MonoBehaviour
         {
             isPlayerInside = false;
             deliverProgress = 0f;
+
+            StopProgressBarSound();
+
             if (deliverCoroutine != null)
             {
                 StopCoroutine(deliverCoroutine);
@@ -48,12 +52,16 @@ public class KeyDeliver : MonoBehaviour
         float deliverTime = 3f;
         float timer = 0f;
 
+        StartProgressBarSound();
+
         while (timer < deliverTime && isPlayerInside)
         {
             timer += Time.deltaTime;
             deliverProgress = timer / deliverTime;
             yield return null;
         }
+
+        StopProgressBarSound();
 
         if (deliverProgress >= 1f)
         {
@@ -66,8 +74,27 @@ public class KeyDeliver : MonoBehaviour
         }
     }
 
+    private void StartProgressBarSound()
+    {
+        if (!isSoundPlaying && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayProgressBarSound();
+            isSoundPlaying = true;
+        }
+    }
+
+    private void StopProgressBarSound()
+    {
+        if (isSoundPlaying && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopProgressBarSound();
+            isSoundPlaying = false;
+        }
+    }
+
     public void DestroySelf()
     {
+        StopProgressBarSound();
         Destroy(gameObject);
     }
 

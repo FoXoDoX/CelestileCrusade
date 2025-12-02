@@ -1,10 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
+    public static event EventHandler OnSettingsButtonClick;
+
     [SerializeField] private Button playButton;
     [SerializeField] private Button levelsButton;
+    [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
 
     private void Awake()
@@ -13,7 +17,6 @@ public class MainMenuUI : MonoBehaviour
 
         if (!SaveSystem.SaveFileExists)
         {
-            Debug.Log("No save file exists, creating initial save");
             SaveSystem.Save();
         }
 
@@ -29,6 +32,11 @@ public class MainMenuUI : MonoBehaviour
             SceneLoader.LoadScene(SceneLoader.Scene.LevelsMenuScene);
         });
 
+        settingsButton.onClick.AddListener(() =>
+        {
+            OnSettingsButtonClick?.Invoke(this, EventArgs.Empty);
+        });
+
         quitButton.onClick.AddListener(() =>
         {
             Application.Quit();
@@ -38,5 +46,17 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         playButton.Select();
+
+        SettingsUI.OnBackButtonClick += SettingsUI_OnBackButtonClick;
+    }
+
+    private void SettingsUI_OnBackButtonClick(object sender, EventArgs e)
+    {
+        playButton.Select();
+    }
+
+    private void OnDestroy()
+    {
+        SettingsUI.OnBackButtonClick -= SettingsUI_OnBackButtonClick;
     }
 }

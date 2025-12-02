@@ -18,9 +18,12 @@ public class KeyHolder : MonoBehaviour
     private List<Key.KeyType> keyList;
     private Dictionary<Key.KeyType, RectTransform> _keyDestinations;
     private Dictionary<Key.KeyType, Image> _keyUIElements;
+    private Camera _mainCamera;
 
     private void Awake()
     {
+        DOTween.Init();
+
         keyList = new List<Key.KeyType>();
 
         _keyDestinations = new Dictionary<Key.KeyType, RectTransform>
@@ -31,17 +34,32 @@ public class KeyHolder : MonoBehaviour
         };
 
         _keyUIElements = new Dictionary<Key.KeyType, Image>();
+
+        // Кэшируем камеру
+        _mainCamera = Camera.main;
     }
 
     private void Start()
     {
-        Instance.OnKeyDeliver += Lander_OnKeyDeliver;
+        // Используем Instance с проверкой на null
+        if (Lander.Instance != null)
+        {
+            Lander.Instance.OnKeyDeliver += Lander_OnKeyDeliver;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Отписываемся от событий при уничтожении
+        if (Lander.Instance != null)
+        {
+            Lander.Instance.OnKeyDeliver -= Lander_OnKeyDeliver;
+        }
     }
 
     private void Lander_OnKeyDeliver(object sender, OnKeyDeliverEventArgs e)
     {
         RemoveKey(e.DeliveredKeyType);
-
         RemoveKeyUI(e.DeliveredKeyType);
     }
 
@@ -67,60 +85,130 @@ public class KeyHolder : MonoBehaviour
         if (key != null)
         {
             AddKey(key.GetKeyType());
-            AnimateKeyToUI(key);
+
+            // Получаем необходимые данные ДО уничтожения ключа
+            KeyData keyData = new KeyData
+            {
+                KeyType = key.GetKeyType(),
+                Sprite = GetKeySprite(key),
+                WorldPosition = key.transform.position
+            };
+
+            // Сразу уничтожаем физический ключ
             Destroy(key.gameObject);
+
+            // Анимируем с использованием сохраненных данных
+            AnimateKeyToUI(keyData);
         }
     }
 
-    private void AnimateKeyToUI(Key worldKey)
+    private Sprite GetKeySprite(Key key)
     {
-        Key.KeyType keyType = worldKey.GetKeyType();
-        if (_keyUIElements.ContainsKey(keyType))
-        {
-            Destroy(_keyUIElements[keyType].gameObject);
-            _keyUIElements.Remove(keyType);
-        }
+        SpriteRenderer spriteRenderer = key.GetComponentInChildren<SpriteRenderer>();
+        return spriteRenderer != null ? spriteRenderer.sprite : null;
+    }
 
-        Image keyImage = Instantiate(_keyUIPrefab, _targetCanvas.transform);
-
-        SpriteRenderer spriteRenderer = worldKey.GetComponentInChildren<SpriteRenderer>();
-        if (spriteRenderer != null)
+    private void AnimateKeyToUI(KeyData keyData)
+    {
+        if (_targetCanvas == null || _mainCamera == null)
         {
-            keyImage.sprite = spriteRenderer.sprite;
-        }
-        else
-        {
+            Debug.LogError("Key animation failed: missing required components");
             return;
         }
 
+        // Удаляем старый UI элемент, если он есть
+        if (_keyUIElements.ContainsKey(keyData.KeyType))
+        {
+            Destroy(_keyUIElements[keyData.KeyType].gameObject);
+            _keyUIElements.Remove(keyData.KeyType);
+        }
+
+        // Создаем новый UI элемент
+        Image keyImage = Instantiate(_keyUIPrefab, _targetCanvas.transform);
+
+        // Устанавливаем спрайт
+        if (keyData.Sprite != null)
+        {
+            keyImage.sprite = keyData.Sprite;
+        }
+        else
+        {
+            Destroy(keyImage.gameObject);
+            return;
+        }
+
+        // Получаем RectTransform
         RectTransform keyRect = keyImage.GetComponent<RectTransform>();
-        Vector3 worldPosition = worldKey.transform.position;
-        Vector3 screenPoint = Camera.main.WorldToScreenPoint(worldPosition);
+        if (keyRect == null)
+        {
+            Destroy(keyImage.gameObject);
+            return;
+        }
+
+        // Устанавливаем начальную позицию
+        Vector3 screenPoint = _mainCamera.WorldToScreenPoint(keyData.WorldPosition);
+
+        // Сброс позиции и вращения
         keyRect.position = screenPoint;
+        keyRect.localRotation = Quaternion.identity;
+        keyRect.localScale = Vector3.one;
 
-        RectTransform targetDestination = GetDestinationForKeyType(keyType);
+        // Получаем целевую позицию
+        RectTransform targetDestination = GetDestinationForKeyType(keyData.KeyType);
+        if (targetDestination == null)
+        {
+            targetDestination = _redKeyDestination;
+        }
 
-        // Создаем эффект "скорости" - быстрое мерцание и изменение размера
+        // Создаем анимацию
         Sequence flightSequence = DOTween.Sequence();
 
         // 1. Быстрое увеличение (эффект "рывка")
-        flightSequence.Append(keyRect.DOScale(1.5f, 0.1f));
+        flightSequence.Append(keyRect.DOScale(1.5f, 0.1f).SetEase(Ease.OutBack));
 
         // 2. Возврат к нормальному размеру с одновременным перемещением
         flightSequence.Append(keyRect.DOScale(1f, 0.2f));
-        flightSequence.Join(keyRect.DOMove(targetDestination.position, 1f).SetEase(Ease.OutQuad));
+        flightSequence.Join(keyRect.DOMove(targetDestination.position, 1f)
+            .SetEase(Ease.OutQuad)
+            .OnUpdate(() => {
+                // Если UI элемент был уничтожен, прерываем анимацию
+                if (!keyImage)
+                {
+                    flightSequence.Kill();
+                }
+            })
+            .OnComplete(() => {
+                // Сохраняем UI элемент в словаре
+                if (keyImage != null)
+                {
+                    _keyUIElements[keyData.KeyType] = keyImage;
+                }
 
-        _keyUIElements[keyType] = keyImage;
+                // Фиксируем позицию UI элемента на случай изменения разрешения
+                if (keyRect != null && targetDestination != null)
+                {
+                    keyRect.position = targetDestination.position;
+                }
+            }));
 
-        // Уничтожаем физический ключ
-        Destroy(worldKey.gameObject);
+        // Запускаем анимацию
+        flightSequence.Play();
     }
 
     private void RemoveKeyUI(Key.KeyType keyType)
     {
-        if (_keyUIElements.ContainsKey(keyType))
+        if (_keyUIElements.ContainsKey(keyType) && _keyUIElements[keyType] != null)
         {
-            Destroy(_keyUIElements[keyType].gameObject);
+            // Плавно исчезаем перед удалением
+            Image keyImage = _keyUIElements[keyType];
+            keyImage.DOFade(0f, 0.3f)
+                .OnComplete(() => {
+                    if (keyImage != null && keyImage.gameObject != null)
+                    {
+                        Destroy(keyImage.gameObject);
+                    }
+                });
+
             _keyUIElements.Remove(keyType);
         }
     }
@@ -133,5 +221,13 @@ public class KeyHolder : MonoBehaviour
         }
 
         return _redKeyDestination;
+    }
+
+    // Структура для хранения данных ключа перед анимацией
+    private struct KeyData
+    {
+        public Key.KeyType KeyType;
+        public Sprite Sprite;
+        public Vector3 WorldPosition;
     }
 }

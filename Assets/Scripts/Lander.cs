@@ -182,16 +182,21 @@ public class Lander : MonoBehaviour
 
         Destroy(landerRigidBody2D);
 
-        float maxScoreAmountLandingAngle = 100f;
-        float scoreDotLandingMultiplier = 10f;
-        float landingAngleScore = maxScoreAmountLandingAngle - Mathf.Abs(dotVector - 1f) * scoreDotLandingMultiplier * maxScoreAmountLandingAngle;
+        float maxScorePerCategory = 100f;
 
-        float maxScoreAmountLandingSpeed = 100f;
-        float landingSpeedScore = (softLandingVelocityMagnitude - relativeVelocityMagnitude) * maxScoreAmountLandingSpeed;
+        float angleScorePercentage = (dotVector - minDDotVector) / (1f - minDDotVector);
+        angleScorePercentage = Mathf.Clamp01(angleScorePercentage);
+        float landingAngleScore = angleScorePercentage * maxScorePerCategory;
 
-        int score = Mathf.RoundToInt((landingAngleScore + landingSpeedScore) * landingPad.ScoreMultiplier);
+        float speedScorePercentage = 1f - (relativeVelocityMagnitude / softLandingVelocityMagnitude);
+        speedScorePercentage = Mathf.Clamp01(speedScorePercentage);
+        float landingSpeedScore = speedScorePercentage * maxScorePerCategory;
 
-        Debug.Log("Score:" + score);
+        float totalScoreWithoutMultiplier = landingAngleScore + landingSpeedScore;
+
+        int score = Mathf.RoundToInt(totalScoreWithoutMultiplier * landingPad.ScoreMultiplier);
+
+        Debug.Log($"Score: {score} (Angle: {landingAngleScore:F0}, Speed: {landingSpeedScore:F0}, Multiplier: {landingPad.ScoreMultiplier})");
 
         OnLanded?.Invoke(this, new OnLandedEventArgs
         {

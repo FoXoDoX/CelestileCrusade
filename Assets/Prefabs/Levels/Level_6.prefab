@@ -72,6 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4059366961299164775}
   - component: {fileID: -7640745756527960139}
+  - component: {fileID: 4380989790183388639}
   m_Layer: 0
   m_Name: Level_6
   m_TagString: Untagged
@@ -161,8 +162,20 @@ MonoBehaviour:
   landerStartPositionTransform: {fileID: 8888277193072619499}
   cameraStartTargetTransform: {fileID: 5461951159502678277}
   normalOrthographicSize: 12
-  zoomedOutOrthographicSize: 85
-  starThresholds: 540b0000a00f000044160000
+  zoomedOutOrthographicSize: 88
+  starThresholds: d0070000100e000068100000
+--- !u!114 &4380989790183388639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069332513892790257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a97071e6e62be46954c00b54190ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSoundInitializer
 --- !u!1 &5499129489696913982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: movementSpeed
-      value: 13
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7116726352966146473, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1829,7 +1842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: movementSpeed
-      value: 12
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: asteroidPrefab
@@ -2194,7 +2207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: movementSpeed
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: asteroidPrefab
@@ -2624,7 +2637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: movementSpeed
-      value: 14
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: asteroidPrefab
@@ -3552,7 +3565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: movementSpeed
-      value: 13
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: asteroidPrefab
@@ -3801,7 +3814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: movementSpeed
-      value: 18
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7116726352966146473, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4035,7 +4048,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: movementSpeed
-      value: 15
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: asteroidPrefab

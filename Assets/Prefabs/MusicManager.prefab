@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289c1e59dd68e2b45bc4bb3cfaaf5598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicManager
+  musicTracks:
+  - {fileID: 8300000, guid: a12e09b03479a5544b9991ce5fbc3e66, type: 3}
+  - {fileID: 8300000, guid: 522cff4a2650ecd44a72875a5c87595c, type: 3}
+  - {fileID: 8300000, guid: 57cfa40c40cef30478b8375cb154bac1, type: 3}
+  - {fileID: 8300000, guid: eaffb03da56ded94a941f2b6019f37ef, type: 3}
+  - {fileID: 8300000, guid: 0a56cb27c46225b4882eaa16b6986194, type: 3}
 --- !u!82 &5849979725457603751
 AudioSource:
   m_ObjectHideFlags: 0

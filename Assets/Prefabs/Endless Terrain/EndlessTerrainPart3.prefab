@@ -96,8 +96,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: 29.000004, y: 6.240061, z: 0}
-    m_Extent: {x: 26.000004, y: 19.240063, z: 0}
+    m_Center: {x: 29.000004, y: -4.759941, z: 0}
+    m_Extent: {x: 26.000004, y: 30.240063, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &5972101445592143751
 MonoBehaviour:
@@ -226,7 +226,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 55, y: -13, z: 0}
+    - position: {x: 55, y: -35, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 3, y: -13, z: 0}
+    - position: {x: 3, y: -35, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -278,8 +278,8 @@ MonoBehaviour:
   - {x: 33.977097, y: 24.199749}
   - {x: 47.49893, y: 8.764786}
   - {x: 55, y: 6}
-  - {x: 55, y: -13}
-  - {x: 3, y: -13}
+  - {x: 55, y: -35}
+  - {x: 3, y: -35}
   - {x: 3, y: 6}
   m_ShadowSegment: []
 --- !u!60 &3513444635112957706
@@ -342,8 +342,8 @@ PolygonCollider2D:
       - {x: 33.977097, y: 24.199749}
       - {x: 47.49893, y: 8.764786}
       - {x: 55, y: 6}
-      - {x: 55, y: -13}
-      - {x: 3, y: -13}
+      - {x: 55, y: -35}
+      - {x: 3, y: -35}
       - {x: 3, y: 6}
   m_UseDelaunayMesh: 0
 --- !u!1 &8311712895535802789

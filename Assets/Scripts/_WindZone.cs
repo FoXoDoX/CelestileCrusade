@@ -9,7 +9,6 @@ public class WindZone2D : MonoBehaviour
     [SerializeField] private bool showGizmos = true;
 
     private Vector2 windVector;
-    private Lander playerLander;
     private Collider2D windCollider;
 
     private void OnValidate()
@@ -22,33 +21,42 @@ public class WindZone2D : MonoBehaviour
         UpdateWindDirection();
         windCollider = GetComponent<Collider2D>();
 
-        // Ќастраиваем коллайдер если он есть
         if (windCollider != null)
         {
             windCollider.isTrigger = true;
         }
     }
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // ѕолучаем ссылку на игрока через синглтон
-        playerLander = Lander.Instance;
-    }
-
-    private void Update()
-    {
-        if (playerLander == null) return;
-
-        // ѕровер€ем находитс€ ли игрок в зоне ветра
-        if (windCollider != null && windCollider.OverlapPoint(playerLander.transform.position))
+        Lander lander = other.GetComponent<Lander>();
+        if (lander != null && SoundManager.Instance != null)
         {
-            ApplyWindForce();
+            SoundManager.Instance.PlayWindSound();
         }
     }
 
-    private void ApplyWindForce()
+    private void OnTriggerStay2D(Collider2D other)
     {
-        Rigidbody2D playerRb = playerLander.GetComponent<Rigidbody2D>();
+        Lander lander = other.GetComponent<Lander>();
+        if (lander != null)
+        {
+            ApplyWindForce(lander);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Lander lander = other.GetComponent<Lander>();
+        if (lander != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopWindSound();
+        }
+    }
+
+    private void ApplyWindForce(Lander lander)
+    {
+        Rigidbody2D playerRb = lander.GetComponent<Rigidbody2D>();
         if (playerRb != null)
         {
             playerRb.AddForce(windVector, forceMode);
@@ -57,7 +65,6 @@ public class WindZone2D : MonoBehaviour
 
     private void UpdateWindDirection()
     {
-        //  онвертируем градусы в вектор направлени€
         float rad = windDirection * Mathf.Deg2Rad;
         windVector = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * windForce;
     }
@@ -66,17 +73,13 @@ public class WindZone2D : MonoBehaviour
     {
         if (!showGizmos) return;
 
-        // ѕолучаем коллайдер (в редакторе может быть не инициализирован)
         Collider2D col = windCollider != null ? windCollider : GetComponent<Collider2D>();
         if (col == null) return;
 
-        // ¬ычисл€ем центр коллайдера в мировых координатах
         Vector2 colliderCenter = GetColliderCenter(col);
 
-        // –исуем область коллайдера
         Gizmos.color = new Color(0.5f, 0.8f, 1f, 0.3f);
 
-        // ќбрабатываем разные типы коллайдеров
         if (col is BoxCollider2D boxCollider)
         {
             Vector2 size = boxCollider.size;
@@ -93,23 +96,19 @@ public class WindZone2D : MonoBehaviour
         }
         else if (col is PolygonCollider2D || col is EdgeCollider2D)
         {
-            // ƒл€ сложных коллайдеров рисуем bounding box
             Bounds bounds = col.bounds;
             Gizmos.DrawCube(bounds.center, bounds.size);
         }
 
-        // –исуем направление ветра из центра коллайдера
         Gizmos.color = Color.blue;
         Vector3 direction = new Vector3(windVector.x, windVector.y, 0).normalized;
 
-        // ќпредел€ем длину стрелки в зависимости от размера коллайдера
         float arrowLength = GetColliderSize(col) * 0.8f;
 
         Vector3 start = colliderCenter;
         Vector3 end = start + direction * arrowLength;
         Gizmos.DrawLine(start, end);
 
-        // —трелка направлени€
         Vector3 right = Quaternion.Euler(0, 0, 30) * -direction * arrowLength * 0.3f;
         Vector3 left = Quaternion.Euler(0, 0, -30) * -direction * arrowLength * 0.3f;
         Gizmos.DrawLine(end, end + right);

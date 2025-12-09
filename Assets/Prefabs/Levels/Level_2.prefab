@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4059366961299164775}
   - component: {fileID: -7640745756527960139}
-  - component: {fileID: -4363331714883572648}
   m_Layer: 0
   m_Name: Level_2
   m_TagString: Untagged
@@ -93,24 +92,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e52bce8d4da9449f757623ed6ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
-  levelNumber: 2
-  landerStartPositionTransform: {fileID: 8888277193072619499}
-  cameraStartTargetTransform: {fileID: 5461951159502678277}
-  normalOrthographicSize: 12
-  zoomedOutOrthographicSize: 55
-  starThresholds: 90010000e8030000dc050000
---- !u!114 &-4363331714883572648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069332513892790257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a97071e6e62be46954c00b54190ac6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelSoundInitializer
+  _levelNumber: 2
+  _landerStartPosition: {fileID: 8888277193072619499}
+  _cameraStartTarget: {fileID: 5461951159502678277}
+  _normalOrthographicSize: 12
+  _zoomedOutOrthographicSize: 54
+  _starThresholds: 64000000c80000002c010000
 --- !u!1 &5499129489696913982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,6 +1852,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _leftSpawnPoint
+      value: 
+      objectReference: {fileID: 1708068553768726519}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _rightSpawnPoint
+      value: 
+      objectReference: {fileID: 8842789885815021457}
     - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
       propertyPath: terrainEndPositionLeft
       value: 

@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4059366961299164775}
   - component: {fileID: -7640745756527960139}
-  - component: {fileID: -7799952013914271727}
   m_Layer: 0
   m_Name: Level_10
   m_TagString: Untagged
@@ -397,24 +396,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e52bce8d4da9449f757623ed6ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
-  levelNumber: 10
-  landerStartPositionTransform: {fileID: 8888277193072619499}
-  cameraStartTargetTransform: {fileID: 5461951159502678277}
-  normalOrthographicSize: 20
-  zoomedOutOrthographicSize: 43
-  starThresholds: 4c1d000010270000d4300000
---- !u!114 &-7799952013914271727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069332513892790257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a97071e6e62be46954c00b54190ac6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelSoundInitializer
+  _levelNumber: 10
+  _landerStartPosition: {fileID: 8888277193072619499}
+  _cameraStartTarget: {fileID: 5461951159502678277}
+  _normalOrthographicSize: 12
+  _zoomedOutOrthographicSize: 40
+  _starThresholds: 64000000c80000002c010000
 --- !u!1 &5499129489696913982
 GameObject:
   m_ObjectHideFlags: 0
@@ -15681,6 +15668,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyDeliver
       objectReference: {fileID: 0}
+    - target: {fileID: 5981676048580390917, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
+      propertyPath: _keyDeliver
+      value: 
+      objectReference: {fileID: 3913095914794005825}
+    - target: {fileID: 5981676048580390917, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
+      propertyPath: _requiredKeyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8426265553033904442, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.5205812
@@ -15726,6 +15721,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
+--- !u!114 &3913095914794005825 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8470617930786534676, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
+  m_PrefabInstance: {fileID: 4882942273618296917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c588b0737ba881478b694d009419a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeyDeliver
 --- !u!4 &3977709538843525487 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8426265553033904442, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
@@ -26482,6 +26488,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _leftSpawnPoint
+      value: 
+      objectReference: {fileID: 1708068553768726519}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _rightSpawnPoint
+      value: 
+      objectReference: {fileID: 8842789885815021457}
     - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
       propertyPath: terrainEndPositionLeft
       value: 

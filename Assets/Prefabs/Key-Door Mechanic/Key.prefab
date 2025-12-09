@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2e8539ed1352843b8aa1a296fa3783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Key
-  keyType: 1
+  _keyType: 1
 --- !u!1 &8532452636645619145
 GameObject:
   m_ObjectHideFlags: 0

@@ -1001,8 +1001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe4d7eb3fd7fe742854aa3e906dc81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrateOnRope
-  crackedCrate: {fileID: -329623048172348665, guid: 4e6c0e05e2c990241a3770b878ba8534, type: 3}
-  veryCrackedCrate: {fileID: -2699617827137059956, guid: cc7040538e1256c4db00c6632734e30d, type: 3}
+  _crackedCrateSprite: {fileID: -329623048172348665, guid: 4e6c0e05e2c990241a3770b878ba8534, type: 3}
+  _veryCrackedCrateSprite: {fileID: -2699617827137059956, guid: cc7040538e1256c4db00c6632734e30d, type: 3}
 --- !u!1 &5035474907517003428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,5 +1722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95eaf3568673f641a45f45b08000c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rope
-  anchor: {fileID: 4651482977450060789}
-  crate: {fileID: 4820030492336854411}
+  _anchor: {fileID: 4651482977450060789}
+  _crate: {fileID: 4820030492336854411}
+  _anchorOffset: {x: 0, y: -1, z: 0}

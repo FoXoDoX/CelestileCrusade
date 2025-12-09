@@ -294,9 +294,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d373dbbf6b69c419d1c373d0d0c8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorVisuals
-  keyType: 1
-  leftDoor: {fileID: 259923929977779867}
-  rightDoor: {fileID: 2346030162878724736}
+  _requiredKeyType: 1
+  _leftDoor: {fileID: 1258488131659240707}
+  _rightDoor: {fileID: 1676560193990827963}
+  _openDuration: 2
+  _openEase: 6
 --- !u!1 &5983021564273295149
 GameObject:
   m_ObjectHideFlags: 0

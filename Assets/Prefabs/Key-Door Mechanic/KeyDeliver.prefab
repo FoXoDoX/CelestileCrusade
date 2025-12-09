@@ -188,7 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c588b0737ba881478b694d009419a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyDeliver
-  keyType: 1
+  _requiredKeyType: 1
+  _deliverDuration: 3
 --- !u!114 &5981676048580390917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,11 +202,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5beddfe573e693344a25e7e3de68d207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyDeliverUI
-  keyFilledImage: {fileID: 5820218507030190608}
-  keyDeliver: {fileID: 8470617930786534676}
-  keySpriteRenderer: {fileID: 4561109146736924091}
-  crossSpriteRenderer: {fileID: 7835859883770258134}
-  keyType: 1
+  _progressFillImage: {fileID: 5820218507030190608}
+  _keySpriteRenderer: {fileID: 4561109146736924091}
+  _crossSpriteRenderer: {fileID: 7835859883770258134}
+  _requiredKeyType: 0
+  _keyDeliver: {fileID: 8470617930786534676}
 --- !u!1 &3540610607951918887
 GameObject:
   m_ObjectHideFlags: 0

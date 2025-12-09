@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4059366961299164775}
   - component: {fileID: -7640745756527960139}
-  - component: {fileID: 8414240363672449922}
   m_Layer: 0
   m_Name: Level_7
   m_TagString: Untagged
@@ -147,24 +146,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e52bce8d4da9449f757623ed6ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
-  levelNumber: 7
-  landerStartPositionTransform: {fileID: 8888277193072619499}
-  cameraStartTargetTransform: {fileID: 5461951159502678277}
-  normalOrthographicSize: 12
-  zoomedOutOrthographicSize: 73
-  starThresholds: c012000070170000bc1b0000
---- !u!114 &8414240363672449922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069332513892790257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a97071e6e62be46954c00b54190ac6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelSoundInitializer
+  _levelNumber: 7
+  _landerStartPosition: {fileID: 8888277193072619499}
+  _cameraStartTarget: {fileID: 5461951159502678277}
+  _normalOrthographicSize: 12
+  _zoomedOutOrthographicSize: 70
+  _starThresholds: 64000000c80000002c010000
 --- !u!1 &5499129489696913982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,6 +1496,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratePickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+      propertyPath: _cratePickup
+      value: 
+      objectReference: {fileID: 6661883506192057667}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1519,6 +1510,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 946706220690791016, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
   m_PrefabInstance: {fileID: 164813942693423745}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6661883506192057667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6789821477619855298, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+  m_PrefabInstance: {fileID: 164813942693423745}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35f0669679a5ba4d801e246adb7b95f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CratePickup
 --- !u!1001 &184182381208333640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1881,6 +1883,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratePickup (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+      propertyPath: _cratePickup
+      value: 
+      objectReference: {fileID: 6277291934840831212}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1891,6 +1897,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 946706220690791016, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
   m_PrefabInstance: {fileID: 659532607339746094}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6277291934840831212 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6789821477619855298, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+  m_PrefabInstance: {fileID: 659532607339746094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35f0669679a5ba4d801e246adb7b95f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CratePickup
 --- !u!1001 &680838898306666292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1943,6 +1960,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratePickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+      propertyPath: _cratePickup
+      value: 
+      objectReference: {fileID: 6289446161582334198}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1953,6 +1974,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 946706220690791016, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
   m_PrefabInstance: {fileID: 680838898306666292}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6289446161582334198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6789821477619855298, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+  m_PrefabInstance: {fileID: 680838898306666292}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35f0669679a5ba4d801e246adb7b95f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CratePickup
 --- !u!1001 &744980281286009618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2739,6 +2771,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560722321673716491, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
+      propertyPath: _crateLandingPad
+      value: 
+      objectReference: {fileID: 4297324148074782198}
     - target: {fileID: 8604195205758366560, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_Name
       value: CrateLandingPad
@@ -2748,6 +2784,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
+--- !u!114 &4297324148074782198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2013480398302036642, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
+  m_PrefabInstance: {fileID: 2329056218635951956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdbf24d2b9df4f47a473b8998302fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrateLandingPad
 --- !u!4 &8239165144526256996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5910162254106567728, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
@@ -3239,6 +3286,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratePickup (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+      propertyPath: _cratePickup
+      value: 
+      objectReference: {fileID: 7962747425230216970}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3249,6 +3300,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 946706220690791016, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
   m_PrefabInstance: {fileID: 3511424732712513736}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7962747425230216970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6789821477619855298, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+  m_PrefabInstance: {fileID: 3511424732712513736}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35f0669679a5ba4d801e246adb7b95f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CratePickup
 --- !u!1001 &3861551217915352207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3859,11 +3921,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratePickup (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+      propertyPath: _cratePickup
+      value: 
+      objectReference: {fileID: 1872358353803578855}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+--- !u!114 &1872358353803578855 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6789821477619855298, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
+  m_PrefabInstance: {fileID: 5170623477160075813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35f0669679a5ba4d801e246adb7b95f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CratePickup
 --- !u!4 &5396120369839388749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 946706220690791016, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
@@ -4909,6 +4986,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _leftSpawnPoint
+      value: 
+      objectReference: {fileID: 1708068553768726519}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _rightSpawnPoint
+      value: 
+      objectReference: {fileID: 8842789885815021457}
     - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
       propertyPath: terrainEndPositionLeft
       value: 

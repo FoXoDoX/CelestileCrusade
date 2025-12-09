@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4059366961299164775}
   - component: {fileID: -7640745756527960139}
-  - component: {fileID: 3575490776426847426}
   m_Layer: 0
   m_Name: Level_1
   m_TagString: Untagged
@@ -58,24 +57,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e52bce8d4da9449f757623ed6ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
-  levelNumber: 1
-  landerStartPositionTransform: {fileID: 8888277193072619499}
-  cameraStartTargetTransform: {fileID: 1382785582288456747}
-  normalOrthographicSize: 12
-  zoomedOutOrthographicSize: 30
-  starThresholds: 64000000f4010000e8030000
---- !u!114 &3575490776426847426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069332513892790257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a97071e6e62be46954c00b54190ac6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelSoundInitializer
+  _levelNumber: 99
+  _landerStartPosition: {fileID: 8888277193072619499}
+  _cameraStartTarget: {fileID: 1382785582288456747}
+  _normalOrthographicSize: 12
+  _zoomedOutOrthographicSize: 27
+  _starThresholds: 64000000c80000002c010000
 --- !u!1 &3037417158122525153
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +518,7 @@ Transform:
   m_GameObject: {fileID: 8485267948207044624}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.4, y: 10.6, z: 0}
+  m_LocalPosition: {x: -24.6, y: 10.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -586,6 +573,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _leftSpawnPoint
+      value: 
+      objectReference: {fileID: 6311014277990789669}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _rightSpawnPoint
+      value: 
+      objectReference: {fileID: 4465056479756398539}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
       propertyPath: terrainEndPositionLeft
       value: 
       objectReference: {fileID: 6311014277990789669}
@@ -601,6 +596,34 @@ PrefabInstance:
       propertyPath: mainTerrainEndPositionRight
       value: 
       objectReference: {fileID: 4465056479756398539}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: _terrainPartPrefabs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: '_terrainPartPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6808161260887289068, guid: 34706798fcfe20c4e8b7acb7d6730f93, type: 3}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: '_terrainPartPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8224755428452640200, guid: 6a58d5265d56c164795551343367533d, type: 3}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: '_terrainPartPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5447192504337618628, guid: ee14e975def69c9488f34063ae1b3a2a, type: 3}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: '_terrainPartPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 5447192504337618628, guid: e59e7cb57119a3e4c8240e58cdc99fa7, type: 3}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: '_terrainPartPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 5447192504337618628, guid: db9397254e5e61f409f67d656b14d798, type: 3}
+    - target: {fileID: 1456707735055456629, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
+      propertyPath: '_terrainPartPrefabs.Array.data[5]'
+      value: 
+      objectReference: {fileID: 5447192504337618628, guid: 388fdabff506989418ac9d279af0f696, type: 3}
     - target: {fileID: 7611287683659519198, guid: 4dd7f8d7168c5db48a05aa9962b17461, type: 3}
       propertyPath: m_Name
       value: EndlessTerrainGenerator

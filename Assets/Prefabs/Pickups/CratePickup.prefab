@@ -324,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35f0669679a5ba4d801e246adb7b95f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CratePickup
+  _pickupDuration: 3
 --- !u!114 &7582829910160158605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,8 +337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06ce80cdeb6ef44da327477db948631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CratePickupUI
-  crateFilledImage: {fileID: 2960811433487450434}
-  cratePickup: {fileID: 6789821477619855298}
+  _progressFillImage: {fileID: 2960811433487450434}
+  _cratePickup: {fileID: 6789821477619855298}
 --- !u!1 &8324747845767060718
 GameObject:
   m_ObjectHideFlags: 0

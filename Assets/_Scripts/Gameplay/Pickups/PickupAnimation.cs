@@ -1,151 +1,262 @@
 using System.Collections;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 namespace My.Scripts.Gameplay.Pickups
 {
+    /// <summary>
+    /// Анимация pickup'ов: круговое движение, растягивание и мерцание.
+    /// </summary>
     public class PickupAnimation : MonoBehaviour
     {
-        [Header("Animation Settings")]
-        [SerializeField] private float stretchDuration = 0.5f;
-        [SerializeField] private float minTimeBetweenAnimations = 3f;
-        [SerializeField] private float maxTimeBetweenAnimations = 6f;
-        [SerializeField] private float circleRadius = 0.1f;
-        [SerializeField] private float circleDuration = 2f;
-        [SerializeField] private float blinkDuration = 0.3f;
+        #region Constants
 
-        private Vector3 originalScale;
-        private Color originalColor;
-        private SpriteRenderer spriteRenderer;
-        private Coroutine stretchCoroutine;
-        private Coroutine blinkCoroutine;
-        private Coroutine circleCoroutine;
-        private Vector3 localCircleCenter;
-        private bool isAlive = true;
-        private Transform cachedTransform;
+        private const float STRETCH_SCALE_Y = 1.3f;
+        private const float STRETCH_SCALE_X = 0.7f;
+        private const float BLINK_INTERVAL = 4f;
+        private const float FLASH_INTENSITY = 1.5f;
+
+        #endregion
+
+        #region Serialized Fields
+
+        [Header("Stretch Animation")]
+        [SerializeField] private float _stretchDuration = 0.5f;
+        [SerializeField] private Vector2 _stretchIntervalRange = new(3f, 6f);
+
+        [Header("Circle Animation")]
+        [SerializeField] private float _circleRadius = 0.1f;
+        [SerializeField] private float _circleDuration = 2f;
+
+        [Header("Blink Animation")]
+        [SerializeField] private float _blinkDuration = 0.3f;
+
+        #endregion
+
+        #region Private Fields
+
+        private Transform _cachedTransform;
+        private SpriteRenderer _spriteRenderer;
+
+        private Vector3 _originalScale;
+        private Vector3 _localCircleCenter;
+        private Color _originalColor;
+
+        private Coroutine _circleCoroutine;
+        private Coroutine _stretchCoroutine;
+        private Coroutine _blinkCoroutine;
+
+        private bool _isAlive = true;
+
+        #endregion
+
+        #region Unity Lifecycle
+
+        private void Awake()
+        {
+            CacheComponents();
+        }
 
         private void Start()
         {
-            // Кешируем Transform для производительности
-            cachedTransform = transform;
-
-            // Получаем компоненты
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
-            // Сохраняем оригинальные значения в ЛОКАЛЬНОМ пространстве
-            originalScale = cachedTransform.localScale;
-            originalColor = spriteRenderer.color;
-            localCircleCenter = cachedTransform.localPosition; // Используем локальную позицию
-
-            // Запускаем постоянное круговое движение в ЛОКАЛЬНОМ пространстве
-            circleCoroutine = StartCoroutine(SmoothCircleAnimation());
-
-            // Запускаем корутины для случайных анимаций
-            stretchCoroutine = StartCoroutine(StretchAnimationRoutine());
-            blinkCoroutine = StartCoroutine(BlinkAnimationRoutine());
+            SaveOriginalValues();
+            StartAnimations();
         }
 
-        IEnumerator SmoothCircleAnimation()
+        private void OnDestroy()
+        {
+            Cleanup();
+        }
+
+        #endregion
+
+        #region Private Methods — Initialization
+
+        private void CacheComponents()
+        {
+            _cachedTransform = transform;
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            if (_spriteRenderer == null)
+            {
+                Debug.LogWarning($"[{nameof(PickupAnimation)}] SpriteRenderer not found!", this);
+            }
+        }
+
+        private void SaveOriginalValues()
+        {
+            _originalScale = _cachedTransform.localScale;
+            _localCircleCenter = _cachedTransform.localPosition;
+
+            if (_spriteRenderer != null)
+            {
+                _originalColor = _spriteRenderer.color;
+            }
+        }
+
+        private void StartAnimations()
+        {
+            _circleCoroutine = StartCoroutine(CircleRoutine());
+            _stretchCoroutine = StartCoroutine(StretchRoutine());
+            _blinkCoroutine = StartCoroutine(BlinkRoutine());
+        }
+
+        #endregion
+
+        #region Private Methods — Circle Animation
+
+        private IEnumerator CircleRoutine()
         {
             float angle = 0f;
-            Vector3 startLocalPosition = localCircleCenter;
 
-            while (isAlive)
+            while (_isAlive && _cachedTransform != null)
             {
-                // Проверяем, не уничтожен ли объект
-                if (!isAlive || cachedTransform == null) yield break;
+                angle += Time.deltaTime * (2f * Mathf.PI / _circleDuration);
 
-                // Увеличиваем угол с учетом времени и радиуса
-                angle += Time.deltaTime * (2 * Mathf.PI / circleDuration);
+                float x = Mathf.Cos(angle) * _circleRadius;
+                float y = Mathf.Sin(angle) * _circleRadius;
 
-                // Вычисляем позицию на окружности в ЛОКАЛЬНОМ пространстве
-                float x = Mathf.Cos(angle) * circleRadius;
-                float y = Mathf.Sin(angle) * circleRadius;
+                _cachedTransform.localPosition = _localCircleCenter + new Vector3(x, y, 0f);
 
-                // Плавное перемещение в ЛОКАЛЬНОМ пространстве
-                cachedTransform.localPosition = startLocalPosition + new Vector3(x, y, 0);
-
-                // Сброс угла при полном обороте
-                if (angle >= 2 * Mathf.PI) angle = 0f;
+                if (angle >= 2f * Mathf.PI)
+                {
+                    angle = 0f;
+                }
 
                 yield return null;
             }
         }
 
-        private IEnumerator StretchAnimationRoutine()
+        #endregion
+
+        #region Private Methods — Stretch Animation
+
+        private IEnumerator StretchRoutine()
         {
-            while (isAlive)
+            while (_isAlive)
             {
-                // Случайная пауза между анимациями
-                yield return new WaitForSeconds(Random.Range(minTimeBetweenAnimations, maxTimeBetweenAnimations));
+                float delay = Random.Range(_stretchIntervalRange.x, _stretchIntervalRange.y);
+                yield return new WaitForSeconds(delay);
 
-                if (!isAlive) yield break;
+                if (!_isAlive) yield break;
 
-                // Запускаем анимацию растягивания
-                StretchAnimation();
+                PlayStretchAnimation();
             }
         }
 
-        private void StretchAnimation()
+        private void PlayStretchAnimation()
         {
-            Sequence stretchSequence = DOTween.Sequence();
+            float halfDuration = _stretchDuration / 2f;
 
-            // Растягиваем по Y и сжимаем по X в ЛОКАЛЬНОМ пространстве
-            stretchSequence.Append(cachedTransform.DOScaleY(originalScale.y * 1.3f, stretchDuration / 2f));
-            stretchSequence.Join(cachedTransform.DOScaleX(originalScale.x * 0.7f, stretchDuration / 2f));
+            Sequence sequence = DOTween.Sequence();
 
-            // Возвращаем к исходному размеру в ЛОКАЛЬНОМ пространстве
-            stretchSequence.Append(cachedTransform.DOScaleY(originalScale.y, stretchDuration / 2f));
-            stretchSequence.Join(cachedTransform.DOScaleX(originalScale.x, stretchDuration / 2f));
+            // Растягиваем по Y, сжимаем по X
+            sequence.Append(_cachedTransform.DOScaleY(_originalScale.y * STRETCH_SCALE_Y, halfDuration));
+            sequence.Join(_cachedTransform.DOScaleX(_originalScale.x * STRETCH_SCALE_X, halfDuration));
 
-            stretchSequence.SetEase(Ease.OutQuad);
-            stretchSequence.SetLink(gameObject);
+            // Возвращаем к исходному размеру
+            sequence.Append(_cachedTransform.DOScaleY(_originalScale.y, halfDuration));
+            sequence.Join(_cachedTransform.DOScaleX(_originalScale.x, halfDuration));
+
+            sequence.SetEase(Ease.OutQuad);
+            sequence.SetLink(gameObject);
         }
 
-        private IEnumerator BlinkAnimationRoutine()
+        #endregion
+
+        #region Private Methods — Blink Animation
+
+        private IEnumerator BlinkRoutine()
         {
-            while (isAlive)
+            while (_isAlive)
             {
-                // Случайная пауза между морганиями
-                yield return new WaitForSeconds(4);
+                yield return new WaitForSeconds(BLINK_INTERVAL);
 
-                if (!isAlive) yield break;
+                if (!_isAlive || _spriteRenderer == null) yield break;
 
-                // Запускаем анимацию моргания
-                BlinkAnimation();
+                PlayBlinkAnimation();
             }
         }
 
-        void BlinkAnimation()
+        private void PlayBlinkAnimation()
         {
-            Sequence blinkSequence = DOTween.Sequence();
+            if (_spriteRenderer == null) return;
 
-            Color flashColor = new Color(1.5f, 1.5f, 1.5f, originalColor.a);
+            Color flashColor = new Color(FLASH_INTENSITY, FLASH_INTENSITY, FLASH_INTENSITY, _originalColor.a);
+            float thirdDuration = _blinkDuration / 3f;
 
-            blinkSequence.Append(spriteRenderer.DOColor(flashColor, blinkDuration / 3f));
-            blinkSequence.Append(spriteRenderer.DOColor(originalColor, blinkDuration / 3f));
+            Sequence sequence = DOTween.Sequence();
 
-            blinkSequence.SetEase(Ease.Flash);
-            blinkSequence.SetLink(gameObject);
+            sequence.Append(_spriteRenderer.DOColor(flashColor, thirdDuration));
+            sequence.Append(_spriteRenderer.DOColor(_originalColor, thirdDuration));
+
+            sequence.SetEase(Ease.Flash);
+            sequence.SetLink(gameObject);
         }
 
-        private void OnDestroy()
+        #endregion
+
+        #region Private Methods — Cleanup
+
+        private void Cleanup()
         {
-            isAlive = false;
+            _isAlive = false;
 
-            // Правильно останавливаем все корутины
-            if (circleCoroutine != null)
-                StopCoroutine(circleCoroutine);
-
-            if (stretchCoroutine != null)
-                StopCoroutine(stretchCoroutine);
-
-            if (blinkCoroutine != null)
-                StopCoroutine(blinkCoroutine);
-
-            // Отменяем все DOTween анимации для этого объекта
-            DOTween.Kill(cachedTransform);
-            DOTween.Kill(spriteRenderer);
+            StopAllAnimationCoroutines();
+            KillAllTweens();
         }
+
+        private void StopAllAnimationCoroutines()
+        {
+            if (_circleCoroutine != null)
+            {
+                StopCoroutine(_circleCoroutine);
+                _circleCoroutine = null;
+            }
+
+            if (_stretchCoroutine != null)
+            {
+                StopCoroutine(_stretchCoroutine);
+                _stretchCoroutine = null;
+            }
+
+            if (_blinkCoroutine != null)
+            {
+                StopCoroutine(_blinkCoroutine);
+                _blinkCoroutine = null;
+            }
+        }
+
+        private void KillAllTweens()
+        {
+            if (_cachedTransform != null)
+            {
+                DOTween.Kill(_cachedTransform);
+            }
+
+            if (_spriteRenderer != null)
+            {
+                DOTween.Kill(_spriteRenderer);
+            }
+        }
+
+        #endregion
+
+        #region Editor Helpers
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _stretchDuration = Mathf.Max(0.1f, _stretchDuration);
+            _circleRadius = Mathf.Max(0f, _circleRadius);
+            _circleDuration = Mathf.Max(0.1f, _circleDuration);
+            _blinkDuration = Mathf.Max(0.1f, _blinkDuration);
+
+            _stretchIntervalRange.x = Mathf.Max(0.1f, _stretchIntervalRange.x);
+            _stretchIntervalRange.y = Mathf.Max(_stretchIntervalRange.x, _stretchIntervalRange.y);
+        }
+#endif
+
+        #endregion
     }
 }

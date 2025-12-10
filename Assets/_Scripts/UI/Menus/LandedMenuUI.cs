@@ -14,7 +14,7 @@ namespace My.Scripts.UI.Menus
         #region Constants
 
         private const string SUCCESS_TITLE = "<wave amplitude=5>SUCCESSFUL LANDING!</wave>";
-        private const string CRASH_TITLE = "<color=#ff0000><shake>CRASH!</shake></color>";
+        private const string CRASH_TITLE = "<color=#ff0000><shake minx=2 miny=2 maxx=2 maxy=2>CRASH!</shake></color>";
         private const string CONTINUE_BUTTON_TEXT = "CONTINUE";
         private const string RESTART_BUTTON_TEXT = "RESTART";
 

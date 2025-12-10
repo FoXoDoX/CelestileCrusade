@@ -1,157 +1,255 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 namespace My.Scripts.UI.Menus
 {
+    /// <summary>
+    /// јнимаци€ по€влени€ меню после посадки: раст€гивание, возврат и по€вление звЄзд.
+    /// </summary>
     public class LandedMenuUIAnimation : MonoBehaviour
     {
+        #region Constants
+
+        private const float STAR_ANIMATION_DURATION = 0.3f;
+        private const float STAR_STAGGER_DELAY = 0.5f;
+
+        #endregion
+
+        #region Serialized Fields
+
         [Header("Animation Settings")]
-        [SerializeField] private float stretchOutDuration = 0.2f;
-        [SerializeField] private float bounceBackDuration = 0.6f;
-        [SerializeField] private float initialVerticalStretch = 1.5f;
+        [SerializeField] private float _stretchOutDuration = 0.1f;
+        [SerializeField] private float _bounceBackDuration = 0.4f;
+        [SerializeField] private float _initialVerticalStretch = 1.5f;
 
         [Header("UI References")]
-        [SerializeField] private RectTransform mainPanel;
-        [SerializeField] private List<Transform> stars;
+        [SerializeField] private RectTransform _mainPanel;
+        [SerializeField] private List<Transform> _stars;
 
-        private Vector3 originalScale;
-        private List<Graphic> colorElements;
-        private List<Color> originalColors = new List<Color>();
+        #endregion
+
+        #region Private Fields
+
+        private Vector3 _originalScale;
+        private List<Graphic> _colorElements;
+        private List<Color> _originalColors;
+
+        #endregion
+
+        #region Properties
+
+        private float TotalAnimationDuration => _stretchOutDuration + _bounceBackDuration;
+
+        #endregion
+
+        #region Unity Lifecycle
 
         private void Awake()
         {
-            // Store original values
-            if (mainPanel != null)
-            {
-                originalScale = mainPanel.localScale;
-            }
-
-            // Automatically get all Graphic components in children
-            colorElements = new List<Graphic>(GetComponentsInChildren<Graphic>(true));
-
-            // Store original colors
-            foreach (Graphic element in colorElements)
-            {
-                if (element != null)
-                {
-                    originalColors.Add(element.color);
-                }
-            }
-
-            // Initially set up the initial state
+            CacheOriginalValues();
             ResetToInitialState();
         }
 
+        private void OnDestroy()
+        {
+            KillAllTweens();
+        }
+
+        #endregion
+
+        #region Public Methods
+
         public void PlayEnterAnimation()
         {
-            // Reset to initial state before playing animation
             ResetToInitialState();
 
-            // Create the main scale sequence
-            Sequence scaleSequence = DOTween.Sequence();
+            Sequence mainSequence = DOTween.Sequence();
 
-            if (mainPanel != null)
+            AnimatePanel(mainSequence);
+            AnimateColors();
+            AnimateStars(mainSequence);
+
+            mainSequence.SetLink(gameObject);
+        }
+
+        #endregion
+
+        #region Private Methods Ч Initialization
+
+        private void CacheOriginalValues()
+        {
+            // —охран€ем оригинальный масштаб
+            if (_mainPanel != null)
             {
-                // Start from original scale
-                mainPanel.localScale = originalScale;
-
-                // First: stretch vertically
-                scaleSequence.Append(mainPanel.DOScaleY(originalScale.y * initialVerticalStretch, stretchOutDuration)
-                    .SetEase(Ease.OutQuad));
-
-                // Then: bounce back to original scale
-                scaleSequence.Append(mainPanel.DOScaleY(originalScale.y, bounceBackDuration)
-                    .SetEase(Ease.OutBack));
+                _originalScale = _mainPanel.localScale;
             }
 
-            // Animate colors from white to original
-            Sequence colorSequence = DOTween.Sequence();
+            // Ќаходим все Graphic компоненты
+            _colorElements = new List<Graphic>(GetComponentsInChildren<Graphic>(true));
+            _originalColors = new List<Color>();
 
-            for (int i = 0; i < colorElements.Count; i++)
+            foreach (var element in _colorElements)
             {
-                if (colorElements[i] != null)
+                if (element != null)
                 {
-                    // Set initial white color
-                    colorElements[i].color = Color.white;
-
-                    // Animate to original color over the total duration
-                    colorSequence.Join(colorElements[i].DOColor(originalColors[i], stretchOutDuration + bounceBackDuration)
-                        .SetEase(Ease.OutQuad));
-                }
-            }
-
-            // Animate stars with slight delay for each (starting after the main animation)
-            if (stars != null && stars.Count > 0)
-            {
-                float starStartDelay = stretchOutDuration + bounceBackDuration;
-
-                for (int i = 0; i < stars.Count; i++)
-                {
-                    if (stars[i] != null)
-                    {
-                        stars[i].localScale = Vector3.zero;
-
-                        // Staggered animation for stars after main animation
-                        scaleSequence.Insert(starStartDelay + i * 0.5f, stars[i].DOScale(Vector3.one, 0.3f)
-                            .SetEase(Ease.OutBack));
-                    }
+                    _originalColors.Add(element.color);
                 }
             }
         }
 
         private void ResetToInitialState()
         {
-            // Reset scale to original (animation will start from here)
-            if (mainPanel != null)
-            {
-                mainPanel.localScale = originalScale;
-            }
-
-            // Reset colors to white using automatically found elements
-            if (colorElements != null)
-            {
-                foreach (Graphic element in colorElements)
-                {
-                    if (element != null)
-                    {
-                        element.color = Color.white;
-                    }
-                }
-            }
-
-            // Reset stars scale
-            if (stars != null)
-            {
-                foreach (Transform star in stars)
-                {
-                    if (star != null)
-                    {
-                        star.localScale = Vector3.zero;
-                    }
-                }
-            }
+            ResetPanelScale();
+            ResetColors();
+            ResetStars();
         }
 
-        private void OnDestroy()
+        private void ResetPanelScale()
         {
-            // Clean up DOTween tweens
-            if (mainPanel != null)
+            if (_mainPanel != null)
             {
-                mainPanel.DOKill();
+                _mainPanel.localScale = _originalScale;
             }
+        }
 
-            if (colorElements != null)
+        private void ResetColors()
+        {
+            if (_colorElements == null) return;
+
+            foreach (var element in _colorElements)
             {
-                foreach (Graphic element in colorElements)
+                if (element != null)
                 {
-                    if (element != null)
-                    {
-                        element.DOKill();
-                    }
+                    element.color = Color.white;
                 }
             }
         }
+
+        private void ResetStars()
+        {
+            if (_stars == null) return;
+
+            foreach (var star in _stars)
+            {
+                if (star != null)
+                {
+                    star.localScale = Vector3.zero;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Private Methods Ч Animation
+
+        private void AnimatePanel(Sequence sequence)
+        {
+            if (_mainPanel == null) return;
+
+            _mainPanel.localScale = _originalScale;
+
+            // –аст€гивание по вертикали
+            sequence.Append(
+                _mainPanel.DOScaleY(_originalScale.y * _initialVerticalStretch, _stretchOutDuration)
+                    .SetEase(Ease.OutQuad)
+            );
+
+            // ¬озврат к исходному масштабу с отскоком
+            sequence.Append(
+                _mainPanel.DOScaleY(_originalScale.y, _bounceBackDuration)
+                    .SetEase(Ease.OutBack)
+            );
+        }
+
+        private void AnimateColors()
+        {
+            if (_colorElements == null || _originalColors == null) return;
+
+            Sequence colorSequence = DOTween.Sequence();
+
+            for (int i = 0; i < _colorElements.Count; i++)
+            {
+                if (_colorElements[i] == null) continue;
+                if (i >= _originalColors.Count) break;
+
+                _colorElements[i].color = Color.white;
+
+                colorSequence.Join(
+                    _colorElements[i].DOColor(_originalColors[i], TotalAnimationDuration)
+                        .SetEase(Ease.OutQuad)
+                );
+            }
+
+            colorSequence.SetLink(gameObject);
+        }
+
+        private void AnimateStars(Sequence sequence)
+        {
+            if (_stars == null || _stars.Count == 0) return;
+
+            for (int i = 0; i < _stars.Count; i++)
+            {
+                if (_stars[i] == null) continue;
+
+                _stars[i].localScale = Vector3.zero;
+
+                float delay = TotalAnimationDuration + i * STAR_STAGGER_DELAY;
+
+                sequence.Insert(
+                    delay,
+                    _stars[i].DOScale(Vector3.one, STAR_ANIMATION_DURATION)
+                        .SetEase(Ease.OutBack)
+                );
+            }
+        }
+
+        #endregion
+
+        #region Private Methods Ч Cleanup
+
+        private void KillAllTweens()
+        {
+            if (_mainPanel != null)
+            {
+                _mainPanel.DOKill();
+            }
+
+            if (_colorElements == null) return;
+
+            foreach (var element in _colorElements)
+            {
+                if (element != null)
+                {
+                    element.DOKill();
+                }
+            }
+
+            if (_stars == null) return;
+
+            foreach (var star in _stars)
+            {
+                if (star != null)
+                {
+                    star.DOKill();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Editor Helpers
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _stretchOutDuration = Mathf.Max(0.01f, _stretchOutDuration);
+            _bounceBackDuration = Mathf.Max(0.01f, _bounceBackDuration);
+            _initialVerticalStretch = Mathf.Max(1f, _initialVerticalStretch);
+        }
+#endif
+
+        #endregion
     }
 }

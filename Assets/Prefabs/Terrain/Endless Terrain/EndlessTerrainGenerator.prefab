@@ -56,4 +56,4 @@ MonoBehaviour:
   _spawnDistance: 100
   _initialPartsPerSide: 3
   _rightSpawnOffset: {x: 3, y: 6, z: 0}
-  _leftSpawnOffset: {x: -3, y: 6, z: 0}
+  _leftSpawnOffset: {x: 3, y: 6, z: 0}

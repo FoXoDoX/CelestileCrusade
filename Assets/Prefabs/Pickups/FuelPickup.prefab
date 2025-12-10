@@ -185,9 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2183090d4237f549aaabc6746932ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupVisuals
-  stretchDuration: 0.5
-  minTimeBetweenAnimations: 3
-  maxTimeBetweenAnimations: 6
-  circleRadius: 0.1
-  circleDuration: 2
-  blinkDuration: 0.3
+  _stretchDuration: 0.5
+  _stretchIntervalRange: {x: 3, y: 6}
+  _circleRadius: 0.1
+  _circleDuration: 2
+  _blinkDuration: 0.3

@@ -4,123 +4,234 @@ using UnityEngine;
 
 namespace My.Scripts.UI.Popups
 {
+    /// <summary>
+    /// Анимация появления и исчезновения ScorePopup.
+    /// </summary>
     public class ScorePopupAnimation : MonoBehaviour
     {
+        #region Serialized Fields
+
         [Header("Background References")]
-        [SerializeField] private GameObject whiteBackground;
-        [SerializeField] private GameObject background;
+        [SerializeField] private GameObject _whiteBackground;
+        [SerializeField] private GameObject _background;
 
         [Header("Animation Settings")]
-        [SerializeField] private float squeezeDuration = 0.5f;
-        [SerializeField] private float backgroundSwitchTime = 0.05f;
-        [SerializeField] private float totalLifetime = 1.5f;
-        [SerializeField] private float disappearDuration = 0.5f;
-        [SerializeField] private Vector3 squeezeScale = new Vector3(1.5f, 0.5f, 1f);
+        [SerializeField] private float _squeezeDuration = 0.5f;
+        [SerializeField] private float _backgroundSwitchTime = 0.05f;
+        [SerializeField] private float _totalLifetime = 1.5f;
+        [SerializeField] private float _disappearDuration = 0.5f;
+        [SerializeField] private Vector3 _squeezeScale = new(1.5f, 0.5f, 1f);
 
-        private Vector3 originalScale;
-        private TextMeshPro textMesh;
-        private SpriteRenderer whiteBgRenderer;
-        private SpriteRenderer bgRenderer;
+        #endregion
+
+        #region Private Fields
+
+        private Vector3 _originalScale;
+        private TextMeshPro _textMesh;
+        private SpriteRenderer _whiteBackgroundRenderer;
+        private SpriteRenderer _backgroundRenderer;
+
+        #endregion
+
+        #region Unity Lifecycle
 
         private void Awake()
         {
-            // Получаем компоненты
-            textMesh = GetComponentInChildren<TextMeshPro>();
-            if (whiteBackground != null)
-                whiteBgRenderer = whiteBackground.GetComponent<SpriteRenderer>();
-            if (background != null)
-                bgRenderer = background.GetComponent<SpriteRenderer>();
-
-            // Сохраняем оригинальный масштаб
-            originalScale = transform.localScale;
-
-            // Настраиваем начальное состояние
+            CacheComponents();
+            SaveOriginalValues();
             InitializeAnimationState();
-
-            // Запускаем анимацию
             StartAnimationSequence();
+        }
+
+        private void OnDestroy()
+        {
+            KillAllTweens();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Устанавливает текст popup'а.
+        /// </summary>
+        public void SetText(string text)
+        {
+            if (_textMesh != null)
+            {
+                _textMesh.text = text;
+            }
+        }
+
+        #endregion
+
+        #region Private Methods — Initialization
+
+        private void CacheComponents()
+        {
+            _textMesh = GetComponentInChildren<TextMeshPro>();
+
+            if (_whiteBackground != null)
+            {
+                _whiteBackgroundRenderer = _whiteBackground.GetComponent<SpriteRenderer>();
+            }
+
+            if (_background != null)
+            {
+                _backgroundRenderer = _background.GetComponent<SpriteRenderer>();
+            }
+        }
+
+        private void SaveOriginalValues()
+        {
+            _originalScale = transform.localScale;
         }
 
         private void InitializeAnimationState()
         {
             // Начальное состояние: белый фон активен, обычный фон неактивен
-            if (whiteBackground != null)
-                whiteBackground.SetActive(true);
-            if (background != null)
-                background.SetActive(false);
+            if (_whiteBackground != null)
+            {
+                _whiteBackground.SetActive(true);
+            }
+
+            if (_background != null)
+            {
+                _background.SetActive(false);
+            }
 
             // Устанавливаем сжатый масштаб
-            transform.localScale = squeezeScale;
+            transform.localScale = _squeezeScale;
 
             // Делаем текст полностью прозрачным в начале
-            if (textMesh != null)
-                textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0f);
+            if (_textMesh != null)
+            {
+                Color color = _textMesh.color;
+                _textMesh.color = new Color(color.r, color.g, color.b, 0f);
+            }
         }
+
+        #endregion
+
+        #region Private Methods — Animation
 
         private void StartAnimationSequence()
         {
             Sequence mainSequence = DOTween.Sequence();
 
-            // 1. Анимация "распрямления" слайма (0.5 секунд)
-            mainSequence.Append(transform.DOScale(originalScale, squeezeDuration)
-                .SetEase(Ease.OutElastic, 0.5f, 1f));
+            // 1. Анимация "распрямления" (эластичный эффект)
+            mainSequence.Append(
+                transform.DOScale(_originalScale, _squeezeDuration)
+                    .SetEase(Ease.OutElastic, 0.5f, 1f)
+            );
 
-            // Одновременно с распрямлением - появление текста
-            mainSequence.Join(textMesh.DOFade(1f, squeezeDuration * 0.7f));
+            // Одновременно — появление текста
+            if (_textMesh != null)
+            {
+                mainSequence.Join(
+                    _textMesh.DOFade(1f, _squeezeDuration * 0.7f)
+                );
+            }
 
-            // 2. Переключение фонов на 0.25 секунде
-            mainSequence.InsertCallback(backgroundSwitchTime, SwitchBackgrounds);
+            // 2. Переключение фонов
+            mainSequence.InsertCallback(_backgroundSwitchTime, SwitchBackgrounds);
 
             // 3. Пауза перед исчезновением
-            float pauseDuration = totalLifetime - squeezeDuration - disappearDuration;
+            float pauseDuration = _totalLifetime - _squeezeDuration - _disappearDuration;
             mainSequence.AppendInterval(pauseDuration);
 
-            // 4. Исчезновение (0.5 секунд)
-            Sequence disappearSequence = DOTween.Sequence();
-            disappearSequence.Append(transform.DOScale(Vector3.zero, disappearDuration)
-                .SetEase(Ease.InBack));
-            disappearSequence.Join(textMesh.DOFade(0f, disappearDuration));
+            // 4. Исчезновение
+            mainSequence.Append(CreateDisappearSequence());
 
-            // Если фоны активны, тоже анимируем их исчезновение
-            if (whiteBgRenderer != null)
-                disappearSequence.Join(whiteBgRenderer.DOFade(0f, disappearDuration));
-            if (bgRenderer != null)
-                disappearSequence.Join(bgRenderer.DOFade(0f, disappearDuration));
-
-            mainSequence.Append(disappearSequence);
-
-            // Уничтожаем объект после завершения анимации
+            // Уничтожаем объект после завершения
             mainSequence.OnComplete(() => Destroy(gameObject));
-
             mainSequence.SetLink(gameObject);
+        }
+
+        private Sequence CreateDisappearSequence()
+        {
+            Sequence disappearSequence = DOTween.Sequence();
+
+            disappearSequence.Append(
+                transform.DOScale(Vector3.zero, _disappearDuration)
+                    .SetEase(Ease.InBack)
+            );
+
+            if (_textMesh != null)
+            {
+                disappearSequence.Join(_textMesh.DOFade(0f, _disappearDuration));
+            }
+
+            if (_whiteBackgroundRenderer != null)
+            {
+                disappearSequence.Join(_whiteBackgroundRenderer.DOFade(0f, _disappearDuration));
+            }
+
+            if (_backgroundRenderer != null)
+            {
+                disappearSequence.Join(_backgroundRenderer.DOFade(0f, _disappearDuration));
+            }
+
+            return disappearSequence;
         }
 
         private void SwitchBackgrounds()
         {
-            // Переключаем фоны: выключаем белый, включаем обычный
-            if (whiteBackground != null)
-                whiteBackground.SetActive(false);
-            if (background != null)
-                background.SetActive(true);
+            if (_whiteBackground != null)
+            {
+                _whiteBackground.SetActive(false);
+            }
+
+            if (_background != null)
+            {
+                _background.SetActive(true);
+            }
         }
 
-        // Метод для установки текста (совместимость с существующим кодом)
-        public void SetText(string text)
-        {
-            if (textMesh != null)
-                textMesh.text = text;
-        }
+        #endregion
 
-        private void OnDestroy()
+        #region Private Methods — Cleanup
+
+        private void KillAllTweens()
         {
-            // Останавливаем все твины при уничтожении объекта
             DOTween.Kill(transform);
-            if (textMesh != null)
-                DOTween.Kill(textMesh);
-            if (whiteBgRenderer != null)
-                DOTween.Kill(whiteBgRenderer);
-            if (bgRenderer != null)
-                DOTween.Kill(bgRenderer);
+
+            if (_textMesh != null)
+            {
+                DOTween.Kill(_textMesh);
+            }
+
+            if (_whiteBackgroundRenderer != null)
+            {
+                DOTween.Kill(_whiteBackgroundRenderer);
+            }
+
+            if (_backgroundRenderer != null)
+            {
+                DOTween.Kill(_backgroundRenderer);
+            }
         }
+
+        #endregion
+
+        #region Editor Helpers
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _squeezeDuration = Mathf.Max(0.01f, _squeezeDuration);
+            _backgroundSwitchTime = Mathf.Max(0f, _backgroundSwitchTime);
+            _totalLifetime = Mathf.Max(_squeezeDuration + _disappearDuration + 0.1f, _totalLifetime);
+            _disappearDuration = Mathf.Max(0.01f, _disappearDuration);
+        }
+
+        private void Reset()
+        {
+            _whiteBackground = transform.Find("WhiteBackground")?.gameObject;
+            _background = transform.Find("Background")?.gameObject;
+        }
+#endif
+
+        #endregion
     }
 }

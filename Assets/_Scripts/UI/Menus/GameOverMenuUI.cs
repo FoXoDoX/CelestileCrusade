@@ -115,10 +115,9 @@ namespace My.Scripts.UI.Menus
         {
             if (_completionText == null) return;
 
-            int highestLevel = GameData.HighestCompletedLevel;
             int totalStars = CalculateTotalStars();
 
-            _completionText.text = $"LEVELS COMPLETED: {highestLevel}\nTOTAL STARS: {totalStars}";
+            _completionText.text = $"TOTAL STARS: {totalStars}";
         }
 
         private int CalculateTotalStars()

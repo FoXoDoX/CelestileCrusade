@@ -138,8 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c25059867dbec449b08f808f8d0732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScorePopup
-  textMeshPro: {fileID: 5967072832663841599}
-  background: {fileID: 250756988473450603}
+  _textMesh: {fileID: 5967072832663841599}
+  _background: {fileID: 250756988473450603}
 --- !u!114 &9037390257473489747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,13 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8260aa53a4b493645b56c7055db6273b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScorePopupAnimation
-  whiteBackground: {fileID: 7719885792241433396}
-  background: {fileID: 250756988473450603}
-  squeezeDuration: 0.5
-  backgroundSwitchTime: 0.05
-  totalLifetime: 1.5
-  disappearDuration: 0.5
-  squeezeScale: {x: 1.5, y: 0.5, z: 1}
+  _whiteBackground: {fileID: 7719885792241433396}
+  _background: {fileID: 250756988473450603}
+  _squeezeDuration: 0.5
+  _backgroundSwitchTime: 0.05
+  _totalLifetime: 1.5
+  _disappearDuration: 0.5
+  _squeezeScale: {x: 1.5, y: 0.5, z: 1}
 --- !u!1 &7719885792241433396
 GameObject:
   m_ObjectHideFlags: 0

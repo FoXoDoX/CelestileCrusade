@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: scoreMultiplier
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5778715785788125553, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: _scoreMultiplier
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

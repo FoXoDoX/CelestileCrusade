@@ -26,7 +26,7 @@ namespace My.Scripts.Environment.Terrain
         [SerializeField] private float _spawnDistance = DEFAULT_SPAWN_DISTANCE;
         [SerializeField] private int _initialPartsPerSide = DEFAULT_INITIAL_PARTS;
         [SerializeField] private Vector3 _rightSpawnOffset = new(3f, 6f, 0f);
-        [SerializeField] private Vector3 _leftSpawnOffset = new(-3f, 6f, 0f);
+        [SerializeField] private Vector3 _leftSpawnOffset = new(3f, 6f, 0f);
 
         #endregion
 

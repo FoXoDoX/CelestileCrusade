@@ -208,6 +208,7 @@ namespace My.Scripts.Managers
             em.AddHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
             em.AddHandler(GameEvents.KeyPickup, OnKeyPickup);
             em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.AddHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.AddHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.AddHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
             em.AddHandler<LanderStateData>(GameEvents.LanderStateChanged, OnLanderStateChanged);
@@ -222,6 +223,7 @@ namespace My.Scripts.Managers
             em.RemoveHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
             em.RemoveHandler(GameEvents.KeyPickup, OnKeyPickup);
             em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.RemoveHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.RemoveHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.RemoveHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
             em.RemoveHandler<LanderStateData>(GameEvents.LanderStateChanged, OnLanderStateChanged);
@@ -264,6 +266,8 @@ namespace My.Scripts.Managers
                 useOutline: true
             );
         }
+
+        private void OnCrateCracked() => GeneratePickupImpulse();
 
         private void OnRopeWithCrateSpawned()
         {

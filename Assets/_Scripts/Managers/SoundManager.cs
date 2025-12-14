@@ -40,6 +40,7 @@ namespace My.Scripts.Managers
         [SerializeField] private AudioClip _keyDeliveredClip;
         [SerializeField] private AudioClip _progressBarClip;
         [SerializeField] private AudioClip _windClip;
+        [SerializeField] private AudioClip _turretShootClip;
 
         #endregion
 
@@ -108,8 +109,8 @@ namespace My.Scripts.Managers
         public void PlaySound(AudioClip clip)
         {
             if (clip == null || _soundEffectsSource == null) return;
-            if (_progressBarSource != null && _progressBarSource.isPlaying) return;
 
+            // PlayOneShot позволяет воспроизводить несколько звуков одновременно
             _soundEffectsSource.PlayOneShot(clip, GetSoundVolumeNormalized());
         }
 
@@ -117,7 +118,11 @@ namespace My.Scripts.Managers
         {
             if (_progressBarClip == null || _progressBarSource == null) return;
 
-            StopProgressBarSound();
+            // Не останавливаем, если уже играет тот же звук
+            if (_progressBarSource.isPlaying && _progressBarSource.clip == _progressBarClip)
+            {
+                return;
+            }
 
             _progressBarSource.clip = _progressBarClip;
             _progressBarSource.volume = GetSoundVolumeNormalized();
@@ -191,11 +196,11 @@ namespace My.Scripts.Managers
             var em = EventManager.Instance;
             if (em == null) return;
 
-            // События с параметром PickupEventData
             em.AddHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
             em.AddHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
 
-            // События без параметров
+            em.AddHandler(GameEvents.TurretShoot, OnTurretShoot);
+
             em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.AddHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
@@ -203,7 +208,6 @@ namespace My.Scripts.Managers
             em.AddHandler(GameEvents.KeyPickup, OnKeyPickup);
             em.AddHandler(GameEvents.KeyDelivered, OnKeyDelivered);
 
-            // Событие с параметром LanderLandedData
             em.AddHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
         }
 
@@ -212,11 +216,11 @@ namespace My.Scripts.Managers
             var em = EventManager.Instance;
             if (em == null) return;
 
-            // События с параметром PickupEventData
             em.RemoveHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
             em.RemoveHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
 
-            // События без параметров
+            em.RemoveHandler(GameEvents.TurretShoot, OnTurretShoot);
+
             em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.RemoveHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
@@ -224,7 +228,6 @@ namespace My.Scripts.Managers
             em.RemoveHandler(GameEvents.KeyPickup, OnKeyPickup);
             em.RemoveHandler(GameEvents.KeyDelivered, OnKeyDelivered);
 
-            // Событие с параметром LanderLandedData
             em.RemoveHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
         }
 
@@ -232,11 +235,11 @@ namespace My.Scripts.Managers
 
         #region Private Methods — Event Handlers
 
-        // Обработчики с параметром PickupEventData (данные игнорируем, нужен только звук)
         private void OnFuelPickup(PickupEventData data) => PlaySound(_fuelPickupClip);
         private void OnCoinPickup(PickupEventData data) => PlaySound(_coinPickupClip);
 
-        // Обработчики без параметров
+        private void OnTurretShoot() => PlaySound(_turretShootClip);
+
         private void OnCrateDrop() => PlaySound(_crateDeliveredClip);
         private void OnCrateCracked() => PlaySound(_crateCrackedClip);
         private void OnCrateDestroyed() => PlaySound(_crateDestroyedClip);

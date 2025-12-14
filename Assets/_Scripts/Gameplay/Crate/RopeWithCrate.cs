@@ -5,23 +5,25 @@ using UnityEngine;
 
 namespace My.Scripts.Gameplay.Crate
 {
+    /// <summary>
+    /// Контейнер для верёвки и ящика. 
+    /// Физика через Distance Joint, визуал через Verlet.
+    /// </summary>
     public class RopeWithCrate : MonoBehaviour
     {
         #region Serialized Fields
 
         [Header("References")]
-        [SerializeField] private GameObject _anchor;
-        [SerializeField] private GameObject _crate;
+        [SerializeField] private RopeVerlet _rope;
+        [SerializeField] private CrateOnRope _crate;
 
         [Header("Settings")]
-        [SerializeField] private Vector3 _anchorOffset = Vector3.down;
+        [SerializeField] private float _crateSpawnOffset = 2f;
 
         #endregion
 
         #region Private Fields
 
-        private HingeJoint2D _anchorJoint;
-        private Collider2D _crateCollider;
         private bool _isDestroyed;
 
         #endregion
@@ -35,13 +37,16 @@ namespace My.Scripts.Gameplay.Crate
 
         private void Start()
         {
+            PositionCrate();
+            InitializeRope();
+            AttachCrateToPlayer();
             SetupCollisionIgnore();
-            BroadcastSpawned();
         }
 
         private void OnEnable()
         {
             SubscribeToEvents();
+            BroadcastSpawned();
         }
 
         private void OnDisable()
@@ -54,28 +59,81 @@ namespace My.Scripts.Gameplay.Crate
             DestroySelf();
         }
 
-        private void FixedUpdate()
-        {
-            if (_isDestroyed) return;
-
-            UpdateAnchorPosition();
-        }
-
         #endregion
 
         #region Private Methods — Initialization
 
         private void CacheComponents()
         {
-            if (_anchor != null)
+            if (_rope == null)
             {
-                _anchorJoint = _anchor.GetComponent<HingeJoint2D>();
+                _rope = GetComponentInChildren<RopeVerlet>();
             }
 
-            if (_crate != null)
+            if (_crate == null)
             {
-                _crateCollider = _crate.GetComponent<Collider2D>();
+                _crate = GetComponentInChildren<CrateOnRope>();
             }
+        }
+
+        private void PositionCrate()
+        {
+            if (_crate == null) return;
+            if (!Lander.HasInstance) return;
+
+            Vector3 landerPosition = Lander.Instance.transform.position;
+            float offset = _rope != null ? _rope.TotalLength : _crateSpawnOffset;
+
+            _crate.transform.position = landerPosition + Vector3.down * offset;
+        }
+
+        private void InitializeRope()
+        {
+            if (_rope == null)
+            {
+                Debug.LogError($"[{nameof(RopeWithCrate)}] RopeVerlet not found!", this);
+                return;
+            }
+
+            if (!Lander.HasInstance)
+            {
+                Debug.LogError($"[{nameof(RopeWithCrate)}] Lander not found!", this);
+                return;
+            }
+
+            if (_crate == null)
+            {
+                Debug.LogError($"[{nameof(RopeWithCrate)}] Crate not found!", this);
+                return;
+            }
+
+            // Визуальная верёвка: начало — точка привязки, конец — ящик
+            RopeAttachPoint attachPoint = Lander.Instance.RopeAttachPoint;
+            Transform startPoint = attachPoint != null
+                ? attachPoint.transform
+                : Lander.Instance.transform;
+
+            _rope.Initialize(startPoint, _crate.transform);
+        }
+
+        private void AttachCrateToPlayer()
+        {
+            if (_crate == null) return;
+            if (!Lander.HasInstance) return;
+
+            // Используем точку привязки вместо основного Rigidbody
+            RopeAttachPoint attachPoint = Lander.Instance.RopeAttachPoint;
+
+            if (attachPoint == null)
+            {
+                Debug.LogError($"[{nameof(RopeWithCrate)}] Lander has no RopeAttachPoint!", this);
+                return;
+            }
+
+            float ropeLength = _rope != null ? _rope.TotalLength : _crateSpawnOffset;
+
+            // Физическая связь через Distance Joint к точке привязки
+            _crate.AttachToPlayer(attachPoint.Rigidbody, ropeLength);
         }
 
         private void SetupCollisionIgnore()
@@ -85,19 +143,12 @@ namespace My.Scripts.Gameplay.Crate
             Collider2D landerCollider = Lander.Instance.GetComponent<Collider2D>();
             if (landerCollider == null) return;
 
-            Collider2D[] ropeColliders = GetComponentsInChildren<Collider2D>();
-
-            foreach (Collider2D ropeCollider in ropeColliders)
+            if (_crate != null)
             {
-                // Пропускаем коллайдер ящика
-                if (ropeCollider == _crateCollider) continue;
-
-                // Верёвка не должна сталкиваться с Lander и ящиком
-                Physics2D.IgnoreCollision(landerCollider, ropeCollider);
-
-                if (_crateCollider != null)
+                var crateColliders = _crate.GetComponents<Collider2D>();
+                foreach (var col in crateColliders)
                 {
-                    Physics2D.IgnoreCollision(_crateCollider, ropeCollider);
+                    Physics2D.IgnoreCollision(landerCollider, col);
                 }
             }
         }
@@ -155,25 +206,6 @@ namespace My.Scripts.Gameplay.Crate
 
         #endregion
 
-        #region Private Methods — Update
-
-        private void UpdateAnchorPosition()
-        {
-            if (!IsValidAnchor()) return;
-            if (!Lander.HasInstance) return;
-
-            _anchor.transform.position = Lander.Instance.transform.position + _anchorOffset;
-        }
-
-        private bool IsValidAnchor()
-        {
-            return _anchor != null &&
-                   _anchorJoint != null &&
-                   _anchorJoint.enabled;
-        }
-
-        #endregion
-
         #region Private Methods — Destruction
 
         private void DestroySelf()
@@ -181,34 +213,27 @@ namespace My.Scripts.Gameplay.Crate
             if (_isDestroyed) return;
             _isDestroyed = true;
 
-            // Освобождаем ящик у Lander
             if (Lander.HasInstance)
             {
                 Lander.Instance.ReleaseCrate();
             }
 
-            // Отключаем joint
-            DisableJoint();
+            if (_rope != null)
+            {
+                _rope.DetachEndPoint();
+            }
 
-            // Отключаем все коллайдеры
+            if (_crate != null)
+            {
+                _crate.DetachFromPlayer();
+            }
+
             DisableAllColliders();
-
-            // Отписываемся от событий
             UnsubscribeFromEvents();
 
-            // Сообщаем об уничтожении
             EventManager.Instance?.Broadcast(GameEvents.RopeWithCrateDestroyed);
 
-            // Уничтожаем объект
             Destroy(gameObject);
-        }
-
-        private void DisableJoint()
-        {
-            if (_anchorJoint != null)
-            {
-                _anchorJoint.enabled = false;
-            }
         }
 
         private void DisableAllColliders()
@@ -223,6 +248,27 @@ namespace My.Scripts.Gameplay.Crate
                 }
             }
         }
+
+        #endregion
+
+        #region Editor Helpers
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _crateSpawnOffset = Mathf.Max(0.5f, _crateSpawnOffset);
+
+            if (_rope == null)
+            {
+                _rope = GetComponentInChildren<RopeVerlet>();
+            }
+
+            if (_crate == null)
+            {
+                _crate = GetComponentInChildren<CrateOnRope>();
+            }
+        }
+#endif
 
         #endregion
     }

@@ -1,7 +1,9 @@
-using My.Scripts.Core.Data;
+﻿using My.Scripts.Core.Data;
 using My.Scripts.EventBus;
+using My.Scripts.Gameplay.KeyDoor;
 using My.Scripts.Gameplay.LandingPads;
 using My.Scripts.Gameplay.Pickups;
+using My.Scripts.Gameplay.Player;
 using My.Scripts.Managers;
 using System;
 using System.Collections;
@@ -9,40 +11,113 @@ using UnityEngine;
 
 namespace My.Scripts.Gameplay.Crate
 {
+    /// <summary>
+    /// Ящик на верёвке. Использует Distance Joint 2D для связи с игроком.
+    /// </summary>
     public class CrateOnRope : MonoBehaviour
     {
         #region Constants
 
-        private const float DELAY_FOR_CRATE_DROP = 3f;
+        private const int INITIAL_HEALTH = 3;
+        private const float DELIVERY_TIME = 3f;
         private const float FUEL_PICKUP_AMOUNT = 15f;
-        private const int INITIAL_CRATE_HEALTH = 3;
 
         #endregion
 
         #region Serialized Fields
 
-        [SerializeField] private Sprite _crackedCrateSprite;
-        [SerializeField] private Sprite _veryCrackedCrateSprite;
+        [Header("Sprites")]
+        [SerializeField] private Sprite _normalSprite;
+        [SerializeField] private Sprite _crackedSprite;
+        [SerializeField] private Sprite _veryCrackedSprite;
+
+        [Header("Vfx")]
+        [SerializeField] private ParticleSystem _crackVfx;
+
+        [Header("Physics — Basic")]
+        [SerializeField] private float _mass = 2f;
+        [SerializeField] private float _gravityScale = 3f;
+
+        [Header("Physics — Damping")]
+        [Tooltip("Сопротивление движению. Низкое = больше раскачивания")]
+        [SerializeField] private float _linearDrag = 0.5f;
+
+        [Tooltip("Сопротивление вращению")]
+        [SerializeField] private float _angularDrag = 0.5f;
+
+        [Header("Physics — Swing Behavior")]
+        [Tooltip("Дополнительная сила, возвращающая ящик под игрока")]
+        [SerializeField] private float _centeringForce = 5f;
+
+        [Tooltip("Демпфирование горизонтальной скорости для плавного качания")]
+        [SerializeField] private float _horizontalDamping = 0.98f;
+
+        [Tooltip("Максимальная горизонтальная скорость")]
+        [SerializeField] private float _maxHorizontalSpeed = 10f;
+
+        [Header("Physics — Tilt")]
+        [Tooltip("Максимальный угол наклона в градусах")]
+        [SerializeField] private float _maxTiltAngle = 25f;
+
+        [Tooltip("Влияние горизонтального смещения на наклон")]
+        [SerializeField] private float _tiltFromOffset = 15f;
+
+        [Tooltip("Влияние горизонтальной скорости на наклон")]
+        [SerializeField] private float _tiltFromVelocity = 3f;
+
+        [Tooltip("Скорость плавного поворота к целевому углу")]
+        [SerializeField] private float _tiltSmoothing = 8f;
+
+        [Header("Physics — Bounce")]
+        [Tooltip("Сила отскока от препятствий")]
+        [SerializeField] private float _bounceForce = 8f;
+
+        [Tooltip("Минимальная скорость столкновения для отскока")]
+        [SerializeField] private float _minImpactVelocity = 1f;
+
+        [Tooltip("Дополнительный наклон при ударе (градусы)")]
+        [SerializeField] private float _impactTiltBoost = 15f;
+
+        [Tooltip("Длительность эффекта удара")]
+        [SerializeField] private float _impactEffectDuration = 0.3f;
+
+        [Tooltip("Подъём вверх при отскоке (0-1)")]
+        [SerializeField] private float _bounceUpwardBias = 0.3f;
 
         #endregion
 
         #region Private Fields
 
+        private Rigidbody2D _rigidbody;
         private SpriteRenderer _spriteRenderer;
-        private CrateLandingPadArea _currentLandingArea;
-        private Coroutine _crateDropCoroutine;
+        private DistanceJoint2D _distanceJoint;
+        private Transform _attachPoint;
 
-        private float _dropTimer;
-        private int _crateHealth = INITIAL_CRATE_HEALTH;
+        private CrateLandingPadArea _currentLandingArea;
+        private Coroutine _deliveryCoroutine;
+
+        private int _health = INITIAL_HEALTH;
+        private float _deliveryProgress;
+        private float _currentTiltAngle;
+        private float _impactTiltEffect;
+        private float _lastImpactTime;
         private bool _isInLandingArea;
         private bool _isProgressSoundPlaying;
+        private bool _isDestroyed;
+
+        #endregion
+
+        #region Properties
+
+        public Rigidbody2D Rigidbody => _rigidbody;
+        public bool IsDestroyed => _isDestroyed;
 
         #endregion
 
         #region Events
 
-        // ��� ������� �����������, ������� ����� collider
-        public Action<Collider2D> OnCrateCollision;
+        public event Action OnCrateCracked;
+        public event Action OnCrateDestroyed;
 
         #endregion
 
@@ -50,28 +125,36 @@ namespace My.Scripts.Gameplay.Crate
 
         private void Awake()
         {
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            CacheComponents();
+            SetupRigidbody();
         }
 
-        private void OnEnable()
+        private void FixedUpdate()
         {
-            EventManager.Instance?.Broadcast(GameEvents.RopeWithCrateSpawned);
+            ApplySwingPhysics();
+        }
+
+        private void Update()
+        {
+            UpdateImpactEffect();
+            ApplyTilt();
         }
 
         private void OnDisable()
         {
             StopProgressBarSound();
-            EventManager.Instance?.Broadcast(GameEvents.RopeWithCrateDestroyed);
         }
 
-        #endregion
-
-        #region Collision Handling
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            HandleCollision(collision);
+        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (TryHandleFuelPickup(other)) return;
             if (TryHandleCoinPickup(other)) return;
+            if (TryHandleKeyPickup(other)) return;
             if (TryHandleLandingAreaEnter(other)) return;
         }
 
@@ -80,199 +163,388 @@ namespace My.Scripts.Gameplay.Crate
             TryHandleLandingAreaExit(other);
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            // ������� �� �������� �� ������� ����
-            if (collision.collider.TryGetComponent(out CrateLandingPad _))
-                return;
-
-            ApplyDamage();
-        }
-
         #endregion
 
         #region Public Methods
 
-        public float GetDropProgressNormalized()
+        /// <summary>
+        /// Привязывает ящик к игроку через Distance Joint 2D.
+        /// </summary>
+        public void AttachToPlayer(Rigidbody2D attachPointRb, float ropeLength)
         {
-            return _dropTimer / DELAY_FOR_CRATE_DROP;
+            _attachPoint = attachPointRb.transform;
+
+            if (_distanceJoint == null)
+            {
+                _distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
+            }
+
+            _distanceJoint.connectedBody = attachPointRb;
+            _distanceJoint.autoConfigureDistance = false;
+            _distanceJoint.distance = ropeLength;
+            _distanceJoint.maxDistanceOnly = true;
+            _distanceJoint.enableCollision = false;
+        }
+
+        /// <summary>
+        /// Отвязывает ящик от игрока.
+        /// </summary>
+        public void DetachFromPlayer()
+        {
+            _attachPoint = null;
+
+            if (_distanceJoint != null)
+            {
+                Destroy(_distanceJoint);
+                _distanceJoint = null;
+            }
+        }
+
+        /// <summary>
+        /// Наносит урон ящику.
+        /// </summary>
+        public void TakeDamage(int damage = 1)
+        {
+            if (_isDestroyed) return;
+
+            _health -= damage;
+
+            UpdateVisual();
+            OnCrateCracked?.Invoke();
+            EventManager.Instance?.Broadcast(GameEvents.CrateCracked);
+
+            if (_health <= 0)
+            {
+                DestroyCrate();
+            }
         }
 
         #endregion
 
-        #region Private Methods � Pickup Handling
+        #region Private Methods — Initialization
+
+        private void CacheComponents()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            if (_rigidbody == null)
+            {
+                _rigidbody = gameObject.AddComponent<Rigidbody2D>();
+            }
+        }
+
+        private void SetupRigidbody()
+        {
+            if (_rigidbody == null) return;
+
+            _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            _rigidbody.mass = _mass;
+            _rigidbody.linearDamping = _linearDrag;
+            _rigidbody.angularDamping = _angularDrag;
+            _rigidbody.gravityScale = _gravityScale;
+            _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            _rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+            _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+
+        #endregion
+
+        #region Private Methods — Swing Physics
+
+        private void ApplySwingPhysics()
+        {
+            if (_attachPoint == null) return;
+            if (_rigidbody == null) return;
+
+            Vector2 attachPos = _attachPoint.position;
+            Vector2 cratePos = _rigidbody.position;
+
+            float horizontalOffset = cratePos.x - attachPos.x;
+
+            float centeringForceX = -horizontalOffset * _centeringForce;
+            _rigidbody.AddForce(new Vector2(centeringForceX, 0f));
+
+            Vector2 velocity = _rigidbody.linearVelocity;
+            velocity.x *= _horizontalDamping;
+
+            velocity.x = Mathf.Clamp(velocity.x, -_maxHorizontalSpeed, _maxHorizontalSpeed);
+
+            _rigidbody.linearVelocity = velocity;
+        }
+
+        #endregion
+
+        #region Private Methods — Tilt
+
+        private void ApplyTilt()
+        {
+            if (_attachPoint == null) return;
+            if (_rigidbody == null) return;
+
+            Vector2 attachPos = _attachPoint.position;
+            Vector2 cratePos = transform.position;
+
+            float horizontalOffset = cratePos.x - attachPos.x;
+            float ropeLength = _distanceJoint != null ? _distanceJoint.distance : 5f;
+            float normalizedOffset = horizontalOffset / ropeLength;
+
+            float horizontalVelocity = _rigidbody.linearVelocity.x;
+
+            float tiltFromPosition = -normalizedOffset * _tiltFromOffset;
+            float tiltFromSpeed = -horizontalVelocity * _tiltFromVelocity;
+
+            float targetTilt = tiltFromPosition + tiltFromSpeed + _impactTiltEffect;
+            targetTilt = Mathf.Clamp(targetTilt, -_maxTiltAngle - _impactTiltBoost, _maxTiltAngle + _impactTiltBoost);
+
+            _currentTiltAngle = Mathf.Lerp(_currentTiltAngle, targetTilt, _tiltSmoothing * Time.deltaTime);
+
+            transform.rotation = Quaternion.Euler(0f, 0f, _currentTiltAngle);
+        }
+
+        private void UpdateImpactEffect()
+        {
+            if (_impactTiltEffect == 0f) return;
+
+            float timeSinceImpact = Time.time - _lastImpactTime;
+            float progress = timeSinceImpact / _impactEffectDuration;
+
+            if (progress >= 1f)
+            {
+                _impactTiltEffect = 0f;
+            }
+            else
+            {
+                float decay = 1f - progress;
+                _impactTiltEffect = _impactTiltEffect * decay * Mathf.Cos(progress * Mathf.PI * 4f);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods — Collision & Bounce
+
+        private void HandleCollision(Collision2D collision)
+        {
+            if (collision.gameObject.GetComponent<CrateLandingPad>() != null) return;
+            if (collision.gameObject.GetComponent<Player.Lander>() != null) return;
+
+            ApplyBounce(collision);
+            TakeDamage();
+        }
+
+        private void ApplyBounce(Collision2D collision)
+        {
+            if (_rigidbody == null) return;
+
+            ContactPoint2D contact = collision.GetContact(0);
+            Vector2 normal = contact.normal;
+            float impactVelocity = collision.relativeVelocity.magnitude;
+
+            if (impactVelocity < _minImpactVelocity) return;
+
+            float bounceMultiplier = Mathf.Clamp01(impactVelocity / 10f) + 0.5f;
+
+            Vector2 bounceDirection = normal;
+            bounceDirection.y += _bounceUpwardBias;
+            bounceDirection.Normalize();
+
+            Vector2 bounceImpulse = bounceDirection * _bounceForce * bounceMultiplier;
+            Instantiate(_crackVfx, transform.position, Quaternion.identity);
+            _rigidbody.AddForce(bounceImpulse, ForceMode2D.Impulse);
+
+            float impactSide = Mathf.Sign(contact.point.x - transform.position.x);
+            _impactTiltEffect = impactSide * _impactTiltBoost * bounceMultiplier;
+            _lastImpactTime = Time.time;
+        }
+
+        #endregion
+
+        #region Private Methods — Pickup Handling
 
         private bool TryHandleCoinPickup(Collider2D other)
         {
-            if (!other.TryGetComponent(out CoinPickup coinPickup))
-                return false;
+            if (!other.TryGetComponent(out CoinPickup coinPickup)) return false;
 
             EventManager.Instance?.Broadcast(GameEvents.CoinPickup, new PickupEventData(transform.position));
-
             coinPickup.DestroySelf();
             return true;
         }
 
         private bool TryHandleFuelPickup(Collider2D other)
         {
-            if (!other.TryGetComponent(out FuelPickup fuelPickup))
-                return false;
+            if (!other.TryGetComponent(out FuelPickup fuelPickup)) return false;
+
+            if (Lander.HasInstance)
+            {
+                Lander.Instance.AddFuel(FUEL_PICKUP_AMOUNT);
+            }
 
             EventManager.Instance?.Broadcast(GameEvents.FuelPickup, new PickupEventData(transform.position));
-
             fuelPickup.DestroySelf();
             return true;
         }
 
+        private bool TryHandleKeyPickup(Collider2D other)
+        {
+            if (!other.TryGetComponent(out Key key)) return false;
+
+            KeyHolder keyHolder = FindKeyHolder();
+
+            if (keyHolder != null)
+            {
+                // Перемещаем ключ к KeyHolder, чтобы тот подобрал его сам
+                key.transform.position = keyHolder.transform.position;
+
+                // KeyHolder подберёт ключ через свой OnTriggerEnter2D
+                return true;
+            }
+
+            // Fallback: уничтожаем ключ и отправляем событие
+            Destroy(key.gameObject);
+            EventManager.Instance?.Broadcast(GameEvents.KeyPickup);
+            return true;
+        }
+
+        private KeyHolder FindKeyHolder()
+        {
+            if (Lander.HasInstance)
+            {
+                var holder = Lander.Instance.GetComponent<KeyHolder>();
+                if (holder != null) return holder;
+
+                holder = Lander.Instance.GetComponentInChildren<KeyHolder>();
+                if (holder != null) return holder;
+            }
+
+            return FindFirstObjectByType<KeyHolder>();
+        }
+
         #endregion
 
-        #region Private Methods � Landing Area
+        #region Private Methods — Landing Area
 
         private bool TryHandleLandingAreaEnter(Collider2D other)
         {
-            if (!other.TryGetComponent(out CrateLandingPadArea landingArea))
-                return false;
+            if (!other.TryGetComponent(out CrateLandingPadArea landingArea)) return false;
 
-            // ���������� �������� LandingPad ������ ������ GetLandingPad()
             var landingPad = landingArea.LandingPad;
-            if (landingPad == null || !landingPad.CanAcceptCrates)
-                return false;
+            if (landingPad == null || !landingPad.CanAcceptCrates) return false;
 
             _currentLandingArea = landingArea;
             _isInLandingArea = true;
 
-            RestartDropCoroutine();
+            RestartDeliveryCoroutine();
             return true;
         }
 
         private void TryHandleLandingAreaExit(Collider2D other)
         {
-            if (!other.TryGetComponent(out CrateLandingPadArea landingArea))
-                return;
+            if (!other.TryGetComponent(out CrateLandingPadArea landingArea)) return;
+            if (_currentLandingArea != landingArea) return;
 
-            if (_currentLandingArea != landingArea)
-                return;
-
-            Debug.Log("Drop canceled");
-
-            CancelDrop();
+            CancelDelivery();
         }
 
-        private void RestartDropCoroutine()
+        private void RestartDeliveryCoroutine()
         {
-            if (_crateDropCoroutine != null)
+            if (_deliveryCoroutine != null)
             {
-                StopCoroutine(_crateDropCoroutine);
+                StopCoroutine(_deliveryCoroutine);
                 StopProgressBarSound();
             }
 
-            _crateDropCoroutine = StartCoroutine(DropCrateAfterDelay());
+            _deliveryCoroutine = StartCoroutine(DeliveryRoutine());
         }
 
-        private void CancelDrop()
+        private void CancelDelivery()
         {
             _isInLandingArea = false;
-
-            // ���������� �������� LandingPad ������ ������ GetLandingPad()
-            var landingPad = _currentLandingArea?.LandingPad;
-            landingPad?.ResetDeliveryProgress();
-
+            _currentLandingArea?.LandingPad?.ResetDeliveryProgress();
             _currentLandingArea = null;
-            _dropTimer = 0f;
+            _deliveryProgress = 0f;
 
-            if (_crateDropCoroutine != null)
+            if (_deliveryCoroutine != null)
             {
-                StopCoroutine(_crateDropCoroutine);
-                _crateDropCoroutine = null;
+                StopCoroutine(_deliveryCoroutine);
+                _deliveryCoroutine = null;
                 StopProgressBarSound();
             }
         }
 
-        private IEnumerator DropCrateAfterDelay()
+        private IEnumerator DeliveryRoutine()
         {
-            Debug.Log("Drop started");
-
             var landingArea = _currentLandingArea;
-            // ���������� �������� LandingPad ������ ������ GetLandingPad()
             var landingPad = landingArea?.LandingPad;
 
-            if (landingPad == null)
-                yield break;
+            if (landingPad == null) yield break;
 
             StartProgressBarSound();
-            _dropTimer = 0f;
+            _deliveryProgress = 0f;
 
-            while (_dropTimer < DELAY_FOR_CRATE_DROP)
+            while (_deliveryProgress < 1f)
             {
-                // ��������� ������� ������
-                if (!_isInLandingArea || landingArea == null || !landingPad.CanAcceptCrates)
+                if (!_isInLandingArea || !landingPad.CanAcceptCrates)
                 {
                     StopProgressBarSound();
                     yield break;
                 }
 
-                _dropTimer += Time.deltaTime;
-                float progress = _dropTimer / DELAY_FOR_CRATE_DROP;
-                landingPad.UpdateDeliveryProgress(progress);
-
+                _deliveryProgress += Time.deltaTime / DELIVERY_TIME;
+                landingPad.UpdateDeliveryProgress(_deliveryProgress);
                 yield return null;
             }
 
-            // �������� ��������
-            if (landingArea != null && landingPad != null && landingPad.CanAcceptCrates)
+            if (landingPad.CanAcceptCrates)
             {
                 landingArea.RegisterCrateDelivery();
                 landingPad.ResetDeliveryProgress();
-
-                DeliverCrate();
             }
 
             StopProgressBarSound();
-            _crateDropCoroutine = null;
+            _deliveryCoroutine = null;
             _currentLandingArea = null;
         }
 
         #endregion
 
-        #region Private Methods � Damage
+        #region Private Methods — Visual
 
-        private void ApplyDamage()
+        private void UpdateVisual()
         {
-            _crateHealth--;
-            EventManager.Instance?.Broadcast(GameEvents.CrateCracked);
+            if (_spriteRenderer == null) return;
 
-            UpdateCrateVisual();
-
-            if (_crateHealth <= 0)
+            _spriteRenderer.sprite = _health switch
             {
-                DestroyCrate();
-            }
-        }
-
-        private void UpdateCrateVisual()
-        {
-            _spriteRenderer.sprite = _crateHealth switch
-            {
-                2 => _crackedCrateSprite,
-                1 => _veryCrackedCrateSprite,
+                3 => _normalSprite,
+                2 => _crackedSprite,
+                1 => _veryCrackedSprite,
                 _ => _spriteRenderer.sprite
             };
         }
 
+        #endregion
+
+        #region Private Methods — Destruction
+
         private void DestroyCrate()
         {
-            EventManager.Instance?.Broadcast(GameEvents.CrateDestroyed);
-            // OnCrateCollision?.Invoke(...); // ���� ����� �������� collider
-        }
+            if (_isDestroyed) return;
 
-        private void DeliverCrate()
-        {
-            EventManager.Instance?.Broadcast(GameEvents.CrateDrop);
+            _isDestroyed = true;
+            CancelDelivery();
+            DetachFromPlayer();
+
+            OnCrateDestroyed?.Invoke();
+            EventManager.Instance?.Broadcast(GameEvents.CrateDestroyed);
+
+            Destroy(gameObject);
         }
 
         #endregion
 
-        #region Private Methods � Sound
+        #region Private Methods — Sound
 
         private void StartProgressBarSound()
         {
@@ -295,6 +567,32 @@ namespace My.Scripts.Gameplay.Crate
                 _isProgressSoundPlaying = false;
             }
         }
+
+        #endregion
+
+        #region Editor Helpers
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _mass = Mathf.Max(0.1f, _mass);
+            _linearDrag = Mathf.Max(0f, _linearDrag);
+            _angularDrag = Mathf.Max(0f, _angularDrag);
+            _gravityScale = Mathf.Max(0f, _gravityScale);
+            _centeringForce = Mathf.Max(0f, _centeringForce);
+            _horizontalDamping = Mathf.Clamp01(_horizontalDamping);
+            _maxHorizontalSpeed = Mathf.Max(1f, _maxHorizontalSpeed);
+            _maxTiltAngle = Mathf.Clamp(_maxTiltAngle, 0f, 45f);
+            _tiltFromOffset = Mathf.Max(0f, _tiltFromOffset);
+            _tiltFromVelocity = Mathf.Max(0f, _tiltFromVelocity);
+            _tiltSmoothing = Mathf.Max(1f, _tiltSmoothing);
+            _bounceForce = Mathf.Max(0f, _bounceForce);
+            _minImpactVelocity = Mathf.Max(0f, _minImpactVelocity);
+            _impactTiltBoost = Mathf.Max(0f, _impactTiltBoost);
+            _impactEffectDuration = Mathf.Max(0.1f, _impactEffectDuration);
+            _bounceUpwardBias = Mathf.Clamp01(_bounceUpwardBias);
+        }
+#endif
 
         #endregion
     }

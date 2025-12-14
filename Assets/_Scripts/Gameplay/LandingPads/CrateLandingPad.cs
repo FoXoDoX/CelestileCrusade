@@ -147,7 +147,6 @@ namespace My.Scripts.Gameplay.LandingPads
         {
             DisableLandingArea();
             HideBackground();
-            BroadcastAllCratesDelivered();
 
             Debug.Log("[CrateLandingPad] All crates delivered! Landing area disabled.");
         }
@@ -175,12 +174,6 @@ namespace My.Scripts.Gameplay.LandingPads
         private void BroadcastCrateDelivered()
         {
             EventManager.Instance?.Broadcast(GameEvents.CrateDrop);
-        }
-
-        private void BroadcastAllCratesDelivered()
-        {
-            // Можно добавить отдельное событие, если нужно
-            // EventManager.Instance?.Broadcast(GameEvents.AllCratesDelivered);
         }
 
         #endregion

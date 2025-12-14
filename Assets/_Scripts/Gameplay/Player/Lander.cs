@@ -34,6 +34,9 @@ namespace My.Scripts.Gameplay.Player
         [Header("Settings")]
         [SerializeField] private float _fuelAmountMax = 30f;
 
+        [Header("Rope")]
+        [SerializeField] private RopeAttachPoint _ropeAttachPoint;
+
         #endregion
 
         #region Private Fields
@@ -50,6 +53,8 @@ namespace My.Scripts.Gameplay.Player
 
         public bool HasCrate => _currentRopeWithCrate != null;
         public State CurrentState => _currentState;
+
+        public RopeAttachPoint RopeAttachPoint => _ropeAttachPoint;
 
         #endregion
 
@@ -146,11 +151,23 @@ namespace My.Scripts.Gameplay.Player
             if (HasCrate) return;
 
             BroadcastEvent(GameEvents.CratePickup);
-            _currentRopeWithCrate = Instantiate(_ropeWithCratePrefab, transform.position, Quaternion.identity);
+
+            // Спавним верёвку с ящиком в позиции лендера
+            // RopeWithCrate сам найдёт Lander.Instance и настроит всё в Start()
+            _currentRopeWithCrate = Instantiate(
+                _ropeWithCratePrefab,
+                transform.position,
+                Quaternion.identity
+            );
+
+            Debug.Log($"[Lander] Crate picked up, rope spawned at {transform.position}");
         }
 
         public void ReleaseCrate()
         {
+            if (_currentRopeWithCrate == null) return;
+
+            Debug.Log($"[Lander] Crate released");
             _currentRopeWithCrate = null;
         }
 

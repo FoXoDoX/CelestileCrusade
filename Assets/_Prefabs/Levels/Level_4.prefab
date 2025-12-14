@@ -214,8 +214,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: 23.000008, y: 23.484127, z: 0}
-    m_Extent: {x: 126.000015, y: 49.51587, z: 0}
+    m_Center: {x: 23.000008, y: 18.999996, z: 0}
+    m_Extent: {x: 126.000015, y: 54, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &454145550415634456
 MonoBehaviour:
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: -103, y: -15.438151, z: 0}
+    - position: {x: -103, y: -35, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 149, y: -26.031742, z: 0}
+    - position: {x: 149, y: -35, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -814,7 +814,7 @@ MonoBehaviour:
   m_Creator: {fileID: 0}
   m_Modifiers: []
   m_ColliderSegment:
-  - {x: -103, y: -15.438151}
+  - {x: -103, y: -35}
   - {x: -103, y: 73}
   - {x: -78.84144, y: 70.43578}
   - {x: -70.62648, y: 70.64956}
@@ -883,8 +883,8 @@ MonoBehaviour:
   - {x: 87.204445, y: 72.574326}
   - {x: 100.87695, y: 72.46094}
   - {x: 149, y: 60}
-  - {x: 149, y: -26.031742}
-  - {x: -103, y: -15.438151}
+  - {x: 149, y: -35}
+  - {x: -103, y: -35}
   m_ShadowSegment: []
 --- !u!60 &6170579465389559112
 PolygonCollider2D:
@@ -932,7 +932,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -103, y: -15.438151}
+    - - {x: -103, y: -35}
       - {x: -103, y: 73}
       - {x: -78.84144, y: 70.43578}
       - {x: -70.62648, y: 70.64956}
@@ -1001,8 +1001,8 @@ PolygonCollider2D:
       - {x: 87.204445, y: 72.574326}
       - {x: 100.87695, y: 72.46094}
       - {x: 149, y: 60}
-      - {x: 149, y: -26.031742}
-      - {x: -103, y: -15.438151}
+      - {x: 149, y: -35}
+      - {x: -103, y: -35}
   m_UseDelaunayMesh: 0
 --- !u!1 &6599210760773186355
 GameObject:

@@ -38,7 +38,7 @@ namespace My.Scripts.Input
 
         #endregion
 
-        #region Public Methods — Input State
+        #region Public Methods — Player Input State
 
         public bool IsUpActionPressed()
         {
@@ -67,6 +67,35 @@ namespace My.Scripts.Input
 
         #endregion
 
+        #region Public Methods — Camera Input State
+
+        public float GetCameraZoomInput()
+        {
+            float value = _inputActions?.Camera.Zoom.ReadValue<float>() ?? 0f;
+            if (Mathf.Abs(value) > 0.01f)
+            {
+                Debug.Log($"[GameInput] Zoom input: {value}");
+            }
+            return value;
+        }
+
+        public Vector2 GetCameraPanInput()
+        {
+            return _inputActions?.Camera.Pan.ReadValue<Vector2>() ?? Vector2.zero;
+        }
+
+        public bool IsCameraPanActivated()
+        {
+            bool value = _inputActions?.Camera.PanActivate.IsPressed() ?? false;
+            if (value)
+            {
+                Debug.Log($"[GameInput] PanActivate pressed");
+            }
+            return value;
+        }
+
+        #endregion
+
         #region Public Methods — Input Control
 
         public void EnableInput()
@@ -77,6 +106,16 @@ namespace My.Scripts.Input
         public void DisableInput()
         {
             _inputActions?.Disable();
+        }
+
+        public void EnableCameraInput()
+        {
+            _inputActions?.Camera.Enable();
+        }
+
+        public void DisableCameraInput()
+        {
+            _inputActions?.Camera.Disable();
         }
 
         #endregion

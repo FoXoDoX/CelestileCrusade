@@ -1,14 +1,15 @@
-﻿using My.Scripts.Core.Data;
+﻿using DG.Tweening;
+using My.Scripts.Core.Data;
 using My.Scripts.Core.Scene;
 using My.Scripts.Core.Utility;
 using My.Scripts.EventBus;
+using My.Scripts.Gameplay.CameraUtility;
 using My.Scripts.Gameplay.Levels;
 using My.Scripts.Gameplay.Player;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
 
 namespace My.Scripts.Managers
 {
@@ -338,6 +339,9 @@ namespace My.Scripts.Managers
 
         private void OnCrateDrop()
         {
+            Debug.Log($"[GameManager] OnCrateDrop called! Current score: {_score}, adding: {SCORE_PER_CRATE}");
+            Debug.Log($"[GameManager] Stack trace:\n{System.Environment.StackTrace}");
+
             AddScore(SCORE_PER_CRATE);
             ResetCameraZoom();
         }
@@ -401,7 +405,26 @@ namespace My.Scripts.Managers
                 );
             }
 
+            // Инициализируем превью камеру
+            InitializeLevelPreviewCamera();
+
             Debug.Log($"[GameManager] Level {_currentGameLevel.GetLevelNumber()} loaded successfully");
+        }
+
+        private void InitializeLevelPreviewCamera()
+        {
+            var previewCamera = FindFirstObjectByType<LevelPreviewCamera>();
+
+            if (previewCamera != null && _spawnedLevelInstance != null)
+            {
+                previewCamera.Initialize(_spawnedLevelInstance);
+                Debug.Log("[GameManager] LevelPreviewCamera initialized");
+            }
+            else
+            {
+                Debug.LogWarning($"[GameManager] LevelPreviewCamera not found or level is null. " +
+                                $"PreviewCamera: {previewCamera != null}, Level: {_spawnedLevelInstance != null}");
+            }
         }
 
         private GameLevel FindGameLevelByNumber(int levelNumber)

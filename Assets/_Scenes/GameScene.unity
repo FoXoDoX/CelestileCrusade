@@ -2873,6 +2873,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958986899}
   m_CullTransparentMesh: 1
+--- !u!1 &985685034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 985685036}
+  - component: {fileID: 985685035}
+  m_Layer: 0
+  m_Name: LevelPreviewCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &985685035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985685034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1ec4bb6e07d0744b43441bb291db3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.Gameplay.CameraUtility.LevelPreviewCamera
+  _cinemachineCamera: {fileID: 1719064502}
+  _cameraTarget: {fileID: 0}
+  _zoomSpeed: 5
+  _minZoom: 5
+  _panSpeed: 1.5
+  _enableDebugLogs: 1
+--- !u!4 &985685036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985685034}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1068240618
 GameObject:
   m_ObjectHideFlags: 0
@@ -3459,6 +3509,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176257787}
   m_CullTransparentMesh: 1
+--- !u!1 &1176570656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1176570657}
+  - component: {fileID: 1176570659}
+  - component: {fileID: 1176570658}
+  m_Layer: 0
+  m_Name: RopeAttachPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1176570657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176570656}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1780317551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1176570658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176570656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe6bfe63e4954f4ebbc84030198f77c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.Gameplay.Player.RopeAttachPoint
+--- !u!50 &1176570659
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176570656}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &1191788443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5436,6 +5558,7 @@ Transform:
   - {fileID: 1923762458}
   - {fileID: 1594600281}
   - {fileID: 448746625}
+  - {fileID: 1176570657}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1780317552
@@ -5496,8 +5619,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1557943c295ac034d90d0c78c1b1813c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lander
-  _ropeWithCratePrefab: {fileID: 9160686567755914486, guid: d44302fe8594aae488cbb6af1c9152d6, type: 3}
+  _ropeWithCratePrefab: {fileID: 1774051119269211781, guid: 36db0e49c593d884f964844479bbeb6e, type: 3}
   _fuelAmountMax: 30
+  _ropeAttachPoint: {fileID: 1176570658}
 --- !u!114 &1780317554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6541,6 +6665,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1719064503}
   - {fileID: 525411007}
+  - {fileID: 985685036}
   - {fileID: 1722717486}
   - {fileID: 438430089}
   - {fileID: 2145945653}

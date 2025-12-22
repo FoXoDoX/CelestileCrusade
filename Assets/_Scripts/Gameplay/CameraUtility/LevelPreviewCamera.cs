@@ -1,5 +1,4 @@
 using My.Scripts.Core.Data;
-using My.Scripts.Core.Utility;
 using My.Scripts.EventBus;
 using My.Scripts.Gameplay.Levels;
 using My.Scripts.Gameplay.Player;
@@ -38,7 +37,7 @@ namespace My.Scripts.Gameplay.CameraUtility
         [SerializeField] private float _panSpeed = DEFAULT_PAN_SPEED;
 
         [Header("Debug")]
-        [SerializeField] private bool _enableDebugLogs = true;
+        [SerializeField] private bool _enableDebugLogs = false;
 
         #endregion
 
@@ -51,10 +50,6 @@ namespace My.Scripts.Gameplay.CameraUtility
         private Vector3 _targetPosition;
         private Vector3 _levelCenter;
         private Vector2 _levelBoundsHalfSize;
-
-        // Сохраняем оригинальные настройки камеры
-        private Transform _originalTrackingTarget;
-        private float _originalOrthographicSize;
 
         private bool _isInitialized;
         private bool _isPreviewActive;
@@ -136,23 +131,13 @@ namespace My.Scripts.Gameplay.CameraUtility
                 Log($"CameraTarget position set to: {_targetPosition}");
             }
 
-            // === КЛЮЧЕВОЕ ИЗМЕНЕНИЕ ===
-            // Сохраняем оригинальные настройки и переключаем камеру на наш target
+            // Переключаем камеру на наш preview target
             if (_cinemachineCamera != null)
             {
-                // Сохраняем оригинальный target
-                _originalTrackingTarget = _cinemachineCamera.Target.TrackingTarget;
-                _originalOrthographicSize = _cinemachineCamera.Lens.OrthographicSize;
-
-                Log($"Saved original tracking target: {(_originalTrackingTarget != null ? _originalTrackingTarget.name : "NULL")}");
-                Log($"Saved original orthographic size: {_originalOrthographicSize}");
-
-                // Переключаем на наш preview target
                 _cinemachineCamera.Target.TrackingTarget = _cameraTarget;
                 _cinemachineCamera.Lens.OrthographicSize = _targetZoom;
 
                 Log($"Switched camera to preview target: {_cameraTarget.name}");
-                Log($"Set orthographic size to: {_targetZoom}");
             }
 
             _isInitialized = true;
@@ -170,6 +155,12 @@ namespace My.Scripts.Gameplay.CameraUtility
 
             _targetZoom = _maxZoom;
             _targetPosition = _levelCenter;
+
+            if (_cameraTarget != null)
+            {
+                _cameraTarget.position = _targetPosition;
+            }
+
             Log("Reset to default");
         }
 
@@ -246,6 +237,8 @@ namespace My.Scripts.Gameplay.CameraUtility
 
         private void OnLanderStateChanged(LanderStateData data)
         {
+            Log($"LanderStateChanged: {data.State}");
+
             if (data.State != Lander.State.WaitingToStart)
             {
                 EndPreview();
@@ -253,29 +246,37 @@ namespace My.Scripts.Gameplay.CameraUtility
         }
 
         /// <summary>
-        /// Завершает превью и восстанавливает оригинальные настройки камеры.
+        /// Завершает превью и переключает камеру на Lander.
         /// </summary>
         private void EndPreview()
         {
             if (!_isPreviewActive) return;
 
             _isPreviewActive = false;
+            _isInitialized = false;
 
-            // === ВОССТАНАВЛИВАЕМ ОРИГИНАЛЬНЫЕ НАСТРОЙКИ ===
-            if (_cinemachineCamera != null && _originalTrackingTarget != null)
+            Log("Ending preview...");
+
+            // Переключаем камеру на Lander напрямую
+            if (_cinemachineCamera != null && Lander.HasInstance)
             {
-                _cinemachineCamera.Target.TrackingTarget = _originalTrackingTarget;
-                Log($"Restored original tracking target: {_originalTrackingTarget.name}");
+                _cinemachineCamera.Target.TrackingTarget = Lander.Instance.transform;
+                Log($"Camera now tracking Lander at {Lander.Instance.transform.position}");
+            }
+            else
+            {
+                Log($"Cannot switch to Lander. Camera: {_cinemachineCamera != null}, Lander: {Lander.HasInstance}");
             }
 
             // Уничтожаем созданный target
             if (_cameraTarget != null && _cameraTarget.name == "PreviewCameraTarget")
             {
                 Destroy(_cameraTarget.gameObject);
+                _cameraTarget = null;
                 Log("Destroyed preview camera target");
             }
 
-            Log("Preview ended. Game started.");
+            Log("Preview ended. Camera switched to Lander.");
         }
 
         #endregion
@@ -288,12 +289,8 @@ namespace My.Scripts.Gameplay.CameraUtility
 
             if (Mathf.Abs(scrollDelta) > 0.01f)
             {
-                float oldZoom = _targetZoom;
-
                 _targetZoom -= scrollDelta * _zoomSpeed * 0.5f;
                 _targetZoom = Mathf.Clamp(_targetZoom, _minZoom, _maxZoom);
-
-                Log($"Zoom: {oldZoom:F2} -> {_targetZoom:F2} (delta: {scrollDelta:F2})");
 
                 ClampTargetPosition();
             }
@@ -315,7 +312,6 @@ namespace My.Scripts.Gameplay.CameraUtility
 
                 float zoomFactor = currentZoom / _maxZoom;
 
-                // Применяем движение напрямую (без Lerp)
                 Vector3 panMovement = new Vector3(
                     -panDelta.x * _panSpeed * zoomFactor * 0.1f,
                     -panDelta.y * _panSpeed * zoomFactor * 0.1f,
@@ -325,7 +321,6 @@ namespace My.Scripts.Gameplay.CameraUtility
                 _targetPosition += panMovement;
                 ClampTargetPosition();
 
-                // === МГНОВЕННО ПРИМЕНЯЕМ ПОЗИЦИЮ ===
                 if (_cameraTarget != null)
                 {
                     _cameraTarget.position = _targetPosition;
@@ -347,12 +342,8 @@ namespace My.Scripts.Gameplay.CameraUtility
             float newZoom = Mathf.Lerp(currentZoom, _targetZoom, Time.deltaTime * ZOOM_SMOOTHING);
             _cinemachineCamera.Lens.OrthographicSize = newZoom;
 
-            // Позиция обновляется мгновенно в HandlePanInput()
-            // Но если pan не активен, всё равно синхронизируем позицию
-            if (!GameInput.Instance.IsCameraPanActivated())
-            {
-                _cameraTarget.position = _targetPosition;
-            }
+            // Позиция — мгновенно
+            _cameraTarget.position = _targetPosition;
         }
 
         private void ClampTargetPosition()

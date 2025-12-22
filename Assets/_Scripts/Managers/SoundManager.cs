@@ -2,8 +2,11 @@ using My.Scripts.Core.Data;
 using My.Scripts.Core.Utility;
 using My.Scripts.EventBus;
 using My.Scripts.Gameplay.Player;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace My.Scripts.Managers
 {
@@ -11,22 +14,23 @@ namespace My.Scripts.Managers
     {
         #region Constants
 
-        private const int SOUND_VOLUME_MAX = 10;
-        private const int SOUND_VOLUME_DEFAULT = 6;
+        private const string MIXER_SOUND_PARAM = "SoundVolume";
+        private const float MIN_DECIBELS = -80f;
         private const float WIND_FADE_TIME = 0.5f;
-
-        #endregion
-
-        #region Static Fields
-
-        private static int _soundVolume = SOUND_VOLUME_DEFAULT;
+        private const float MIXER_INIT_DELAY = 0.05f;
 
         #endregion
 
         #region Serialized Fields
 
+        [Header("Audio Mixer")]
+        [SerializeField] private AudioMixer _audioMixer;
+        [SerializeField] private AudioMixerGroup _soundMixerGroup;
+
         [Header("Audio Sources")]
-        [SerializeField] private AudioSource _soundEffectsSource;
+        [SerializeField] private AudioSource _mainAudioSource;
+        [SerializeField] private AudioSource _windAudioSource;
+        [SerializeField] private AudioSource _progressBarAudioSource;
 
         [Header("Sound Effects")]
         [SerializeField] private AudioClip _fuelPickupClip;
@@ -41,22 +45,39 @@ namespace My.Scripts.Managers
         [SerializeField] private AudioClip _progressBarClip;
         [SerializeField] private AudioClip _windClip;
         [SerializeField] private AudioClip _turretShootClip;
+        [SerializeField] private AudioClip _thrusterClip;
 
         #endregion
 
         #region Private Fields
 
-        private AudioSource _progressBarSource;
-        private AudioSource _windSource;
         private Coroutine _windFadeCoroutine;
         private bool _isWindPlaying;
-        private float _windTargetVolume;
+        private bool _isPaused;
+        private bool _isMixerReady;
+
+        // Thruster audio
+        private AudioSource _thrusterAudioSource;
+        private bool _isThrusterPlaying;
+
+        private readonly List<AudioSourcePauseState> _pausedAudioStates = new();
+
+        #endregion
+
+        #region Nested Types
+
+        private struct AudioSourcePauseState
+        {
+            public AudioSource Source;
+            public bool WasPlaying;
+            public float Volume;
+        }
 
         #endregion
 
         #region Events
 
-        public event System.Action OnSoundVolumeChanged;
+        public event Action OnSoundVolumeChanged;
 
         #endregion
 
@@ -64,7 +85,13 @@ namespace My.Scripts.Managers
 
         protected override void OnSingletonAwake()
         {
-            InitializeAudioSources();
+            ValidateAudioSources();
+            ConfigureAudioSources();
+        }
+
+        private void Start()
+        {
+            StartCoroutine(InitializeMixerDelayed());
         }
 
         private void OnEnable()
@@ -82,25 +109,86 @@ namespace My.Scripts.Managers
             base.OnDestroy();
             UnsubscribeFromEvents();
             StopAllCoroutines();
+            CleanupThrusterAudio();
+        }
+
+        #endregion
+
+        #region Private Methods Ч Initialization
+
+        private IEnumerator InitializeMixerDelayed()
+        {
+            yield return null;
+            yield return new WaitForSecondsRealtime(MIXER_INIT_DELAY);
+
+            _isMixerReady = true;
+            ApplyVolumeToMixer();
+
+            Debug.Log($"[SoundManager] Mixer initialized, volume applied: {GameData.SoundVolume:F3}");
+        }
+
+        private void ValidateAudioSources()
+        {
+            if (_audioMixer == null)
+            {
+                Debug.LogError($"[{nameof(SoundManager)}] AudioMixer is not assigned!");
+            }
+
+            if (_mainAudioSource == null)
+            {
+                Debug.LogError($"[{nameof(SoundManager)}] Main AudioSource is not assigned!");
+            }
+        }
+
+        private void ConfigureAudioSources()
+        {
+            if (_mainAudioSource != null)
+            {
+                _mainAudioSource.playOnAwake = false;
+                _mainAudioSource.loop = false;
+                _mainAudioSource.outputAudioMixerGroup = _soundMixerGroup;
+            }
+
+            if (_windAudioSource != null)
+            {
+                _windAudioSource.playOnAwake = false;
+                _windAudioSource.loop = true;
+                _windAudioSource.clip = _windClip;
+                _windAudioSource.volume = 0f;
+                _windAudioSource.outputAudioMixerGroup = _soundMixerGroup;
+            }
+
+            if (_progressBarAudioSource != null)
+            {
+                _progressBarAudioSource.playOnAwake = false;
+                _progressBarAudioSource.loop = false;
+                _progressBarAudioSource.outputAudioMixerGroup = _soundMixerGroup;
+            }
         }
 
         #endregion
 
         #region Public Methods Ч Volume Control
 
-        public void ChangeSoundVolume()
+        public void SetSoundVolume(float normalizedVolume)
         {
-            _soundVolume = (_soundVolume + 1) % (SOUND_VOLUME_MAX + 1);
+            float clampedVolume = Mathf.Clamp01(normalizedVolume);
 
-            UpdateActiveSourcesVolume();
-            PlaySound(_coinPickupClip);
+            GameData.SetSoundVolume(clampedVolume);
+
+            if (_isMixerReady)
+            {
+                ApplyVolumeToMixer();
+            }
 
             OnSoundVolumeChanged?.Invoke();
+
+            Debug.Log($"[SoundManager] Volume: {GetSoundVolumePercent()}%");
         }
 
-        public int GetSoundVolume() => _soundVolume;
+        public float GetSoundVolumeNormalized() => GameData.SoundVolume;
 
-        public float GetSoundVolumeNormalized() => (float)_soundVolume / SOUND_VOLUME_MAX;
+        public int GetSoundVolumePercent() => Mathf.RoundToInt(GameData.SoundVolume * 100f);
 
         #endregion
 
@@ -108,58 +196,60 @@ namespace My.Scripts.Managers
 
         public void PlaySound(AudioClip clip)
         {
-            if (clip == null || _soundEffectsSource == null) return;
+            if (clip == null || _mainAudioSource == null || _isPaused) return;
 
-            // PlayOneShot позвол€ет воспроизводить несколько звуков одновременно
-            _soundEffectsSource.PlayOneShot(clip, GetSoundVolumeNormalized());
+            _mainAudioSource.PlayOneShot(clip, 1f);
         }
 
         public void PlayProgressBarSound()
         {
-            if (_progressBarClip == null || _progressBarSource == null) return;
+            if (_progressBarClip == null || _progressBarAudioSource == null || _isPaused) return;
+            if (_progressBarAudioSource.isPlaying) return;
 
-            // Ќе останавливаем, если уже играет тот же звук
-            if (_progressBarSource.isPlaying && _progressBarSource.clip == _progressBarClip)
-            {
-                return;
-            }
-
-            _progressBarSource.clip = _progressBarClip;
-            _progressBarSource.volume = GetSoundVolumeNormalized();
-            _progressBarSource.Play();
+            _progressBarAudioSource.clip = _progressBarClip;
+            _progressBarAudioSource.Play();
         }
 
         public void StopProgressBarSound()
         {
-            if (_progressBarSource != null && _progressBarSource.isPlaying)
+            if (_progressBarAudioSource != null && _progressBarAudioSource.isPlaying)
             {
-                _progressBarSource.Stop();
+                _progressBarAudioSource.Stop();
             }
         }
 
         public void PlayWindSound()
         {
-            if (_windClip == null || _windSource == null) return;
+            if (_windClip == null || _windAudioSource == null) return;
 
-            _windTargetVolume = GetSoundVolumeNormalized();
+            if (_isPaused)
+            {
+                _isWindPlaying = true;
+                return;
+            }
 
             StopWindFadeCoroutine();
 
             if (!_isWindPlaying)
             {
-                _windSource.volume = 0f;
-                _windSource.Play();
+                _windAudioSource.volume = 0f;
+                _windAudioSource.Play();
                 _isWindPlaying = true;
             }
 
-            _windFadeCoroutine = StartCoroutine(FadeWindVolume(_windTargetVolume));
+            _windFadeCoroutine = StartCoroutine(FadeWindVolume(1f));
         }
 
         public void StopWindSound()
         {
-            if (_windSource == null) return;
+            if (_windAudioSource == null) return;
 
-            _windTargetVolume = 0f;
+            if (_isPaused)
+            {
+                _isWindPlaying = false;
+                return;
+            }
+
             StopWindFadeCoroutine();
             _windFadeCoroutine = StartCoroutine(FadeWindVolume(0f));
         }
@@ -172,19 +262,150 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods Ч Initialization
+        #region Public Methods Ч Thruster Audio
 
-        private void InitializeAudioSources()
+        /// <summary>
+        /// –егистрирует AudioSource двигател€ Lander.
+        /// ¬ызываетс€ при спавне Lander.
+        /// </summary>
+        public void RegisterThrusterAudioSource(AudioSource thrusterSource)
         {
-            _progressBarSource = gameObject.AddComponent<AudioSource>();
-            _progressBarSource.playOnAwake = false;
-            _progressBarSource.loop = false;
+            if (thrusterSource == null)
+            {
+                Debug.LogWarning($"[{nameof(SoundManager)}] Thruster AudioSource is null!");
+                return;
+            }
 
-            _windSource = gameObject.AddComponent<AudioSource>();
-            _windSource.playOnAwake = false;
-            _windSource.loop = true;
-            _windSource.clip = _windClip;
-            _windSource.volume = 0f;
+            _thrusterAudioSource = thrusterSource;
+
+            // Ќастраиваем AudioSource
+            _thrusterAudioSource.clip = _thrusterClip;
+            _thrusterAudioSource.loop = true;
+            _thrusterAudioSource.playOnAwake = false;
+            _thrusterAudioSource.volume = 0f;
+            _thrusterAudioSource.outputAudioMixerGroup = _soundMixerGroup;
+            _thrusterAudioSource.Play();
+
+            _isThrusterPlaying = false;
+
+            Debug.Log($"[{nameof(SoundManager)}] Thruster AudioSource registered");
+        }
+
+        /// <summary>
+        /// ќтмен€ет регистрацию AudioSource двигател€.
+        /// ¬ызываетс€ при уничтожении Lander.
+        /// </summary>
+        public void UnregisterThrusterAudioSource()
+        {
+            StopThrusterSound();
+            _thrusterAudioSource = null;
+
+            Debug.Log($"[{nameof(SoundManager)}] Thruster AudioSource unregistered");
+        }
+
+        public void StartThrusterSound()
+        {
+            if (_isThrusterPlaying) return;
+            if (_thrusterAudioSource == null) return;
+            if (_isPaused) return;
+
+            _isThrusterPlaying = true;
+            _thrusterAudioSource.volume = 1f; // Mixer контролирует громкость
+
+            Debug.Log($"[{nameof(SoundManager)}] Thruster started");
+        }
+
+        public void StopThrusterSound()
+        {
+            if (!_isThrusterPlaying) return;
+            if (_thrusterAudioSource == null) return;
+
+            _isThrusterPlaying = false;
+            _thrusterAudioSource.volume = 0f;
+
+            Debug.Log($"[{nameof(SoundManager)}] Thruster stopped");
+        }
+
+        #endregion
+
+        #region Public Methods Ч Pause Control
+
+        public void PauseAllSounds()
+        {
+            if (_isPaused) return;
+
+            _isPaused = true;
+            _pausedAudioStates.Clear();
+
+            StopWindFadeCoroutine();
+
+            PauseAudioSource(_mainAudioSource);
+            PauseAudioSource(_windAudioSource);
+            PauseAudioSource(_progressBarAudioSource);
+            PauseAudioSource(_thrusterAudioSource);
+        }
+
+        public void ResumeAllSounds()
+        {
+            if (!_isPaused) return;
+
+            _isPaused = false;
+
+            foreach (var state in _pausedAudioStates)
+            {
+                if (state.Source != null && state.WasPlaying)
+                {
+                    state.Source.volume = state.Volume;
+                    state.Source.UnPause();
+                }
+            }
+
+            _pausedAudioStates.Clear();
+        }
+
+        #endregion
+
+        #region Private Methods Ч Pause Helpers
+
+        private void PauseAudioSource(AudioSource source)
+        {
+            if (source == null) return;
+
+            var state = new AudioSourcePauseState
+            {
+                Source = source,
+                WasPlaying = source.isPlaying,
+                Volume = source.volume
+            };
+
+            _pausedAudioStates.Add(state);
+
+            if (source.isPlaying)
+            {
+                source.Pause();
+            }
+        }
+
+        #endregion
+
+        #region Private Methods Ч Volume
+
+        private void ApplyVolumeToMixer()
+        {
+            if (_audioMixer == null) return;
+
+            float decibels = NormalizedToDecibels(GameData.SoundVolume);
+            _audioMixer.SetFloat(MIXER_SOUND_PARAM, decibels);
+        }
+
+        private float NormalizedToDecibels(float normalizedVolume)
+        {
+            if (normalizedVolume <= 0.0001f)
+            {
+                return MIN_DECIBELS;
+            }
+
+            return Mathf.Log10(normalizedVolume) * 20f;
         }
 
         #endregion
@@ -196,18 +417,24 @@ namespace My.Scripts.Managers
             var em = EventManager.Instance;
             if (em == null) return;
 
-            em.AddHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
-            em.AddHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
-
+            em.AddHandler(GameEvents.GamePaused, OnGamePaused);
+            em.AddHandler(GameEvents.GameUnpaused, OnGameUnpaused);
             em.AddHandler(GameEvents.TurretShoot, OnTurretShoot);
-
             em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.AddHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.AddHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.AddHandler(GameEvents.KeyPickup, OnKeyPickup);
-            em.AddHandler(GameEvents.KeyDelivered, OnKeyDelivered);
 
+            // Thruster events
+            em.AddHandler(GameEvents.LanderBeforeForce, OnLanderBeforeForce);
+            em.AddHandler(GameEvents.LanderUpForce, OnLanderUpForce);
+            em.AddHandler(GameEvents.LanderLeftForce, OnLanderLeftForce);
+            em.AddHandler(GameEvents.LanderRightForce, OnLanderRightForce);
+
+            em.AddHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
+            em.AddHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.AddHandler<KeyDeliveredData>(GameEvents.KeyDelivered, OnKeyDelivered);
             em.AddHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
         }
 
@@ -216,18 +443,24 @@ namespace My.Scripts.Managers
             var em = EventManager.Instance;
             if (em == null) return;
 
-            em.RemoveHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
-            em.RemoveHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
-
+            em.RemoveHandler(GameEvents.GamePaused, OnGamePaused);
+            em.RemoveHandler(GameEvents.GameUnpaused, OnGameUnpaused);
             em.RemoveHandler(GameEvents.TurretShoot, OnTurretShoot);
-
             em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.RemoveHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.RemoveHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.RemoveHandler(GameEvents.KeyPickup, OnKeyPickup);
-            em.RemoveHandler(GameEvents.KeyDelivered, OnKeyDelivered);
 
+            // Thruster events
+            em.RemoveHandler(GameEvents.LanderBeforeForce, OnLanderBeforeForce);
+            em.RemoveHandler(GameEvents.LanderUpForce, OnLanderUpForce);
+            em.RemoveHandler(GameEvents.LanderLeftForce, OnLanderLeftForce);
+            em.RemoveHandler(GameEvents.LanderRightForce, OnLanderRightForce);
+
+            em.RemoveHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
+            em.RemoveHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.RemoveHandler<KeyDeliveredData>(GameEvents.KeyDelivered, OnKeyDelivered);
             em.RemoveHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
         }
 
@@ -235,20 +468,24 @@ namespace My.Scripts.Managers
 
         #region Private Methods Ч Event Handlers
 
+        private void OnGamePaused() => PauseAllSounds();
+        private void OnGameUnpaused() => ResumeAllSounds();
+
         private void OnFuelPickup(PickupEventData data) => PlaySound(_fuelPickupClip);
         private void OnCoinPickup(PickupEventData data) => PlaySound(_coinPickupClip);
-
         private void OnTurretShoot() => PlaySound(_turretShootClip);
-
         private void OnCrateDrop() => PlaySound(_crateDeliveredClip);
         private void OnCrateCracked() => PlaySound(_crateCrackedClip);
         private void OnCrateDestroyed() => PlaySound(_crateDestroyedClip);
         private void OnRopeWithCrateSpawned() => RefreshSubscriptions();
         private void OnKeyPickup() => PlaySound(_keyPickupClip);
-        private void OnKeyDelivered() => PlaySound(_keyDeliveredClip);
+        private void OnKeyDelivered(KeyDeliveredData data) => PlaySound(_keyDeliveredClip);
 
         private void OnLanderLanded(LanderLandedData data)
         {
+            // ќстанавливаем двигатель при посадке
+            StopThrusterSound();
+
             var clip = data.LandingType == Lander.LandingType.Success
                 ? _landingSuccessClip
                 : _crashClip;
@@ -256,26 +493,15 @@ namespace My.Scripts.Managers
             PlaySound(clip);
         }
 
+        // Thruster event handlers
+        private void OnLanderBeforeForce() => StopThrusterSound();
+        private void OnLanderUpForce() => StartThrusterSound();
+        private void OnLanderLeftForce() => StartThrusterSound();
+        private void OnLanderRightForce() => StartThrusterSound();
+
         #endregion
 
         #region Private Methods Ч Audio Helpers
-
-        private void UpdateActiveSourcesVolume()
-        {
-            float volume = GetSoundVolumeNormalized();
-
-            if (_progressBarSource != null)
-            {
-                _progressBarSource.volume = volume;
-            }
-
-            if (_windSource != null && _isWindPlaying)
-            {
-                _windTargetVolume = volume;
-                StopWindFadeCoroutine();
-                _windFadeCoroutine = StartCoroutine(FadeWindVolume(_windTargetVolume));
-            }
-        }
 
         private void StopWindFadeCoroutine()
         {
@@ -288,33 +514,40 @@ namespace My.Scripts.Managers
 
         private IEnumerator FadeWindVolume(float targetVolume)
         {
-            if (_windSource == null) yield break;
+            if (_windAudioSource == null) yield break;
 
-            float startVolume = _windSource.volume;
+            float startVolume = _windAudioSource.volume;
             float elapsedTime = 0f;
 
             while (elapsedTime < WIND_FADE_TIME)
             {
-                if (_windSource == null) yield break;
+                if (_windAudioSource == null) yield break;
+                if (_isPaused) yield break;
 
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / WIND_FADE_TIME;
-                _windSource.volume = Mathf.Lerp(startVolume, targetVolume, t);
+                _windAudioSource.volume = Mathf.Lerp(startVolume, targetVolume, t);
                 yield return null;
             }
 
-            if (_windSource != null)
+            if (_windAudioSource != null)
             {
-                _windSource.volume = targetVolume;
+                _windAudioSource.volume = targetVolume;
 
                 if (targetVolume <= 0f && _isWindPlaying)
                 {
-                    _windSource.Stop();
+                    _windAudioSource.Stop();
                     _isWindPlaying = false;
                 }
             }
 
             _windFadeCoroutine = null;
+        }
+
+        private void CleanupThrusterAudio()
+        {
+            StopThrusterSound();
+            _thrusterAudioSource = null;
         }
 
         #endregion

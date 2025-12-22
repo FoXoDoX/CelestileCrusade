@@ -167,7 +167,7 @@ namespace My.Scripts.Core.Persistence
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            Debug.Log($"[{nameof(SaveSystem)}] Initializing...");
+            Debug.Log($"[SaveSystem] === Initialize START ===");
 
             _isInitialized = false;
             _saveData = new SaveData();
@@ -175,7 +175,8 @@ namespace My.Scripts.Core.Persistence
             Load();
             _isInitialized = true;
 
-            // Автосохранение при выходе из приложения
+            Debug.Log($"[SaveSystem] === Initialize END === MusicVolume={GameData.MusicVolume:F3}");
+
             Application.quitting += OnApplicationQuitting;
         }
 

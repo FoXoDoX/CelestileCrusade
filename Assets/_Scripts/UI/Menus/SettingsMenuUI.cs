@@ -1,3 +1,4 @@
+п»їusing My.Scripts.Core.Data;
 using My.Scripts.EventBus;
 using My.Scripts.Managers;
 using UnityEngine;
@@ -10,8 +11,8 @@ namespace My.Scripts.UI.Menus
     {
         #region Constants
 
-        private const string SOUND_VOLUME_FORMAT = "SOUND {0}";
-        private const string MUSIC_VOLUME_FORMAT = "MUSIC {0}";
+        private const string SOUND_VOLUME_FORMAT = "{0}%";
+        private const string MUSIC_VOLUME_FORMAT = "{0}%";
 
         #endregion
 
@@ -19,10 +20,12 @@ namespace My.Scripts.UI.Menus
 
         [Header("Buttons")]
         [SerializeField] private Button _backButton;
-        [SerializeField] private Button _soundVolumeButton;
-        [SerializeField] private Button _musicVolumeButton;
 
-        [Header("Text")]
+        [Header("Volume Sliders")]
+        [SerializeField] private Slider _soundVolumeSlider;
+        [SerializeField] private Slider _musicVolumeSlider;
+
+        [Header("Volume Value Text")]
         [SerializeField] private TextMeshProUGUI _soundVolumeText;
         [SerializeField] private TextMeshProUGUI _musicVolumeText;
 
@@ -31,6 +34,7 @@ namespace My.Scripts.UI.Menus
         #region Private Fields
 
         private bool _isSubscribedToEvents;
+        private bool _isInitialized;
 
         #endregion
 
@@ -39,40 +43,53 @@ namespace My.Scripts.UI.Menus
         private void Awake()
         {
             SetupButtons();
+            ConfigureSliderRanges();
         }
 
         private void Start()
         {
-            // Подписываемся на события один раз
             SubscribeToUIEvents();
             SubscribeToVolumeChanges();
-            UpdateVolumeDisplays();
+
+            // Р’РђР–РќРћ: РЎРЅР°С‡Р°Р»Р° СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРј СЃР»Р°Р№РґРµСЂС‹ Р‘Р•Р— РїРѕРґРїРёСЃРєРё РЅР° СЃРѕР±С‹С‚РёСЏ
+            SyncSlidersWithoutNotify();
+
+            // РўРѕР»СЊРєРѕ РџРћРЎР›Р• СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РїРѕРґРїРёСЃС‹РІР°РµРјСЃСЏ РЅР° РёР·РјРµРЅРµРЅРёСЏ СЃР»Р°Р№РґРµСЂРѕРІ
+            SubscribeToSliderEvents();
+
+            _isInitialized = true;
+
+            Debug.Log($"[SettingsMenuUI] Initialized. Music={GameData.MusicVolume:F3}, Sound={GameData.SoundVolume:F3}");
+
             Hide();
         }
 
         private void OnEnable()
         {
-            // При включении обновляем отображение и подписки на звук
             SubscribeToVolumeChanges();
-            UpdateVolumeDisplays();
+
+            if (_isInitialized)
+            {
+                SyncSlidersWithoutNotify();
+            }
         }
 
         private void OnDisable()
         {
-            // Отписываемся только от volume events — UI события нужны всегда
             UnsubscribeFromVolumeChanges();
         }
 
         private void OnDestroy()
         {
             CleanupButtons();
+            UnsubscribeFromSliderEvents();
             UnsubscribeFromVolumeChanges();
-            UnsubscribeFromUIEvents();  // Полная отписка только при уничтожении
+            UnsubscribeFromUIEvents();
         }
 
         #endregion
 
-        #region Private Methods — Initialization
+        #region Private Methods вЂ” Initialization
 
         private void SetupButtons()
         {
@@ -80,15 +97,20 @@ namespace My.Scripts.UI.Menus
             {
                 _backButton.onClick.AddListener(OnBackClicked);
             }
+        }
 
-            if (_soundVolumeButton != null)
+        private void ConfigureSliderRanges()
+        {
+            if (_soundVolumeSlider != null)
             {
-                _soundVolumeButton.onClick.AddListener(OnSoundVolumeClicked);
+                _soundVolumeSlider.minValue = 0f;
+                _soundVolumeSlider.maxValue = 1f;
             }
 
-            if (_musicVolumeButton != null)
+            if (_musicVolumeSlider != null)
             {
-                _musicVolumeButton.onClick.AddListener(OnMusicVolumeClicked);
+                _musicVolumeSlider.minValue = 0f;
+                _musicVolumeSlider.maxValue = 1f;
             }
         }
 
@@ -98,25 +120,70 @@ namespace My.Scripts.UI.Menus
             {
                 _backButton.onClick.RemoveListener(OnBackClicked);
             }
-
-            if (_soundVolumeButton != null)
-            {
-                _soundVolumeButton.onClick.RemoveListener(OnSoundVolumeClicked);
-            }
-
-            if (_musicVolumeButton != null)
-            {
-                _musicVolumeButton.onClick.RemoveListener(OnMusicVolumeClicked);
-            }
         }
 
         #endregion
 
-        #region Private Methods — Event Subscription
+        #region Private Methods вЂ” Slider Events
 
-        /// <summary>
-        /// Подписка на UI события — делается один раз и держится до уничтожения
-        /// </summary>
+        private void SubscribeToSliderEvents()
+        {
+            if (_soundVolumeSlider != null)
+            {
+                _soundVolumeSlider.onValueChanged.AddListener(OnSoundSliderChanged);
+            }
+
+            if (_musicVolumeSlider != null)
+            {
+                _musicVolumeSlider.onValueChanged.AddListener(OnMusicSliderChanged);
+            }
+        }
+
+        private void UnsubscribeFromSliderEvents()
+        {
+            if (_soundVolumeSlider != null)
+            {
+                _soundVolumeSlider.onValueChanged.RemoveListener(OnSoundSliderChanged);
+            }
+
+            if (_musicVolumeSlider != null)
+            {
+                _musicVolumeSlider.onValueChanged.RemoveListener(OnMusicSliderChanged);
+            }
+        }
+
+        private void OnSoundSliderChanged(float value)
+        {
+            if (!_isInitialized) return;
+
+            Debug.Log($"[SettingsMenuUI] Sound slider changed: {value:F3}");
+
+            if (SoundManager.HasInstance)
+            {
+                SoundManager.Instance.SetSoundVolume(value);
+            }
+
+            UpdateSoundVolumeText(value);
+        }
+
+        private void OnMusicSliderChanged(float value)
+        {
+            if (!_isInitialized) return;
+
+            Debug.Log($"[SettingsMenuUI] Music slider changed: {value:F3}");
+
+            if (MusicManager.HasInstance)
+            {
+                MusicManager.Instance.SetMusicVolume(value);
+            }
+
+            UpdateMusicVolumeText(value);
+        }
+
+        #endregion
+
+        #region Private Methods вЂ” Event Subscription
+
         private void SubscribeToUIEvents()
         {
             if (_isSubscribedToEvents) return;
@@ -128,9 +195,6 @@ namespace My.Scripts.UI.Menus
             _isSubscribedToEvents = true;
         }
 
-        /// <summary>
-        /// Отписка от UI событий — только при уничтожении объекта
-        /// </summary>
         private void UnsubscribeFromUIEvents()
         {
             if (!_isSubscribedToEvents) return;
@@ -146,12 +210,12 @@ namespace My.Scripts.UI.Menus
         {
             if (SoundManager.HasInstance)
             {
-                SoundManager.Instance.OnSoundVolumeChanged += UpdateSoundVolumeDisplay;
+                SoundManager.Instance.OnSoundVolumeChanged += OnSoundVolumeChangedExternally;
             }
 
             if (MusicManager.HasInstance)
             {
-                MusicManager.Instance.OnMusicVolumeChanged += UpdateMusicVolumeDisplay;
+                MusicManager.Instance.OnMusicVolumeChanged += OnMusicVolumeChangedExternally;
             }
         }
 
@@ -159,18 +223,18 @@ namespace My.Scripts.UI.Menus
         {
             if (SoundManager.HasInstance)
             {
-                SoundManager.Instance.OnSoundVolumeChanged -= UpdateSoundVolumeDisplay;
+                SoundManager.Instance.OnSoundVolumeChanged -= OnSoundVolumeChangedExternally;
             }
 
             if (MusicManager.HasInstance)
             {
-                MusicManager.Instance.OnMusicVolumeChanged -= UpdateMusicVolumeDisplay;
+                MusicManager.Instance.OnMusicVolumeChanged -= OnMusicVolumeChangedExternally;
             }
         }
 
         #endregion
 
-        #region Private Methods — Event Handlers
+        #region Private Methods вЂ” Event Handlers
 
         private void OnSettingsButtonPressed()
         {
@@ -183,63 +247,75 @@ namespace My.Scripts.UI.Menus
             EventManager.Instance?.Broadcast(GameEvents.SettingsBackButtonPressed);
         }
 
-        private void OnSoundVolumeClicked()
+        private void OnSoundVolumeChangedExternally()
         {
-            if (SoundManager.HasInstance)
-            {
-                SoundManager.Instance.ChangeSoundVolume();
-            }
+            SyncSoundSliderWithoutNotify();
         }
 
-        private void OnMusicVolumeClicked()
+        private void OnMusicVolumeChangedExternally()
         {
-            if (MusicManager.HasInstance)
-            {
-                MusicManager.Instance.ChangeMusicVolume();
-            }
+            SyncMusicSliderWithoutNotify();
         }
 
         #endregion
 
-        #region Private Methods — UI Updates
+        #region Private Methods вЂ” UI Sync
 
-        private void UpdateVolumeDisplays()
+        private void SyncSlidersWithoutNotify()
         {
-            UpdateSoundVolumeDisplay();
-            UpdateMusicVolumeDisplay();
+            SyncSoundSliderWithoutNotify();
+            SyncMusicSliderWithoutNotify();
         }
 
-        private void UpdateSoundVolumeDisplay()
+        private void SyncSoundSliderWithoutNotify()
+        {
+            if (_soundVolumeSlider == null) return;
+
+            float volume = GameData.SoundVolume;
+
+            _soundVolumeSlider.SetValueWithoutNotify(volume);
+            UpdateSoundVolumeText(volume);
+
+            Debug.Log($"[SettingsMenuUI] Synced sound slider: {volume:F3}");
+        }
+
+        private void SyncMusicSliderWithoutNotify()
+        {
+            if (_musicVolumeSlider == null) return;
+
+            float volume = GameData.MusicVolume;
+
+            _musicVolumeSlider.SetValueWithoutNotify(volume);
+            UpdateMusicVolumeText(volume);
+
+            Debug.Log($"[SettingsMenuUI] Synced music slider: {volume:F3}");
+        }
+
+        private void UpdateSoundVolumeText(float normalizedVolume)
         {
             if (_soundVolumeText == null) return;
 
-            int volume = SoundManager.HasInstance
-                ? SoundManager.Instance.GetSoundVolume()
-                : 0;
-
-            _soundVolumeText.text = string.Format(SOUND_VOLUME_FORMAT, volume);
+            int percentage = Mathf.RoundToInt(normalizedVolume * 100f);
+            _soundVolumeText.text = string.Format(SOUND_VOLUME_FORMAT, percentage);
         }
 
-        private void UpdateMusicVolumeDisplay()
+        private void UpdateMusicVolumeText(float normalizedVolume)
         {
             if (_musicVolumeText == null) return;
 
-            int volume = MusicManager.HasInstance
-                ? MusicManager.Instance.GetMusicVolume()
-                : 0;
-
-            _musicVolumeText.text = string.Format(MUSIC_VOLUME_FORMAT, volume);
+            int percentage = Mathf.RoundToInt(normalizedVolume * 100f);
+            _musicVolumeText.text = string.Format(MUSIC_VOLUME_FORMAT, percentage);
         }
 
         #endregion
 
-        #region Private Methods — Visibility
+        #region Private Methods вЂ” Visibility
 
         private void Show()
         {
             gameObject.SetActive(true);
-            UpdateVolumeDisplays();
-            _backButton?.Select();
+            SyncSlidersWithoutNotify();
+            _soundVolumeSlider?.Select();
         }
 
         private void Hide()

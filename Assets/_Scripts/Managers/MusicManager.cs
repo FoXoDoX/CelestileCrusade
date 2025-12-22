@@ -1,8 +1,11 @@
+п»їusing My.Scripts.Core.Data;
 using My.Scripts.Core.Utility;
 using My.Scripts.EventBus;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace My.Scripts.Managers
 {
@@ -10,19 +13,18 @@ namespace My.Scripts.Managers
     {
         #region Constants
 
-        private const int MUSIC_VOLUME_MAX = 10;
-        private const int MUSIC_VOLUME_DEFAULT = 4;
+        private const string MIXER_MUSIC_PARAM = "MusicVolume";
+        private const float MIN_DECIBELS = -80f;
         private const float TRACK_END_THRESHOLD = 0.1f;
-
-        #endregion
-
-        #region Static Fields
-
-        private static int _musicVolume = MUSIC_VOLUME_DEFAULT;
+        private const float MIXER_INIT_DELAY = 0.05f;
 
         #endregion
 
         #region Serialized Fields
+
+        [Header("Audio Mixer")]
+        [SerializeField] private AudioMixer _audioMixer;
+        [SerializeField] private AudioMixerGroup _musicMixerGroup;
 
         [Header("Music Tracks")]
         [SerializeField] private AudioClip[] _musicTracks;
@@ -40,6 +42,8 @@ namespace My.Scripts.Managers
         private int _currentTrackIndex = -1;
         private bool _isApplicationFocused = true;
         private bool _isPaused;
+        private bool _isMixerReady;
+        private bool _isFullyInitialized;
 
         #endregion
 
@@ -52,8 +56,6 @@ namespace My.Scripts.Managers
 
         #region Properties
 
-        public int MusicVolume => _musicVolume;
-        public float MusicVolumeNormalized => (float)_musicVolume / MUSIC_VOLUME_MAX;
         public bool IsPlaying => _audioSource != null && _audioSource.isPlaying;
         public bool IsPaused => _isPaused;
         public AudioClip CurrentTrack => _audioSource?.clip;
@@ -64,15 +66,18 @@ namespace My.Scripts.Managers
 
         protected override void OnSingletonAwake()
         {
+            Debug.Log($"[MusicManager] OnSingletonAwake - GameData.MusicVolume = {GameData.MusicVolume:F3}");
+
             InitializeAudioSource();
             InitializeTrackList();
-            StartPlayback();
+
+            // Р—Р°РїСѓСЃРєР°РµРј РёРЅРёС†РёР°Р»РёР·Р°С†РёСЋ РјРёРєС€РµСЂР°
+            StartCoroutine(InitializeMixerAndStartPlayback());
         }
 
         private void OnEnable()
         {
             SubscribeToEvents();
-            TryResumePlayback();
         }
 
         private void OnDisable()
@@ -82,54 +87,122 @@ namespace My.Scripts.Managers
 
         private void Update()
         {
-            CheckTrackEnd();
+            // РџСЂРѕРІРµСЂСЏРµРј РѕРєРѕРЅС‡Р°РЅРёРµ С‚СЂРµРєР° С‚РѕР»СЊРєРѕ РїРѕСЃР»Рµ РїРѕР»РЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+            if (_isFullyInitialized)
+            {
+                CheckTrackEnd();
+            }
         }
 
         private void OnApplicationFocus(bool hasFocus)
         {
+            // РРіРЅРѕСЂРёСЂСѓРµРј СЃРѕР±С‹С‚РёСЏ С„РѕРєСѓСЃР° РґРѕ РїРѕР»РЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+            if (!_isFullyInitialized) return;
+
             HandleApplicationFocus(hasFocus);
         }
 
         private void OnApplicationPause(bool pauseStatus)
         {
-            // Для мобильных платформ
+            // РРіРЅРѕСЂРёСЂСѓРµРј СЃРѕР±С‹С‚РёСЏ РїР°СѓР·С‹ РґРѕ РїРѕР»РЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+            if (!_isFullyInitialized) return;
+
             HandleApplicationFocus(!pauseStatus);
         }
 
         #endregion
 
-        #region Public Methods — Volume Control
+        #region Private Methods вЂ” Initialization
 
-        public void ChangeMusicVolume()
+        private IEnumerator InitializeMixerAndStartPlayback()
         {
-            _musicVolume = (_musicVolume + 1) % (MUSIC_VOLUME_MAX + 1);
-            ApplyVolume();
+            // Р–РґС‘Рј РѕРґРёРЅ РєР°РґСЂ РґР»СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё Unity СЃРёСЃС‚РµРј
+            yield return null;
 
-            OnMusicVolumeChanged?.Invoke();
-            EventManager.Instance?.Broadcast(GameEvents.MusicVolumeChanged);
+            // РќРµР±РѕР»СЊС€Р°СЏ Р·Р°РґРµСЂР¶РєР° РґР»СЏ РЅР°РґС‘Р¶РЅРѕСЃС‚Рё AudioMixer
+            yield return new WaitForSecondsRealtime(MIXER_INIT_DELAY);
 
-            Debug.Log($"[{nameof(MusicManager)}] Volume: {_musicVolume}");
+            // РџСЂРёРјРµРЅСЏРµРј РіСЂРѕРјРєРѕСЃС‚СЊ Р”Рћ РЅР°С‡Р°Р»Р° РІРѕСЃРїСЂРѕРёР·РІРµРґРµРЅРёСЏ
+            _isMixerReady = true;
+            ApplyVolumeToMixer();
+
+            Debug.Log($"[MusicManager] Mixer ready, starting playback with volume: {GameData.MusicVolume:F3}");
+
+            // РўРµРїРµСЂСЊ Р·Р°РїСѓСЃРєР°РµРј РІРѕСЃРїСЂРѕРёР·РІРµРґРµРЅРёРµ
+            StartPlayback();
+
+            // РџРѕРјРµС‡Р°РµРј РїРѕР»РЅСѓСЋ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ
+            _isFullyInitialized = true;
         }
 
-        public void SetMusicVolume(int volume)
+        private void InitializeAudioSource()
         {
-            _musicVolume = Mathf.Clamp(volume, 0, MUSIC_VOLUME_MAX);
-            ApplyVolume();
+            _audioSource = GetComponent<AudioSource>();
 
-            OnMusicVolumeChanged?.Invoke();
+            if (_audioSource == null)
+            {
+                _audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            _audioSource.loop = false;
+            _audioSource.playOnAwake = false;
+            _audioSource.volume = 1f;
+            _audioSource.outputAudioMixerGroup = _musicMixerGroup;
         }
 
-        public int GetMusicVolume() => _musicVolume;
+        private void InitializeTrackList()
+        {
+            _availableTrackIndices.Clear();
 
-        public float GetMusicVolumeNormalized() => MusicVolumeNormalized;
+            if (_musicTracks == null) return;
+
+            for (int i = 0; i < _musicTracks.Length; i++)
+            {
+                if (_musicTracks[i] != null)
+                {
+                    _availableTrackIndices.Add(i);
+                }
+            }
+        }
+
+        private void StartPlayback()
+        {
+            if (CanPlayMusic())
+            {
+                PlayNextTrack();
+            }
+        }
 
         #endregion
 
-        #region Public Methods — Playback Control
+        #region Public Methods вЂ” Volume Control
+
+        public void SetMusicVolume(float normalizedVolume)
+        {
+            float clampedVolume = Mathf.Clamp01(normalizedVolume);
+
+            GameData.SetMusicVolume(clampedVolume);
+
+            if (_isMixerReady)
+            {
+                ApplyVolumeToMixer();
+            }
+
+            OnMusicVolumeChanged?.Invoke();
+            EventManager.Instance?.Broadcast(GameEvents.MusicVolumeChanged);
+        }
+
+        public float GetMusicVolumeNormalized() => GameData.MusicVolume;
+
+        public int GetMusicVolumePercent() => Mathf.RoundToInt(GameData.MusicVolume * 100f);
+
+        #endregion
+
+        #region Public Methods вЂ” Playback Control
 
         public void Play()
         {
-            if (_audioSource == null) return;
+            if (_audioSource == null || !_isFullyInitialized) return;
 
             if (_audioSource.clip == null)
             {
@@ -168,7 +241,7 @@ namespace My.Scripts.Managers
 
         public void PlayNextTrack()
         {
-            if (!CanPlayMusic()) return;
+            if (!CanPlayMusic() || !_isMixerReady) return;
 
             SelectNextTrack();
             PlayCurrentTrack();
@@ -190,48 +263,53 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods — Initialization
+        #region Private Methods вЂ” Volume
 
-        private void InitializeAudioSource()
+        private void ApplyVolumeToMixer()
         {
-            _audioSource = GetComponent<AudioSource>();
-
-            if (_audioSource == null)
+            if (_audioMixer == null)
             {
-                _audioSource = gameObject.AddComponent<AudioSource>();
+                Debug.LogWarning($"[{nameof(MusicManager)}] AudioMixer is not assigned!");
+                return;
             }
 
-            _audioSource.loop = false; // Мы сами управляем переключением треков
-            _audioSource.playOnAwake = false;
-            _audioSource.volume = MusicVolumeNormalized;
+            float volume = GameData.MusicVolume;
+            float decibels = NormalizedToDecibels(volume);
+
+            bool success = _audioMixer.SetFloat(MIXER_MUSIC_PARAM, decibels);
+
+            if (!success)
+            {
+                Debug.LogError($"[MusicManager] Failed to set '{MIXER_MUSIC_PARAM}'. Check if parameter is exposed in AudioMixer!");
+                return;
+            }
+
+            // Р’РµСЂРёС„РёРєР°С†РёСЏ
+            _audioMixer.GetFloat(MIXER_MUSIC_PARAM, out float actualValue);
+
+            if (!Mathf.Approximately(actualValue, decibels))
+            {
+                Debug.LogError($"[MusicManager] Mixer value mismatch! Set={decibels:F1}, Got={actualValue:F1}");
+            }
+            else
+            {
+                Debug.Log($"[MusicManager] Volume applied: {volume:P0} в†’ {decibels:F1} dB вњ“");
+            }
         }
 
-        private void InitializeTrackList()
+        private float NormalizedToDecibels(float normalizedVolume)
         {
-            _availableTrackIndices.Clear();
-
-            if (_musicTracks == null) return;
-
-            for (int i = 0; i < _musicTracks.Length; i++)
+            if (normalizedVolume <= 0.0001f)
             {
-                if (_musicTracks[i] != null)
-                {
-                    _availableTrackIndices.Add(i);
-                }
+                return MIN_DECIBELS;
             }
-        }
 
-        private void StartPlayback()
-        {
-            if (CanPlayMusic())
-            {
-                PlayNextTrack();
-            }
+            return Mathf.Log10(normalizedVolume) * 20f;
         }
 
         #endregion
 
-        #region Private Methods — Event Subscription
+        #region Private Methods вЂ” Event Subscription
 
         private void SubscribeToEvents()
         {
@@ -245,25 +323,12 @@ namespace My.Scripts.Managers
             EventManager.Instance?.RemoveHandler(GameEvents.GameUnpaused, OnGameUnpaused);
         }
 
-        #endregion
-
-        #region Private Methods — Event Handlers
-
-        private void OnGamePaused()
-        {
-            // Опционально: приглушить музыку при паузе
-            // _audioSource.volume = MusicVolumeNormalized * 0.3f;
-        }
-
-        private void OnGameUnpaused()
-        {
-            // Опционально: вернуть громкость
-            // _audioSource.volume = MusicVolumeNormalized;
-        }
+        private void OnGamePaused() { }
+        private void OnGameUnpaused() { }
 
         #endregion
 
-        #region Private Methods — Playback Logic
+        #region Private Methods вЂ” Playback Logic
 
         private bool CanPlayMusic()
         {
@@ -274,14 +339,12 @@ namespace My.Scripts.Managers
 
         private void SelectNextTrack()
         {
-            // Если список пуст, переинициализируем
             if (_availableTrackIndices.Count == 0)
             {
                 if (!_loopPlaylist) return;
 
                 InitializeTrackList();
 
-                // Исключаем текущий трек чтобы не повторялся сразу
                 if (_currentTrackIndex >= 0 && _availableTrackIndices.Count > 1)
                 {
                     _availableTrackIndices.Remove(_currentTrackIndex);
@@ -290,16 +353,9 @@ namespace My.Scripts.Managers
 
             if (_availableTrackIndices.Count == 0) return;
 
-            // Выбираем следующий трек
-            int listIndex;
-            if (_shuffleTracks)
-            {
-                listIndex = UnityEngine.Random.Range(0, _availableTrackIndices.Count);
-            }
-            else
-            {
-                listIndex = 0;
-            }
+            int listIndex = _shuffleTracks
+                ? UnityEngine.Random.Range(0, _availableTrackIndices.Count)
+                : 0;
 
             _currentTrackIndex = _availableTrackIndices[listIndex];
             _availableTrackIndices.RemoveAt(listIndex);
@@ -314,7 +370,6 @@ namespace My.Scripts.Managers
 
             _audioSource.Stop();
             _audioSource.clip = track;
-            _audioSource.volume = MusicVolumeNormalized;
             _audioSource.Play();
 
             _isPaused = false;
@@ -328,14 +383,12 @@ namespace My.Scripts.Managers
             if (!_isApplicationFocused || _isPaused || _audioSource == null) return;
             if (_audioSource.clip == null) return;
 
-            // Трек почти закончился
             bool isNearEnd = _audioSource.time >= _audioSource.clip.length - TRACK_END_THRESHOLD;
 
             if (isNearEnd && _audioSource.isPlaying)
             {
                 PlayNextTrack();
             }
-            // Если музыка остановилась неожиданно
             else if (!_audioSource.isPlaying && !_isPaused)
             {
                 TryResumeOrPlayNext();
@@ -378,7 +431,7 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods — Application Focus
+        #region Private Methods вЂ” Application Focus
 
         private void HandleApplicationFocus(bool hasFocus)
         {
@@ -388,32 +441,21 @@ namespace My.Scripts.Managers
 
             if (hasFocus)
             {
-                // Возвращаем фокус — возобновляем если нужно
                 if (!_isPaused)
                 {
+                    if (_isMixerReady)
+                    {
+                        ApplyVolumeToMixer();
+                    }
                     TryResumePlayback();
                 }
             }
             else
             {
-                // Теряем фокус — ставим на паузу
                 if (_audioSource.isPlaying)
                 {
                     _audioSource.Pause();
-                    // Не меняем _isPaused — это системная пауза
                 }
-            }
-        }
-
-        #endregion
-
-        #region Private Methods — Helpers
-
-        private void ApplyVolume()
-        {
-            if (_audioSource != null)
-            {
-                _audioSource.volume = MusicVolumeNormalized;
             }
         }
 

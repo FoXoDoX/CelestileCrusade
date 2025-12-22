@@ -1,4 +1,4 @@
-using My.Scripts.Core.Persistence;
+п»їusing My.Scripts.Core.Persistence;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,13 @@ namespace My.Scripts.Core.Data
 {
     public static class GameData
     {
+        #region Constants
+
+        private const float DEFAULT_MUSIC_VOLUME = 0.5f;
+        private const float DEFAULT_SOUND_VOLUME = 0.7f;
+
+        #endregion
+
         #region Private Fields
 
         private static int _currentLevel = 1;
@@ -42,6 +49,23 @@ namespace My.Scripts.Core.Data
 
         #endregion
 
+        #region Audio Settings
+
+        public static float MusicVolume { get; private set; } = DEFAULT_MUSIC_VOLUME;
+        public static float SoundVolume { get; private set; } = DEFAULT_SOUND_VOLUME;
+
+        public static void SetMusicVolume(float volume)
+        {
+            MusicVolume = Mathf.Clamp01(volume);
+        }
+
+        public static void SetSoundVolume(float volume)
+        {
+            SoundVolume = Mathf.Clamp01(volume);
+        }
+
+        #endregion
+
         #region Public Methods
 
         public static void MarkLevelCompleted(int levelNumber, int starsEarned)
@@ -50,13 +74,11 @@ namespace My.Scripts.Core.Data
 
             Debug.Log($"[GameData] Level {levelNumber} completed with {starsEarned} stars");
 
-            // Обновляем максимальный пройденный уровень
             if (levelNumber > _highestCompletedLevel)
             {
                 _highestCompletedLevel = levelNumber;
             }
 
-            // Сохраняем лучший результат по звёздам
             if (!_levelStars.TryGetValue(levelNumber, out int currentStars) || starsEarned > currentStars)
             {
                 _levelStars[levelNumber] = starsEarned;
@@ -83,25 +105,20 @@ namespace My.Scripts.Core.Data
             _highestCompletedLevel = level;
         }
 
-        /// <summary>
-        /// Сброс данных текущей сессии (не прогресса!)
-        /// </summary>
         public static void ResetSessionData()
         {
             _currentLevel = 1;
             _totalScore = 0;
         }
 
-        /// <summary>
-        /// Полный сброс всего прогресса
-        /// </summary>
         public static void ResetAllProgress()
         {
             _currentLevel = 1;
             _totalScore = 0;
             _highestCompletedLevel = 0;
+            MusicVolume = DEFAULT_MUSIC_VOLUME;
+            SoundVolume = DEFAULT_SOUND_VOLUME;
 
-            // Гарантируем создание нового словаря
             _levelStars = new Dictionary<int, int>();
             _isInitialized = true;
 
@@ -116,6 +133,11 @@ namespace My.Scripts.Core.Data
         {
             EnsureInitialized();
 
+            // Р’РђР–РќРћ: РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„Р»Р°Рі С‡С‚Рѕ РёРіСЂР° Р±С‹Р»Р° СЃРѕС…СЂР°РЅРµРЅР°
+            data.hasBeenSavedBefore = true;
+
+            data.musicVolume = MusicVolume;
+            data.soundVolume = SoundVolume;
             data.highestCompletedLevel = _highestCompletedLevel;
             data.levelStarsData = new List<LevelStarData>();
 
@@ -128,21 +150,36 @@ namespace My.Scripts.Core.Data
                 });
             }
 
-            Debug.Log($"[GameData] Saved: {_levelStars.Count} levels, highest = {_highestCompletedLevel}");
+            Debug.Log($"[GameData] Saved: Music={MusicVolume:F3}, Sound={SoundVolume:F3}, hasBeenSaved=true");
         }
 
         public static void Load(GameSaveData data)
         {
-            _highestCompletedLevel = data.highestCompletedLevel;
+            Debug.Log($"[GameData] Loading... hasBeenSavedBefore={data.hasBeenSavedBefore}, music={data.musicVolume:F3}, sound={data.soundVolume:F3}");
 
-            // Всегда создаём новый словарь при загрузке
+            // Р•СЃР»Рё РёРіСЂР° РќРРљРћР“Р”Рђ РЅРµ СЃРѕС…СЂР°РЅСЏР»Р°СЃСЊ вЂ” РёСЃРїРѕР»СЊР·СѓРµРј РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ
+            if (!data.hasBeenSavedBefore)
+            {
+                Debug.Log("[GameData] First launch detected вЂ” using default volumes");
+                MusicVolume = DEFAULT_MUSIC_VOLUME;
+                SoundVolume = DEFAULT_SOUND_VOLUME;
+            }
+            else
+            {
+                // РРіСЂР° СЃРѕС…СЂР°РЅСЏР»Р°СЃСЊ вЂ” РёСЃРїРѕР»СЊР·СѓРµРј СЃРѕС…СЂР°РЅС‘РЅРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ (РґР°Р¶Рµ РµСЃР»Рё РѕРЅРё 0!)
+                MusicVolume = Mathf.Clamp01(data.musicVolume);
+                SoundVolume = Mathf.Clamp01(data.soundVolume);
+                Debug.Log($"[GameData] Loaded saved volumes: Music={MusicVolume:F3}, Sound={SoundVolume:F3}");
+            }
+
+            _highestCompletedLevel = data.highestCompletedLevel;
             _levelStars = new Dictionary<int, int>();
 
             if (data.levelStarsData != null)
             {
                 foreach (var starData in data.levelStarsData)
                 {
-                    if (starData.starsCount > 0) // Только валидные данные
+                    if (starData.starsCount > 0)
                     {
                         _levelStars[starData.levelNumber] = starData.starsCount;
                     }
@@ -151,13 +188,7 @@ namespace My.Scripts.Core.Data
 
             _isInitialized = true;
 
-            Debug.Log($"[GameData] Loaded: {_levelStars.Count} levels, highest = {_highestCompletedLevel}");
-
-            // Выводим все загруженные звёзды для отладки
-            foreach (var kvp in _levelStars)
-            {
-                Debug.Log($"[GameData]   Level {kvp.Key}: {kvp.Value} stars");
-            }
+            Debug.Log($"[GameData] Load complete: Music={MusicVolume:F3}, Sound={SoundVolume:F3}");
         }
 
         #endregion
@@ -168,7 +199,6 @@ namespace My.Scripts.Core.Data
         {
             if (_isInitialized) return;
 
-            // Если не инициализированы, создаём пустой словарь
             _levelStars ??= new Dictionary<int, int>();
             _isInitialized = true;
 
@@ -183,7 +213,8 @@ namespace My.Scripts.Core.Data
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStaticFields()
         {
-            // Сброс статических полей при Domain Reload (важно для Enter Play Mode Options)
+            MusicVolume = DEFAULT_MUSIC_VOLUME;
+            SoundVolume = DEFAULT_SOUND_VOLUME;
             _currentLevel = 1;
             _totalScore = 0;
             _highestCompletedLevel = 0;
@@ -202,6 +233,9 @@ namespace My.Scripts.Core.Data
     [System.Serializable]
     public struct GameSaveData
     {
+        public bool hasBeenSavedBefore;
+        public float musicVolume;
+        public float soundVolume;
         public int highestCompletedLevel;
         public List<LevelStarData> levelStarsData;
     }

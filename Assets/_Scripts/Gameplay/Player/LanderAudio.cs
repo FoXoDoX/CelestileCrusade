@@ -1,4 +1,3 @@
-using My.Scripts.EventBus;
 using My.Scripts.Managers;
 using UnityEngine;
 
@@ -13,40 +12,23 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Private Fields
-
-        private bool _isThrusting;
-
-        #endregion
-
         #region Unity Lifecycle
 
-        private void Awake()
+        private void Start()
         {
-            InitializeAudioSource();
-        }
-
-        private void OnEnable()
-        {
-            SubscribeToEvents();
-        }
-
-        private void OnDisable()
-        {
-            UnsubscribeFromEvents();
+            RegisterWithSoundManager();
         }
 
         private void OnDestroy()
         {
-            UnsubscribeFromEvents();
-            StopThrusting();
+            UnregisterFromSoundManager();
         }
 
         #endregion
 
-        #region Private Methods Ч Initialization
+        #region Private Methods
 
-        private void InitializeAudioSource()
+        private void RegisterWithSoundManager()
         {
             if (_thrusterAudioSource == null)
             {
@@ -54,112 +36,18 @@ namespace My.Scripts.Gameplay.Player
                 return;
             }
 
-            _thrusterAudioSource.volume = 0f;
-            _thrusterAudioSource.loop = true;
-            _thrusterAudioSource.Play();
-        }
-
-        #endregion
-
-        #region Private Methods Ч Event Subscription
-
-        private void SubscribeToEvents()
-        {
-            var em = EventManager.Instance;
-            if (em == null) return;
-
-            em.AddHandler(GameEvents.LanderBeforeForce, OnBeforeForce);
-            em.AddHandler(GameEvents.LanderUpForce, OnUpForce);
-            em.AddHandler(GameEvents.LanderLeftForce, OnLeftForce);
-            em.AddHandler(GameEvents.LanderRightForce, OnRightForce);
-
-            // ѕодписка на изменение громкости
             if (SoundManager.HasInstance)
             {
-                SoundManager.Instance.OnSoundVolumeChanged += OnSoundVolumeChanged;
+                SoundManager.Instance.RegisterThrusterAudioSource(_thrusterAudioSource);
             }
         }
 
-        private void UnsubscribeFromEvents()
+        private void UnregisterFromSoundManager()
         {
-            var em = EventManager.Instance;
-            if (em != null)
-            {
-                em.RemoveHandler(GameEvents.LanderBeforeForce, OnBeforeForce);
-                em.RemoveHandler(GameEvents.LanderUpForce, OnUpForce);
-                em.RemoveHandler(GameEvents.LanderLeftForce, OnLeftForce);
-                em.RemoveHandler(GameEvents.LanderRightForce, OnRightForce);
-            }
-
             if (SoundManager.HasInstance)
             {
-                SoundManager.Instance.OnSoundVolumeChanged -= OnSoundVolumeChanged;
+                SoundManager.Instance.UnregisterThrusterAudioSource();
             }
-        }
-
-        #endregion
-
-        #region Private Methods Ч Event Handlers
-
-        private void OnBeforeForce()
-        {
-            StopThrusting();
-        }
-
-        private void OnUpForce()
-        {
-            StartThrusting();
-        }
-
-        private void OnLeftForce()
-        {
-            StartThrusting();
-        }
-
-        private void OnRightForce()
-        {
-            StartThrusting();
-        }
-
-        private void OnSoundVolumeChanged()
-        {
-            if (_isThrusting)
-            {
-                UpdateThrusterVolume();
-            }
-        }
-
-        #endregion
-
-        #region Private Methods Ч Audio Control
-
-        private void StartThrusting()
-        {
-            if (_isThrusting) return;
-            if (_thrusterAudioSource == null) return;
-
-            _isThrusting = true;
-            UpdateThrusterVolume();
-        }
-
-        private void StopThrusting()
-        {
-            if (!_isThrusting) return;
-            if (_thrusterAudioSource == null) return;
-
-            _isThrusting = false;
-            _thrusterAudioSource.volume = 0f;
-        }
-
-        private void UpdateThrusterVolume()
-        {
-            if (_thrusterAudioSource == null) return;
-
-            float volume = SoundManager.HasInstance
-                ? SoundManager.Instance.GetSoundVolumeNormalized()
-                : 1f;
-
-            _thrusterAudioSource.volume = volume;
         }
 
         #endregion

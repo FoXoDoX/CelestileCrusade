@@ -1,46 +1,43 @@
 using UnityEngine;
-using DG.Tweening;
 
 namespace My.Scripts.Environment.Hazards
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class TurretProjectile : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private float speed = 15f;
-        [SerializeField] private float lifetime = 20f;
-        [SerializeField] private Ease movementEase = Ease.Linear;
+        [SerializeField] private float _speed = 15f;
+        [SerializeField] private float _lifetime = 20f;
+        [SerializeField] private float _destroyAnimationDuration = 0.2f;
 
-        private Tween movementTween;
-        private Tween scaleTween;
-        private float lifeTimer;
-        private bool isDestroying = false;
+        private Rigidbody2D _rigidbody;
+        private float _lifeTimer;
+        private bool _isDestroying;
+
+        private Vector3 _originalScale;
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+
+            _rigidbody.gravityScale = 0f;
+            _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+            _originalScale = transform.localScale;
+        }
 
         public void LaunchTowards(Vector2 direction)
         {
-            Vector2 normalizedDirection = direction.normalized;
-
-            float distance = speed * lifetime;
-            Vector2 targetPosition = (Vector2)transform.position + normalizedDirection * distance;
-
-            float moveDuration = distance / speed;
-
-            movementTween = transform.DOMove(targetPosition, moveDuration)
-                .SetEase(movementEase)
-                .OnComplete(() =>
-                {
-                    DestroyProjectile();
-                })
-                .SetLink(gameObject); // Автоматическая отмена при уничтожении объекта
-
-            lifeTimer = lifetime;
+            _rigidbody.linearVelocity = direction.normalized * _speed;
+            _lifeTimer = _lifetime;
         }
 
         private void Update()
         {
-            if (isDestroying) return;
+            if (_isDestroying) return;
 
-            lifeTimer -= Time.deltaTime;
-            if (lifeTimer <= 0)
+            _lifeTimer -= Time.deltaTime;
+            if (_lifeTimer <= 0)
             {
                 DestroyProjectile();
             }
@@ -53,20 +50,27 @@ namespace My.Scripts.Environment.Hazards
 
         private void DestroyProjectile()
         {
-            if (isDestroying) return;
-            isDestroying = true;
+            if (_isDestroying) return;
+            _isDestroying = true;
 
-            // Останавливаем движение
-            movementTween?.Kill();
+            _rigidbody.linearVelocity = Vector2.zero;
 
-            // Анимация исчезновения
-            scaleTween = transform.DOScale(Vector3.zero, 0.2f)
-                .OnComplete(() =>
-                {
-                    if (gameObject != null)
-                        Destroy(gameObject);
-                })
-                .SetLink(gameObject);
+            StartCoroutine(DestroyAnimation());
+        }
+
+        private System.Collections.IEnumerator DestroyAnimation()
+        {
+            float elapsed = 0f;
+
+            while (elapsed < _destroyAnimationDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / _destroyAnimationDuration;
+                transform.localScale = Vector3.Lerp(_originalScale, Vector3.zero, t);
+                yield return null;
+            }
+
+            Destroy(gameObject);
         }
     }
 }

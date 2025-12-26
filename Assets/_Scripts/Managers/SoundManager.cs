@@ -18,6 +18,14 @@ namespace My.Scripts.Managers
         private const float MIN_DECIBELS = -80f;
         private const float WIND_FADE_TIME = 0.5f;
         private const float MIXER_INIT_DELAY = 0.05f;
+        private const float VOLUME_FADE_TIME = 0.15f;
+        private const float THRUSTER_FADE_TIME = 0.1f;
+
+        // Настройки стерео-панорамирования
+        private const float SIDE_THRUSTER_PAN = 0.7f;      // Насколько сильно смещается звук в сторону (0-1)
+        private const float SIDE_THRUSTER_VOLUME = 0.8f;   // Громкость бокового двигателя
+        private const float UP_THRUSTER_VOLUME = 0.6f;     // Громкость верхнего двигателя
+        private const float MAX_COMBINED_VOLUME = 1f;      // Максимальная комбинированная громкость
 
         #endregion
 
@@ -47,18 +55,42 @@ namespace My.Scripts.Managers
         [SerializeField] private AudioClip _turretShootClip;
         [SerializeField] private AudioClip _thrusterClip;
 
+        [Header("Thruster Stereo Settings")]
+        [SerializeField, Range(0f, 1f)]
+        private float _sideThrusterPan = SIDE_THRUSTER_PAN;
+
+        [SerializeField, Range(0f, 1f)]
+        private float _sideThrusterVolume = SIDE_THRUSTER_VOLUME;
+
+        [SerializeField, Range(0f, 1f)]
+        private float _upThrusterVolume = UP_THRUSTER_VOLUME;
+
         #endregion
 
         #region Private Fields
 
         private Coroutine _windFadeCoroutine;
+        private Coroutine _volumeFadeCoroutine;
+        private Coroutine _thrusterFadeCoroutine;
+        private Coroutine _thrusterUpdateCoroutine;
+
         private bool _isWindPlaying;
         private bool _isPaused;
         private bool _isMixerReady;
 
-        // Thruster audio
         private AudioSource _thrusterAudioSource;
         private bool _isThrusterPlaying;
+
+        private float _targetMixerVolume;
+
+        // Состояние активных двигателей
+        private bool _isLeftThrusterActive;
+        private bool _isRightThrusterActive;
+        private bool _isUpThrusterActive;
+
+        // Целевые значения для плавного перехода
+        private float _targetThrusterVolume;
+        private float _targetThrusterPan;
 
         private readonly List<AudioSourcePauseState> _pausedAudioStates = new();
 
@@ -122,7 +154,9 @@ namespace My.Scripts.Managers
             yield return new WaitForSecondsRealtime(MIXER_INIT_DELAY);
 
             _isMixerReady = true;
-            ApplyVolumeToMixer();
+            _targetMixerVolume = GameData.SoundVolume;
+
+            ApplyVolumeToMixerImmediate(_targetMixerVolume);
 
             Debug.Log($"[SoundManager] Mixer initialized, volume applied: {GameData.SoundVolume:F3}");
         }
@@ -178,7 +212,7 @@ namespace My.Scripts.Managers
 
             if (_isMixerReady)
             {
-                ApplyVolumeToMixer();
+                ApplyVolumeToMixerSmooth(clampedVolume);
             }
 
             OnSoundVolumeChanged?.Invoke();
@@ -264,10 +298,6 @@ namespace My.Scripts.Managers
 
         #region Public Methods — Thruster Audio
 
-        /// <summary>
-        /// Регистрирует AudioSource двигателя Lander.
-        /// Вызывается при спавне Lander.
-        /// </summary>
         public void RegisterThrusterAudioSource(AudioSource thrusterSource)
         {
             if (thrusterSource == null)
@@ -278,52 +308,136 @@ namespace My.Scripts.Managers
 
             _thrusterAudioSource = thrusterSource;
 
-            // Настраиваем AudioSource
             _thrusterAudioSource.clip = _thrusterClip;
             _thrusterAudioSource.loop = true;
             _thrusterAudioSource.playOnAwake = false;
             _thrusterAudioSource.volume = 0f;
+            _thrusterAudioSource.panStereo = 0f;
             _thrusterAudioSource.outputAudioMixerGroup = _soundMixerGroup;
             _thrusterAudioSource.Play();
 
             _isThrusterPlaying = false;
+            ResetThrusterState();
 
             Debug.Log($"[{nameof(SoundManager)}] Thruster AudioSource registered");
         }
 
-        /// <summary>
-        /// Отменяет регистрацию AudioSource двигателя.
-        /// Вызывается при уничтожении Lander.
-        /// </summary>
         public void UnregisterThrusterAudioSource()
         {
-            StopThrusterSound();
+            StopThrusterFadeCoroutine();
+
+            if (_thrusterAudioSource != null)
+            {
+                _thrusterAudioSource.volume = 0f;
+                _thrusterAudioSource.Stop();
+            }
+
             _thrusterAudioSource = null;
+            _isThrusterPlaying = false;
+            ResetThrusterState();
 
             Debug.Log($"[{nameof(SoundManager)}] Thruster AudioSource unregistered");
         }
 
-        public void StartThrusterSound()
+        #endregion
+
+        #region Private Methods — Thruster Stereo Control
+
+        private void ResetThrusterState()
         {
-            if (_isThrusterPlaying) return;
+            _isLeftThrusterActive = false;
+            _isRightThrusterActive = false;
+            _isUpThrusterActive = false;
+            _targetThrusterVolume = 0f;
+            _targetThrusterPan = 0f;
+        }
+
+        private void UpdateThrusterAudio()
+        {
             if (_thrusterAudioSource == null) return;
             if (_isPaused) return;
 
-            _isThrusterPlaying = true;
-            _thrusterAudioSource.volume = 1f; // Mixer контролирует громкость
+            bool anyThrusterActive = _isLeftThrusterActive || _isRightThrusterActive || _isUpThrusterActive;
 
-            Debug.Log($"[{nameof(SoundManager)}] Thruster started");
+            if (!anyThrusterActive)
+            {
+                // Все двигатели выключены
+                if (_isThrusterPlaying)
+                {
+                    _isThrusterPlaying = false;
+                    StopThrusterFadeCoroutine();
+                    _thrusterFadeCoroutine = StartCoroutine(FadeThrusterVolumeAndPan(0f, 0f));
+                }
+                return;
+            }
+
+            // Вычисляем целевую громкость и панораму
+            CalculateThrusterParameters(out float targetVolume, out float targetPan);
+
+            _targetThrusterVolume = targetVolume;
+            _targetThrusterPan = targetPan;
+
+            if (!_isThrusterPlaying)
+            {
+                _isThrusterPlaying = true;
+            }
+
+            // Плавно переходим к новым значениям
+            StopThrusterFadeCoroutine();
+            _thrusterFadeCoroutine = StartCoroutine(FadeThrusterVolumeAndPan(targetVolume, targetPan));
         }
 
-        public void StopThrusterSound()
+        private void CalculateThrusterParameters(out float volume, out float pan)
         {
-            if (!_isThrusterPlaying) return;
-            if (_thrusterAudioSource == null) return;
+            float totalVolume = 0f;
+            float panContribution = 0f;
+            float panWeight = 0f;
 
-            _isThrusterPlaying = false;
-            _thrusterAudioSource.volume = 0f;
+            // Левый двигатель: звук смещается ВПРАВО (положительный pan)
+            if (_isLeftThrusterActive)
+            {
+                totalVolume += _sideThrusterVolume;
+                panContribution += _sideThrusterPan * _sideThrusterVolume;
+                panWeight += _sideThrusterVolume;
+            }
 
-            Debug.Log($"[{nameof(SoundManager)}] Thruster stopped");
+            // Правый двигатель: звук смещается ВЛЕВО (отрицательный pan)
+            if (_isRightThrusterActive)
+            {
+                totalVolume += _sideThrusterVolume;
+                panContribution += -_sideThrusterPan * _sideThrusterVolume;
+                panWeight += _sideThrusterVolume;
+            }
+
+            // Верхний двигатель: звук по центру
+            if (_isUpThrusterActive)
+            {
+                totalVolume += _upThrusterVolume;
+                // Pan contribution = 0 для центра
+                panWeight += _upThrusterVolume;
+            }
+
+            // Нормализуем громкость
+            volume = Mathf.Min(totalVolume, MAX_COMBINED_VOLUME);
+
+            // Вычисляем взвешенную панораму
+            if (panWeight > 0f)
+            {
+                pan = Mathf.Clamp(panContribution / panWeight, -1f, 1f);
+            }
+            else
+            {
+                pan = 0f;
+            }
+        }
+
+        private IEnumerator UpdateThrusterAtEndOfFrame()
+        {
+            // Ждём конца кадра, чтобы все события Force успели сработать
+            yield return new WaitForEndOfFrame();
+
+            UpdateThrusterAudio();
+            _thrusterUpdateCoroutine = null;
         }
 
         #endregion
@@ -338,6 +452,7 @@ namespace My.Scripts.Managers
             _pausedAudioStates.Clear();
 
             StopWindFadeCoroutine();
+            StopThrusterFadeCoroutine();
 
             PauseAudioSource(_mainAudioSource);
             PauseAudioSource(_windAudioSource);
@@ -390,12 +505,22 @@ namespace My.Scripts.Managers
 
         #region Private Methods — Volume
 
-        private void ApplyVolumeToMixer()
+        private void ApplyVolumeToMixerImmediate(float normalizedVolume)
         {
             if (_audioMixer == null) return;
 
-            float decibels = NormalizedToDecibels(GameData.SoundVolume);
+            float decibels = NormalizedToDecibels(normalizedVolume);
             _audioMixer.SetFloat(MIXER_SOUND_PARAM, decibels);
+        }
+
+        private void ApplyVolumeToMixerSmooth(float targetNormalizedVolume)
+        {
+            if (_audioMixer == null) return;
+
+            _targetMixerVolume = targetNormalizedVolume;
+
+            StopVolumeFadeCoroutine();
+            _volumeFadeCoroutine = StartCoroutine(FadeMixerVolume(targetNormalizedVolume));
         }
 
         private float NormalizedToDecibels(float normalizedVolume)
@@ -406,6 +531,16 @@ namespace My.Scripts.Managers
             }
 
             return Mathf.Log10(normalizedVolume) * 20f;
+        }
+
+        private float DecibelsToNormalized(float decibels)
+        {
+            if (decibels <= MIN_DECIBELS + 0.1f)
+            {
+                return 0f;
+            }
+
+            return Mathf.Pow(10f, decibels / 20f);
         }
 
         #endregion
@@ -426,7 +561,6 @@ namespace My.Scripts.Managers
             em.AddHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.AddHandler(GameEvents.KeyPickup, OnKeyPickup);
 
-            // Thruster events
             em.AddHandler(GameEvents.LanderBeforeForce, OnLanderBeforeForce);
             em.AddHandler(GameEvents.LanderUpForce, OnLanderUpForce);
             em.AddHandler(GameEvents.LanderLeftForce, OnLanderLeftForce);
@@ -452,7 +586,6 @@ namespace My.Scripts.Managers
             em.RemoveHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.RemoveHandler(GameEvents.KeyPickup, OnKeyPickup);
 
-            // Thruster events
             em.RemoveHandler(GameEvents.LanderBeforeForce, OnLanderBeforeForce);
             em.RemoveHandler(GameEvents.LanderUpForce, OnLanderUpForce);
             em.RemoveHandler(GameEvents.LanderLeftForce, OnLanderLeftForce);
@@ -483,8 +616,9 @@ namespace My.Scripts.Managers
 
         private void OnLanderLanded(LanderLandedData data)
         {
-            // Останавливаем двигатель при посадке
-            StopThrusterSound();
+            // Сбрасываем все двигатели
+            ResetThrusterState();
+            UpdateThrusterAudio();
 
             var clip = data.LandingType == Lander.LandingType.Success
                 ? _landingSuccessClip
@@ -493,11 +627,35 @@ namespace My.Scripts.Managers
             PlaySound(clip);
         }
 
-        // Thruster event handlers
-        private void OnLanderBeforeForce() => StopThrusterSound();
-        private void OnLanderUpForce() => StartThrusterSound();
-        private void OnLanderLeftForce() => StartThrusterSound();
-        private void OnLanderRightForce() => StartThrusterSound();
+        private void OnLanderBeforeForce()
+        {
+            // Сбрасываем состояние перед новым кадром
+            _isLeftThrusterActive = false;
+            _isRightThrusterActive = false;
+            _isUpThrusterActive = false;
+
+            // Запускаем отложенную проверку в конце кадра
+            if (_thrusterUpdateCoroutine != null)
+            {
+                StopCoroutine(_thrusterUpdateCoroutine);
+            }
+            _thrusterUpdateCoroutine = StartCoroutine(UpdateThrusterAtEndOfFrame());
+        }
+
+        private void OnLanderUpForce()
+        {
+            _isUpThrusterActive = true;
+        }
+
+        private void OnLanderLeftForce()
+        {
+            _isLeftThrusterActive = true;
+        }
+
+        private void OnLanderRightForce()
+        {
+            _isRightThrusterActive = true;
+        }
 
         #endregion
 
@@ -509,6 +667,24 @@ namespace My.Scripts.Managers
             {
                 StopCoroutine(_windFadeCoroutine);
                 _windFadeCoroutine = null;
+            }
+        }
+
+        private void StopVolumeFadeCoroutine()
+        {
+            if (_volumeFadeCoroutine != null)
+            {
+                StopCoroutine(_volumeFadeCoroutine);
+                _volumeFadeCoroutine = null;
+            }
+        }
+
+        private void StopThrusterFadeCoroutine()
+        {
+            if (_thrusterFadeCoroutine != null)
+            {
+                StopCoroutine(_thrusterFadeCoroutine);
+                _thrusterFadeCoroutine = null;
             }
         }
 
@@ -544,10 +720,88 @@ namespace My.Scripts.Managers
             _windFadeCoroutine = null;
         }
 
+        private IEnumerator FadeMixerVolume(float targetNormalizedVolume)
+        {
+            if (_audioMixer == null) yield break;
+
+            float currentDecibels;
+            if (!_audioMixer.GetFloat(MIXER_SOUND_PARAM, out currentDecibels))
+            {
+                currentDecibels = MIN_DECIBELS;
+            }
+
+            float startNormalized = DecibelsToNormalized(currentDecibels);
+            float elapsedTime = 0f;
+
+            while (elapsedTime < VOLUME_FADE_TIME)
+            {
+                elapsedTime += Time.unscaledDeltaTime;
+                float t = Mathf.SmoothStep(0f, 1f, elapsedTime / VOLUME_FADE_TIME);
+
+                float currentNormalized = Mathf.Lerp(startNormalized, targetNormalizedVolume, t);
+                float decibels = NormalizedToDecibels(currentNormalized);
+
+                _audioMixer.SetFloat(MIXER_SOUND_PARAM, decibels);
+
+                yield return null;
+            }
+
+            float finalDecibels = NormalizedToDecibels(targetNormalizedVolume);
+            _audioMixer.SetFloat(MIXER_SOUND_PARAM, finalDecibels);
+
+            _volumeFadeCoroutine = null;
+        }
+
+        private IEnumerator FadeThrusterVolumeAndPan(float targetVolume, float targetPan)
+        {
+            if (_thrusterAudioSource == null) yield break;
+
+            float startVolume = _thrusterAudioSource.volume;
+            float startPan = _thrusterAudioSource.panStereo;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < THRUSTER_FADE_TIME)
+            {
+                if (_thrusterAudioSource == null) yield break;
+                if (_isPaused) yield break;
+
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.SmoothStep(0f, 1f, elapsedTime / THRUSTER_FADE_TIME);
+
+                _thrusterAudioSource.volume = Mathf.Lerp(startVolume, targetVolume, t);
+                _thrusterAudioSource.panStereo = Mathf.Lerp(startPan, targetPan, t);
+
+                yield return null;
+            }
+
+            if (_thrusterAudioSource != null)
+            {
+                _thrusterAudioSource.volume = targetVolume;
+                _thrusterAudioSource.panStereo = targetPan;
+            }
+
+            _thrusterFadeCoroutine = null;
+        }
+
         private void CleanupThrusterAudio()
         {
-            StopThrusterSound();
+            StopThrusterFadeCoroutine();
+
+            if (_thrusterUpdateCoroutine != null)
+            {
+                StopCoroutine(_thrusterUpdateCoroutine);
+                _thrusterUpdateCoroutine = null;
+            }
+
+            if (_thrusterAudioSource != null)
+            {
+                _thrusterAudioSource.volume = 0f;
+                _thrusterAudioSource.Stop();
+            }
+
             _thrusterAudioSource = null;
+            _isThrusterPlaying = false;
+            ResetThrusterState();
         }
 
         #endregion

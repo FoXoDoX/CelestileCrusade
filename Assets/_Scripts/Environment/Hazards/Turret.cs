@@ -26,7 +26,8 @@ namespace My.Scripts.Environment.Hazards
         [SerializeField] private Ease _rotationEase = Ease.OutBack;
 
         [Header("Combat Settings")]
-        [SerializeField] private float _fireRate = 6f;
+        [SerializeField] private float _minFireInterval = 2f;
+        [SerializeField] private float _maxFireInterval = 3f;
         [SerializeField] private float _triggerRadius = 25f;
         [SerializeField] private float _firingArcAngle = DEFAULT_FIRING_ARC;
 
@@ -105,9 +106,6 @@ namespace My.Scripts.Environment.Hazards
 
         #region Events
 
-        /// <summary>
-        /// Локальное событие выстрела (для визуальных эффектов этой турели).
-        /// </summary>
         public event System.Action OnShoot;
 
         #endregion
@@ -184,7 +182,7 @@ namespace My.Scripts.Environment.Hazards
             if (_isActive) return;
 
             _isActive = true;
-            _fireTimer = _fireRate;
+            _fireTimer = GetRandomFireInterval();
             StartContinuousAiming();
         }
 
@@ -275,21 +273,24 @@ namespace My.Scripts.Environment.Hazards
 
         #region Private Methods — Combat
 
+        private float GetRandomFireInterval()
+        {
+            return Random.Range(_minFireInterval, _maxFireInterval);
+        }
+
         private void UpdateActiveState()
         {
-            // Проверяем, находится ли цель в зоне
             if (_targetTransform == null || !IsTargetInFiringArc(_targetTransform))
             {
                 Deactivate();
                 return;
             }
 
-            // Обновляем таймер стрельбы
             _fireTimer -= Time.deltaTime;
             if (_fireTimer <= 0f)
             {
                 Shoot();
-                _fireTimer = _fireRate;
+                _fireTimer = GetRandomFireInterval();
             }
         }
 
@@ -297,7 +298,6 @@ namespace My.Scripts.Environment.Hazards
         {
             if (_projectilePrefab == null || _firePoint == null) return;
 
-            // Создаём снаряд
             GameObject projectile = Instantiate(_projectilePrefab, _firePoint.position, _firePoint.rotation);
 
             if (projectile.TryGetComponent(out TurretProjectile projectileScript))
@@ -306,10 +306,7 @@ namespace My.Scripts.Environment.Hazards
                 projectileScript.LaunchTowards(direction);
             }
 
-            // Локальное событие для визуальных эффектов
             OnShoot?.Invoke();
-
-            // Глобальное событие для звуков и других систем
             EventManager.Instance?.Broadcast(GameEvents.TurretShoot);
         }
 
@@ -338,14 +335,12 @@ namespace My.Scripts.Environment.Hazards
                 _triggerRadius = 25f;
             }
 
-            if (_fireRate <= 0f)
-            {
-                _fireRate = 1f;
-            }
+            // Гарантируем корректный диапазон интервалов
+            _minFireInterval = Mathf.Max(0.1f, _minFireInterval);
+            _maxFireInterval = Mathf.Max(_minFireInterval, _maxFireInterval);
 
             _firingArcAngle = Mathf.Clamp(_firingArcAngle, 0f, 180f);
 
-            // Обновляем коллайдер в редакторе
             if (_triggerCollider != null)
             {
                 _triggerCollider.radius = _triggerRadius;
@@ -381,17 +376,14 @@ namespace My.Scripts.Environment.Hazards
 
             Gizmos.color = Color.cyan;
 
-            // Центральная линия
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)(forward * _triggerRadius));
 
-            // Границы зоны
             Vector2 leftBound = Quaternion.Euler(0, 0, _firingArcAngle) * forward;
             Vector2 rightBound = Quaternion.Euler(0, 0, -_firingArcAngle) * forward;
 
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)(leftBound * _triggerRadius));
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)(rightBound * _triggerRadius));
 
-            // Дуга
             DrawArc(transform.position, forward, _triggerRadius, _firingArcAngle * 2f);
         }
 

@@ -25,6 +25,7 @@ namespace My.Scripts.UI.Menus
         {
             ResetTimeScale();
             EnsureSaveFileExists();
+            ConfigurePlatformSpecificUI();
             SetupButtons();
         }
 
@@ -63,6 +64,17 @@ namespace My.Scripts.UI.Menus
             {
                 SaveSystem.Save();
             }
+        }
+
+        private void ConfigurePlatformSpecificUI()
+        {
+            // Скрываем кнопку Quit в WebGL
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (_quitButton != null)
+            {
+                _quitButton.gameObject.SetActive(false);
+            }
+#endif
         }
 
         private void SetupButtons()
@@ -159,28 +171,16 @@ namespace My.Scripts.UI.Menus
 
         private void OnQuitClicked()
         {
-            QuitGame();
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#elif !UNITY_WEBGL
+            Application.Quit();
+#endif
         }
 
         private void OnSettingsBack()
         {
             SelectDefaultButton();
-        }
-
-        #endregion
-
-        #region Private Methods — Game Control
-
-        private void QuitGame()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE || UNITY_WEBGL
-            Application.Quit();
-#elif UNITY_ANDROID || UNITY_IOS
-            // На мобильных обычно не используют кнопку Quit
-            Debug.Log($"[{nameof(MainMenuUI)}] Quit not supported on mobile platforms");
-#endif
         }
 
         #endregion

@@ -10,6 +10,8 @@ namespace My.Scripts.Core.Data
 
         private const float DEFAULT_MUSIC_VOLUME = 0.5f;
         private const float DEFAULT_SOUND_VOLUME = 0.7f;
+        private const bool DEFAULT_FULLSCREEN = true;
+        private const int DEFAULT_GRAPHICS_QUALITY = 2; // High (0=Low, 1=Medium, 2=High)
 
         #endregion
 
@@ -66,6 +68,40 @@ namespace My.Scripts.Core.Data
 
         #endregion
 
+        #region Graphics Settings
+
+        public static int GraphicsQuality { get; private set; } = DEFAULT_GRAPHICS_QUALITY;
+
+        public static void SetGraphicsQuality(int qualityLevel)
+        {
+            // Ограничиваем диапазон количеством доступных уровней качества
+            int maxQuality = QualitySettings.names.Length - 1;
+            GraphicsQuality = Mathf.Clamp(qualityLevel, 0, maxQuality);
+
+            Debug.Log($"[GameData] Graphics quality set: {GraphicsQuality}");
+        }
+
+        #endregion
+
+        #region Display Settings
+
+        public static int ScreenWidth { get; private set; }
+        public static int ScreenHeight { get; private set; }
+        public static bool IsFullscreen { get; private set; } = DEFAULT_FULLSCREEN;
+
+        public static void SetResolution(int width, int height)
+        {
+            ScreenWidth = width;
+            ScreenHeight = height;
+        }
+
+        public static void SetFullscreen(bool isFullscreen)
+        {
+            IsFullscreen = isFullscreen;
+        }
+
+        #endregion
+
         #region Public Methods
 
         public static void MarkLevelCompleted(int levelNumber, int starsEarned)
@@ -118,6 +154,11 @@ namespace My.Scripts.Core.Data
             _highestCompletedLevel = 0;
             MusicVolume = DEFAULT_MUSIC_VOLUME;
             SoundVolume = DEFAULT_SOUND_VOLUME;
+            GraphicsQuality = DEFAULT_GRAPHICS_QUALITY;
+
+            ScreenWidth = Screen.width;
+            ScreenHeight = Screen.height;
+            IsFullscreen = DEFAULT_FULLSCREEN;
 
             _levelStars = new Dictionary<int, int>();
             _isInitialized = true;
@@ -133,11 +174,21 @@ namespace My.Scripts.Core.Data
         {
             EnsureInitialized();
 
-            // ВАЖНО: Устанавливаем флаг что игра была сохранена
             data.hasBeenSavedBefore = true;
 
+            // Audio
             data.musicVolume = MusicVolume;
             data.soundVolume = SoundVolume;
+
+            // Graphics
+            data.graphicsQuality = GraphicsQuality;
+
+            // Display
+            data.screenWidth = ScreenWidth;
+            data.screenHeight = ScreenHeight;
+            data.isFullscreen = IsFullscreen;
+
+            // Progress
             data.highestCompletedLevel = _highestCompletedLevel;
             data.levelStarsData = new List<LevelStarData>();
 
@@ -150,28 +201,85 @@ namespace My.Scripts.Core.Data
                 });
             }
 
-            Debug.Log($"[GameData] Saved: Music={MusicVolume:F3}, Sound={SoundVolume:F3}, hasBeenSaved=true");
+            Debug.Log($"[GameData] Saved: Graphics={GraphicsQuality}, Resolution={ScreenWidth}x{ScreenHeight}, Fullscreen={IsFullscreen}");
         }
 
         public static void Load(GameSaveData data)
         {
-            Debug.Log($"[GameData] Loading... hasBeenSavedBefore={data.hasBeenSavedBefore}, music={data.musicVolume:F3}, sound={data.soundVolume:F3}");
+            Debug.Log($"[GameData] Loading... hasBeenSavedBefore={data.hasBeenSavedBefore}");
 
-            // Если игра НИКОГДА не сохранялась — используем дефолтные значения
             if (!data.hasBeenSavedBefore)
             {
-                Debug.Log("[GameData] First launch detected — using default volumes");
-                MusicVolume = DEFAULT_MUSIC_VOLUME;
-                SoundVolume = DEFAULT_SOUND_VOLUME;
+                LoadDefaults();
             }
             else
             {
-                // Игра сохранялась — используем сохранённые значения (даже если они 0!)
-                MusicVolume = Mathf.Clamp01(data.musicVolume);
-                SoundVolume = Mathf.Clamp01(data.soundVolume);
-                Debug.Log($"[GameData] Loaded saved volumes: Music={MusicVolume:F3}, Sound={SoundVolume:F3}");
+                LoadFromSaveData(data);
             }
 
+            LoadProgressData(data);
+
+            _isInitialized = true;
+
+            Debug.Log($"[GameData] Loaded: Graphics={GraphicsQuality}, Fullscreen={IsFullscreen}, Resolution={ScreenWidth}x{ScreenHeight}");
+        }
+
+        private static void LoadDefaults()
+        {
+            Debug.Log("[GameData] First launch — using defaults");
+
+            MusicVolume = DEFAULT_MUSIC_VOLUME;
+            SoundVolume = DEFAULT_SOUND_VOLUME;
+            GraphicsQuality = DEFAULT_GRAPHICS_QUALITY;
+
+            Resolution nativeResolution = Screen.currentResolution;
+            ScreenWidth = nativeResolution.width;
+            ScreenHeight = nativeResolution.height;
+            IsFullscreen = DEFAULT_FULLSCREEN;
+
+            // Применяем настройки
+            QualitySettings.SetQualityLevel(GraphicsQuality);
+            Screen.SetResolution(ScreenWidth, ScreenHeight, IsFullscreen);
+
+            Debug.Log($"[GameData] Applied defaults: Graphics={GraphicsQuality}, {ScreenWidth}x{ScreenHeight}, Fullscreen={IsFullscreen}");
+        }
+
+        private static void LoadFromSaveData(GameSaveData data)
+        {
+            // Audio
+            MusicVolume = Mathf.Clamp01(data.musicVolume);
+            SoundVolume = Mathf.Clamp01(data.soundVolume);
+
+            // Graphics
+            int maxQuality = QualitySettings.names.Length - 1;
+            GraphicsQuality = Mathf.Clamp(data.graphicsQuality, 0, maxQuality);
+
+            // Display
+            ScreenWidth = data.screenWidth;
+            ScreenHeight = data.screenHeight;
+            IsFullscreen = data.isFullscreen;
+
+            // Применяем настройки графики
+            QualitySettings.SetQualityLevel(GraphicsQuality);
+            Debug.Log($"[GameData] Applied graphics quality: {GraphicsQuality} ({QualitySettings.names[GraphicsQuality]})");
+
+            // Применяем разрешение
+            if (ScreenWidth > 0 && ScreenHeight > 0)
+            {
+                Screen.SetResolution(ScreenWidth, ScreenHeight, IsFullscreen);
+                Debug.Log($"[GameData] Applied resolution: {ScreenWidth}x{ScreenHeight}, Fullscreen={IsFullscreen}");
+            }
+            else
+            {
+                Resolution nativeResolution = Screen.currentResolution;
+                ScreenWidth = nativeResolution.width;
+                ScreenHeight = nativeResolution.height;
+                Screen.SetResolution(ScreenWidth, ScreenHeight, IsFullscreen);
+            }
+        }
+
+        private static void LoadProgressData(GameSaveData data)
+        {
             _highestCompletedLevel = data.highestCompletedLevel;
             _levelStars = new Dictionary<int, int>();
 
@@ -185,10 +293,6 @@ namespace My.Scripts.Core.Data
                     }
                 }
             }
-
-            _isInitialized = true;
-
-            Debug.Log($"[GameData] Load complete: Music={MusicVolume:F3}, Sound={SoundVolume:F3}");
         }
 
         #endregion
@@ -215,6 +319,10 @@ namespace My.Scripts.Core.Data
         {
             MusicVolume = DEFAULT_MUSIC_VOLUME;
             SoundVolume = DEFAULT_SOUND_VOLUME;
+            GraphicsQuality = DEFAULT_GRAPHICS_QUALITY;
+            ScreenWidth = 0;
+            ScreenHeight = 0;
+            IsFullscreen = DEFAULT_FULLSCREEN;
             _currentLevel = 1;
             _totalScore = 0;
             _highestCompletedLevel = 0;
@@ -234,8 +342,20 @@ namespace My.Scripts.Core.Data
     public struct GameSaveData
     {
         public bool hasBeenSavedBefore;
+
+        // Audio
         public float musicVolume;
         public float soundVolume;
+
+        // Graphics
+        public int graphicsQuality;
+
+        // Display
+        public int screenWidth;
+        public int screenHeight;
+        public bool isFullscreen;
+
+        // Progress
         public int highestCompletedLevel;
         public List<LevelStarData> levelStarsData;
     }

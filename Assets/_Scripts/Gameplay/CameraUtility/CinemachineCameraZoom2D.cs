@@ -1,10 +1,11 @@
 using My.Scripts.Core.Data;
+using My.Scripts.Core.Utility;
 using My.Scripts.EventBus;
 using My.Scripts.Gameplay.Player;
 using Unity.Cinemachine;
 using UnityEngine;
 
-namespace My.Scripts.Core.Utility
+namespace My.Scripts.Gameplay.CameraUtility
 {
     public class CinemachineCameraZoom2D : Singleton<CinemachineCameraZoom2D>
     {

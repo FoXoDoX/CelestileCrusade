@@ -10,6 +10,7 @@ namespace My.Scripts.Core.Persistence
         #region Constants
 
         private const string SAVE_FILE_NAME = "game.save";
+        private const string PLAYERPREFS_SAVE_KEY = "GameSaveData";
         private const bool PRETTY_PRINT_JSON = true;
 
         #endregion
@@ -24,15 +25,26 @@ namespace My.Scripts.Core.Persistence
         #region Properties
 
         public static string SaveFilePath => Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
-        public static bool SaveFileExists => File.Exists(SaveFilePath);
         public static bool IsInitialized => _isInitialized;
+
+        public static bool SaveFileExists
+        {
+            get
+            {
+#if UNITY_WEBGL && !UNITY_EDITOR
+                return PlayerPrefs.HasKey(PLAYERPREFS_SAVE_KEY);
+#else
+                return File.Exists(SaveFilePath);
+#endif
+            }
+        }
 
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Сохраняет текущее состояние игры в файл.
+        /// Сохраняет текущее состояние игры.
         /// </summary>
         public static void Save()
         {
@@ -42,7 +54,12 @@ namespace My.Scripts.Core.Persistence
                 PrepareSaveData();
 
                 string json = JsonUtility.ToJson(_saveData, PRETTY_PRINT_JSON);
-                File.WriteAllText(SaveFilePath, json);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+                SaveToPlayerPrefs(json);
+#else
+                SaveToFile(json);
+#endif
 
                 LogSaveSuccess(json);
             }
@@ -53,7 +70,7 @@ namespace My.Scripts.Core.Persistence
         }
 
         /// <summary>
-        /// Загружает состояние игры из файла.
+        /// Загружает состояние игры.
         /// </summary>
         public static void Load()
         {
@@ -61,16 +78,20 @@ namespace My.Scripts.Core.Persistence
             {
                 if (!SaveFileExists)
                 {
-                    Debug.Log($"[{nameof(SaveSystem)}] No save file found at: {SaveFilePath}");
+                    Debug.Log($"[{nameof(SaveSystem)}] No save data found");
                     InitializeWithDefaults();
                     return;
                 }
 
-                string json = File.ReadAllText(SaveFilePath);
+#if UNITY_WEBGL && !UNITY_EDITOR
+                string json = LoadFromPlayerPrefs();
+#else
+                string json = LoadFromFile();
+#endif
 
                 if (string.IsNullOrWhiteSpace(json))
                 {
-                    Debug.LogWarning($"[{nameof(SaveSystem)}] Save file is empty");
+                    Debug.LogWarning($"[{nameof(SaveSystem)}] Save data is empty");
                     InitializeWithDefaults();
                     return;
                 }
@@ -87,7 +108,7 @@ namespace My.Scripts.Core.Persistence
         }
 
         /// <summary>
-        /// Удаляет файл сохранения.
+        /// Удаляет сохранение.
         /// </summary>
         public static void DeleteSave()
         {
@@ -95,14 +116,19 @@ namespace My.Scripts.Core.Persistence
             {
                 if (!SaveFileExists)
                 {
-                    Debug.Log($"[{nameof(SaveSystem)}] No save file to delete");
+                    Debug.Log($"[{nameof(SaveSystem)}] No save data to delete");
                     return;
                 }
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+                PlayerPrefs.DeleteKey(PLAYERPREFS_SAVE_KEY);
+                PlayerPrefs.Save();
+#else
                 File.Delete(SaveFilePath);
-                InitializeWithDefaults();
+#endif
 
-                Debug.Log($"[{nameof(SaveSystem)}] Save file deleted");
+                InitializeWithDefaults();
+                Debug.Log($"[{nameof(SaveSystem)}] Save data deleted");
             }
             catch (Exception e)
             {
@@ -111,7 +137,7 @@ namespace My.Scripts.Core.Persistence
         }
 
         /// <summary>
-        /// Принудительная инициализация (если нужно до автоматической).
+        /// Принудительная инициализация.
         /// </summary>
         public static void ForceInitialize()
         {
@@ -121,7 +147,32 @@ namespace My.Scripts.Core.Persistence
 
         #endregion
 
-        #region Private Methods
+        #region Private Methods — Save/Load Implementation
+
+        private static void SaveToFile(string json)
+        {
+            File.WriteAllText(SaveFilePath, json);
+        }
+
+        private static void SaveToPlayerPrefs(string json)
+        {
+            PlayerPrefs.SetString(PLAYERPREFS_SAVE_KEY, json);
+            PlayerPrefs.Save();
+        }
+
+        private static string LoadFromFile()
+        {
+            return File.ReadAllText(SaveFilePath);
+        }
+
+        private static string LoadFromPlayerPrefs()
+        {
+            return PlayerPrefs.GetString(PLAYERPREFS_SAVE_KEY, string.Empty);
+        }
+
+        #endregion
+
+        #region Private Methods — Data Handling
 
         private static void PrepareSaveData()
         {
@@ -140,23 +191,33 @@ namespace My.Scripts.Core.Persistence
             GameData.ResetAllProgress();
         }
 
+        #endregion
+
+        #region Private Methods — Logging
+
         private static void LogSaveSuccess(string json)
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[{nameof(SaveSystem)}] Saved to: {SaveFilePath}");
-            Debug.Log($"[{nameof(SaveSystem)}] Content:\n{json}");
+#if UNITY_WEBGL && !UNITY_EDITOR
+            Debug.Log($"[{nameof(SaveSystem)}] Saved to PlayerPrefs");
 #else
-            Debug.Log($"[{nameof(SaveSystem)}] Game saved successfully");
+            Debug.Log($"[{nameof(SaveSystem)}] Saved to: {SaveFilePath}");
+#endif
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.Log($"[{nameof(SaveSystem)}] Content:\n{json}");
 #endif
         }
 
         private static void LogLoadSuccess(string json)
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[{nameof(SaveSystem)}] Loaded from: {SaveFilePath}");
-            Debug.Log($"[{nameof(SaveSystem)}] Content:\n{json}");
+#if UNITY_WEBGL && !UNITY_EDITOR
+            Debug.Log($"[{nameof(SaveSystem)}] Loaded from PlayerPrefs");
 #else
-            Debug.Log($"[{nameof(SaveSystem)}] Game loaded successfully");
+            Debug.Log($"[{nameof(SaveSystem)}] Loaded from: {SaveFilePath}");
+#endif
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.Log($"[{nameof(SaveSystem)}] Content:\n{json}");
 #endif
         }
 
@@ -167,7 +228,7 @@ namespace My.Scripts.Core.Persistence
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            Debug.Log($"[SaveSystem] === Initialize START ===");
+            Debug.Log($"[{nameof(SaveSystem)}] Initializing...");
 
             _isInitialized = false;
             _saveData = new SaveData();
@@ -175,7 +236,7 @@ namespace My.Scripts.Core.Persistence
             Load();
             _isInitialized = true;
 
-            Debug.Log($"[SaveSystem] === Initialize END === MusicVolume={GameData.MusicVolume:F3}");
+            Debug.Log($"[{nameof(SaveSystem)}] === Initialize END === MusicVolume={GameData.MusicVolume:F3}");
 
             Application.quitting += OnApplicationQuitting;
         }

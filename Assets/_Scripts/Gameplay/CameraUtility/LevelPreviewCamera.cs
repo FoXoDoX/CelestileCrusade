@@ -21,6 +21,9 @@ namespace My.Scripts.Gameplay.CameraUtility
         private const float DEFAULT_MIN_ZOOM = 5f;
         private const float ZOOM_SMOOTHING = 10f;
 
+        // Референсное соотношение сторон (Full HD)
+        private const float REFERENCE_ASPECT_RATIO = 16f / 9f;
+
         #endregion
 
         #region Serialized Fields
@@ -46,6 +49,7 @@ namespace My.Scripts.Gameplay.CameraUtility
         private GameLevel _currentLevel;
 
         private float _maxZoom;
+        private float _baseMaxZoom; // Оригинальный zoom из уровня (для Full HD)
         private float _targetZoom;
         private Vector3 _targetPosition;
         private Vector3 _levelCenter;
@@ -111,11 +115,15 @@ namespace My.Scripts.Gameplay.CameraUtility
 
             _currentLevel = level;
 
-            // Устанавливаем параметры уровня
-            _maxZoom = level.GetZoomedOutOrthographicSize();
+            // Получаем базовый zoom (рассчитанный для Full HD)
+            _baseMaxZoom = level.GetZoomedOutOrthographicSize();
+
+            // Адаптируем zoom под текущее разрешение
+            _maxZoom = CalculateAdaptedZoom(_baseMaxZoom);
+
             _levelCenter = level.GetCameraStartTargetTransform().position;
 
-            Log($"MaxZoom: {_maxZoom}, MinZoom: {_minZoom}, LevelCenter: {_levelCenter}");
+            Log($"BaseMaxZoom: {_baseMaxZoom}, AdaptedMaxZoom: {_maxZoom}, MinZoom: {_minZoom}, LevelCenter: {_levelCenter}");
 
             // Вычисляем границы для панорамирования
             CalculateLevelBounds();
@@ -196,21 +204,44 @@ namespace My.Scripts.Gameplay.CameraUtility
             Log($"Created CameraTarget: {targetObj.name} at position {_cameraTarget.position}");
         }
 
+        /// <summary>
+        /// Вычисляет адаптированный zoom для сохранения одинаковой ширины обзора.
+        /// </summary>
+        private float CalculateAdaptedZoom(float baseZoom)
+        {
+            float currentAspect = GetAspectRatio();
+
+            // Вычисляем ширину обзора для референсного разрешения (Full HD)
+            // width = orthographicSize * 2 * aspectRatio
+            // Для Full HD: referenceWidth = baseZoom * 2 * (16/9)
+            float referenceWidth = baseZoom * 2f * REFERENCE_ASPECT_RATIO;
+
+            // Вычисляем новый orthographicSize, чтобы сохранить ту же ширину
+            // referenceWidth = newZoom * 2 * currentAspect
+            // newZoom = referenceWidth / (2 * currentAspect)
+            float adaptedZoom = referenceWidth / (2f * currentAspect);
+
+            Log($"Aspect adaptation: CurrentAspect={currentAspect:F3}, ReferenceAspect={REFERENCE_ASPECT_RATIO:F3}, " +
+                $"ReferenceWidth={referenceWidth:F2}, BaseZoom={baseZoom:F2}, AdaptedZoom={adaptedZoom:F2}");
+
+            return adaptedZoom;
+        }
+
         private void CalculateLevelBounds()
         {
             if (_currentLevel == null) return;
 
-            float aspectRatio = GetAspectRatio();
-            float height = _maxZoom;
-            float width = height * aspectRatio;
+            // Используем референсные границы (для Full HD), чтобы pan был консистентным
+            float height = _baseMaxZoom;
+            float width = height * REFERENCE_ASPECT_RATIO;
 
             _levelBoundsHalfSize = new Vector2(width, height);
-            Log($"Level bounds calculated. AspectRatio: {aspectRatio}, Bounds: {_levelBoundsHalfSize}");
+            Log($"Level bounds calculated. ReferenceAspect: {REFERENCE_ASPECT_RATIO}, Bounds: {_levelBoundsHalfSize}");
         }
 
         private float GetAspectRatio()
         {
-            if (Screen.height == 0) return 16f / 9f;
+            if (Screen.height == 0) return REFERENCE_ASPECT_RATIO;
             return (float)Screen.width / Screen.height;
         }
 
@@ -290,7 +321,10 @@ namespace My.Scripts.Gameplay.CameraUtility
             if (Mathf.Abs(scrollDelta) > 0.01f)
             {
                 _targetZoom -= scrollDelta * _zoomSpeed * 0.5f;
-                _targetZoom = Mathf.Clamp(_targetZoom, _minZoom, _maxZoom);
+
+                // Адаптируем minZoom под текущее разрешение
+                float adaptedMinZoom = CalculateAdaptedZoom(_minZoom);
+                _targetZoom = Mathf.Clamp(_targetZoom, adaptedMinZoom, _maxZoom);
 
                 ClampTargetPosition();
             }

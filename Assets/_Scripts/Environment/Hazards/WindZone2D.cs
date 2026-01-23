@@ -224,34 +224,32 @@ namespace My.Scripts.Environment.Hazards
         {
             Gizmos.color = _gizmoZoneColor;
 
+            // Сохраняем текущую матрицу
+            Matrix4x4 oldMatrix = Gizmos.matrix;
+
+            // Устанавливаем матрицу трансформации объекта
+            Gizmos.matrix = transform.localToWorldMatrix;
+
             switch (col)
             {
                 case BoxCollider2D box:
-                    DrawBoxGizmo(box);
+                    // Теперь рисуем в локальных координатах — offset и size без преобразования
+                    Gizmos.DrawCube(box.offset, box.size);
                     break;
 
                 case CircleCollider2D circle:
-                    DrawCircleGizmo(circle);
+                    Gizmos.DrawSphere(circle.offset, circle.radius);
                     break;
 
                 default:
+                    // Для других коллайдеров возвращаем старую матрицу и рисуем по bounds
+                    Gizmos.matrix = oldMatrix;
                     DrawBoundsGizmo(col.bounds);
                     break;
             }
-        }
 
-        private void DrawBoxGizmo(BoxCollider2D box)
-        {
-            Vector2 center = transform.TransformPoint(box.offset);
-            Vector2 size = Vector2.Scale(box.size, transform.lossyScale);
-            Gizmos.DrawCube(center, size);
-        }
-
-        private void DrawCircleGizmo(CircleCollider2D circle)
-        {
-            Vector2 center = transform.TransformPoint(circle.offset);
-            float maxScale = Mathf.Max(transform.lossyScale.x, transform.lossyScale.y);
-            Gizmos.DrawSphere(center, circle.radius * maxScale);
+            // Восстанавливаем матрицу
+            Gizmos.matrix = oldMatrix;
         }
 
         private void DrawBoundsGizmo(Bounds bounds)
@@ -267,7 +265,7 @@ namespace My.Scripts.Environment.Hazards
             float size = GetColliderSize(col);
             float arrowLength = size * GIZMO_ARROW_LENGTH_FACTOR;
 
-            // Направление стрелки
+            // Направление стрелки (в мировых координатах)
             Vector3 direction = ((Vector3)_windVector).normalized;
             if (direction == Vector3.zero)
             {
@@ -289,6 +287,7 @@ namespace My.Scripts.Environment.Hazards
 
         private Vector2 GetColliderCenter(Collider2D col)
         {
+            // Центр всегда в мировых координатах для стрелки
             return col switch
             {
                 BoxCollider2D box => transform.TransformPoint(box.offset),

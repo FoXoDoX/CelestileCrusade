@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Intensity: 6
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 21a4872a00000000
+  m_ApplyToSortingLayers: 21a4872a000000007f83599c
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 5778715785788125553}
   - component: {fileID: 4332559278773579314}
   - component: {fileID: 5402011337222038357}
+  - component: {fileID: 6647788962531713628}
   m_Layer: 0
   m_Name: LandingPad
   m_TagString: Untagged
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6d235f226e76b46b82517679f54e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LandingPad
-  scoreMultiplier: 1
+  _scoreMultiplier: 1
 --- !u!114 &4332559278773579314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,7 +557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce94d6ad329330408b4d01a1ba1ceb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LandingPadVisual
-  scoreMultiplierTextMesh: {fileID: 7398893215626908471}
+  _scoreMultiplierText: {fileID: 7398893215626908471}
+  _landingPad: {fileID: 5778715785788125553}
 --- !u!95 &5402011337222038357
 Animator:
   serializedVersion: 7
@@ -579,6 +581,59 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6647788962531713628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604195205758366560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
+  m_ShadowGroup: 0
+  m_Priority: 0
+  m_ComponentVersion: 5
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 21a4872a7f83599c00000000
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 1063009457348796531}
+  m_ShadowShape2DProvider:
+    rid: 6516919309385597013
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.114967346, y: -0.90743256, z: 0}
+      m_Extent: {x: 3.2182236, y: 0.77510834, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0
+  m_CastingOption: 2
+  m_PreviousTrimEdge: 0
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 1063009457348796531}
+  references:
+    version: 2
+    RefIds:
+    - rid: 6516919309385597013
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &8654393372176618509
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,7 +686,7 @@ MonoBehaviour:
   m_Intensity: 6
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 21a4872a00000000
+  m_ApplyToSortingLayers: 21a4872a000000007f83599c
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 77710101169082746}
   - component: {fileID: 7185438158246094399}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spot Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5361118884653288351}
   - component: {fileID: 1340421485390028774}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 1170410354906744156}
   - component: {fileID: 8811325769423436655}
   - component: {fileID: 5447895413694923948}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TurretProjectileLevel10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5499511637846792054}
   - component: {fileID: 2668723141413572995}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6596812867398468808}
   - component: {fileID: 1542915381968483243}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

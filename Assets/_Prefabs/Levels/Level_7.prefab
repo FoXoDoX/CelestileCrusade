@@ -61,13 +61,34 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 658701320416905385}
+  - {fileID: 3351800974872599804}
   - {fileID: 8888277193072619499}
   - {fileID: 5461951159502678277}
+  - {fileID: 8221874759327060087}
+  - {fileID: 658701320416905385}
   - {fileID: 6531394435955461232}
+  - {fileID: 707552791240354160}
+  - {fileID: 2998530092505256118}
+  - {fileID: 7185032112201613840}
+  - {fileID: 8146506036292642627}
+  - {fileID: 8239165144526256996}
+  - {fileID: 7378477369103256208}
+  - {fileID: 749597808334375213}
   - {fileID: 841404458989914236}
   - {fileID: 4181366332337908898}
   - {fileID: 5967899819041966780}
+  - {fileID: 6889734702077496827}
+  - {fileID: 8977372760880620022}
+  - {fileID: 3375466346853015369}
+  - {fileID: 5976190950511358000}
+  - {fileID: 4653692852777809145}
+  - {fileID: 6759895178072553579}
+  - {fileID: 828396032990742380}
+  - {fileID: 1796353601703011656}
+  - {fileID: 1649824447745056068}
+  - {fileID: 6337908055648782548}
+  - {fileID: 937490065300108589}
+  - {fileID: 7867786076931835821}
   - {fileID: 5879053924136500749}
   - {fileID: 1977242959908405251}
   - {fileID: 7516267616795544320}
@@ -112,26 +133,11 @@ Transform:
   - {fileID: 5082943077070969572}
   - {fileID: 628054710088583327}
   - {fileID: 9196418602777134869}
-  - {fileID: 8239165144526256996}
   - {fileID: 311226749293368668}
   - {fileID: 1110956594275332329}
   - {fileID: 5396120369839388749}
   - {fileID: 289427898071812422}
   - {fileID: 4438427699638495904}
-  - {fileID: 749597808334375213}
-  - {fileID: 8977372760880620022}
-  - {fileID: 3375466346853015369}
-  - {fileID: 5976190950511358000}
-  - {fileID: 4653692852777809145}
-  - {fileID: 6759895178072553579}
-  - {fileID: 828396032990742380}
-  - {fileID: 1796353601703011656}
-  - {fileID: 1649824447745056068}
-  - {fileID: 6337908055648782548}
-  - {fileID: 937490065300108589}
-  - {fileID: 7867786076931835821}
-  - {fileID: 8146506036292642627}
-  - {fileID: 1877889342576831892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-7640745756527960139
@@ -152,6 +158,99 @@ MonoBehaviour:
   _normalOrthographicSize: 12
   _zoomedOutOrthographicSize: 70
   _starThresholds: 64000000c80000002c010000
+--- !u!1 &2363233118737656522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6889734702077496827}
+  m_Layer: 0
+  m_Name: ------------------- PICKUPS -----------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6889734702077496827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2363233118737656522}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.52091, y: 1.18865, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4059366961299164775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4458696953860274687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3351800974872599804}
+  m_Layer: 0
+  m_Name: ------------------- START POSITIONS -------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3351800974872599804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4458696953860274687}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.52091, y: 1.18865, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4059366961299164775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4579216892295329640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 707552791240354160}
+  m_Layer: 0
+  m_Name: ------------------- LANDING PADS ----------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &707552791240354160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4579216892295329640}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.52091, y: 1.18865, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4059366961299164775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5499129489696913982
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +264,7 @@ GameObject:
   - component: {fileID: 454145550415634456}
   - component: {fileID: 6170579465389559112}
   m_Layer: 0
-  m_Name: Terrain
+  m_Name: Terrain0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -403,7 +502,15 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: -135.8945, y: 41.300316, z: 0}
+    - position: {x: -143.0125, y: 39.455513, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: -136.29984, y: 39.5016, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -891,7 +998,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 48.612595, y: 50.122093, z: 0}
+    - position: {x: 48.536827, y: 49.616974, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -899,7 +1006,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 57.4013, y: 48.846245, z: 0}
+    - position: {x: 56.82041, y: 49.654434, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -907,7 +1014,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 64.28656, y: 50.013237, z: 0}
+    - position: {x: 64.31181, y: 50.4931, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -1066,7 +1173,8 @@ MonoBehaviour:
   - {x: -152.75223, y: 61.672436}
   - {x: -151.34703, y: 47.782394}
   - {x: -147.07607, y: 37.12301}
-  - {x: -135.8945, y: 41.300316}
+  - {x: -143.0125, y: 39.455513}
+  - {x: -136.29984, y: 39.5016}
   - {x: -131.77449, y: 34.910114}
   - {x: -128.10413, y: 37.650127}
   - {x: -123.27819, y: 37.839497}
@@ -1127,9 +1235,9 @@ MonoBehaviour:
   - {x: 38.771187, y: 57.15829}
   - {x: 38.771187, y: 52.736774}
   - {x: 42.462543, y: 48.368523}
-  - {x: 48.612595, y: 50.122093}
-  - {x: 57.4013, y: 48.846245}
-  - {x: 64.28656, y: 50.013237}
+  - {x: 48.536827, y: 49.616974}
+  - {x: 56.82041, y: 49.654434}
+  - {x: 64.31181, y: 50.4931}
   - {x: 65.920334, y: 58.532272}
   - {x: 72.57219, y: 55.498096}
   - {x: 74.08928, y: 59.349167}
@@ -1209,7 +1317,8 @@ PolygonCollider2D:
       - {x: -152.75223, y: 61.672436}
       - {x: -151.34703, y: 47.782394}
       - {x: -147.07607, y: 37.12301}
-      - {x: -135.8945, y: 41.300316}
+      - {x: -143.0125, y: 39.455513}
+      - {x: -136.29984, y: 39.5016}
       - {x: -131.77449, y: 34.910114}
       - {x: -128.10413, y: 37.650127}
       - {x: -123.27819, y: 37.839497}
@@ -1270,9 +1379,9 @@ PolygonCollider2D:
       - {x: 38.771187, y: 57.15829}
       - {x: 38.771187, y: 52.736774}
       - {x: 42.462543, y: 48.368523}
-      - {x: 48.612595, y: 50.122093}
-      - {x: 57.4013, y: 48.846245}
-      - {x: 64.28656, y: 50.013237}
+      - {x: 48.536827, y: 49.616974}
+      - {x: 56.82041, y: 49.654434}
+      - {x: 64.31181, y: 50.4931}
       - {x: 65.920334, y: 58.532272}
       - {x: 72.57219, y: 55.498096}
       - {x: 74.08928, y: 59.349167}
@@ -1289,6 +1398,37 @@ PolygonCollider2D:
       - {x: 112, y: -6}
       - {x: -180, y: -10}
   m_UseDelaunayMesh: 0
+--- !u!1 &6151954367206306578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8221874759327060087}
+  m_Layer: 0
+  m_Name: ------------------- TERRAIN -----------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8221874759327060087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151954367206306578}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.52091, y: 1.18865, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4059366961299164775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6599210760773186355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1491,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4059366961299164775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8405730308471014161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7378477369103256208}
+  m_Layer: 0
+  m_Name: ------------------- HAZARDS ---------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7378477369103256208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8405730308471014161}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.52091, y: 1.18865, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4059366961299164775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8905439240556801781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,8 +1563,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (27)
+      value: CoinPickup35
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 4934276727337266297}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 52.15
@@ -1442,6 +1617,11 @@ PrefabInstance:
 --- !u!4 &2823172927868367644 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 132180875140792850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &4934276727337266297 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 132180875140792850}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &164813942693423745
@@ -1494,7 +1674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523873839187668903, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: m_Name
-      value: CratePickup (1)
+      value: CratePickup1
       objectReference: {fileID: 0}
     - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: _cratePickup
@@ -1531,8 +1711,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (37)
+      value: CoinPickup5
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 5125610543754429219}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -38.64
@@ -1583,6 +1767,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 184182381208333640}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &5125610543754429219 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 184182381208333640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &306027124343576506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1593,8 +1782,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (8)
+      value: CoinPickup11
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 4724470932152138193}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -67.01
@@ -1645,6 +1838,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 306027124343576506}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &4724470932152138193 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 306027124343576506}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &386431695358180703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1655,8 +1853,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (14)
+      value: CoinPickup17
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 4680201879411659572}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -128.92
@@ -1705,6 +1907,11 @@ PrefabInstance:
 --- !u!4 &2568341014746975313 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 386431695358180703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &4680201879411659572 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 386431695358180703}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &393776099344575305
@@ -1757,7 +1964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (4)
+      value: FuelPickup4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1779,8 +1986,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (38)
+      value: CoinPickup6
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 4794686089324698624}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -41.72
@@ -1829,6 +2040,11 @@ PrefabInstance:
 --- !u!4 &2440348207407514469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 515009992638640747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &4794686089324698624 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 515009992638640747}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &659532607339746094
@@ -1881,7 +2097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523873839187668903, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: m_Name
-      value: CratePickup (3)
+      value: CratePickup3
       objectReference: {fileID: 0}
     - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: _cratePickup
@@ -1958,7 +2174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523873839187668903, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: m_Name
-      value: CratePickup
+      value: CratePickup0
       objectReference: {fileID: 0}
     - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: _cratePickup
@@ -2035,7 +2251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (2)
+      value: FuelPickup2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2057,8 +2273,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (31)
+      value: CoinPickup39
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 5443159879913629047}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 50.76
@@ -2107,6 +2327,11 @@ PrefabInstance:
 --- !u!4 &2944794821846710802 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 1019632477408119580}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &5443159879913629047 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1019632477408119580}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1102753348724153334
@@ -2159,7 +2384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (8)
+      value: FuelPickup8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2181,8 +2406,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (12)
+      value: CoinPickup15
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 6225478575285560835}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -128.72
@@ -2233,6 +2462,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1426194691040692328}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &6225478575285560835 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 1426194691040692328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1480076460144765071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2243,8 +2477,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (30)
+      value: CoinPickup38
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 5847294055308625636}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 65.27
@@ -2295,6 +2533,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1480076460144765071}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &5847294055308625636 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 1480076460144765071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1557694795284568385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2305,8 +2548,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (4)
+      value: CoinPickup7
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 5778541005047166762}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -43.8
@@ -2355,6 +2602,11 @@ PrefabInstance:
 --- !u!4 &3703786513962674255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 1557694795284568385}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &5778541005047166762 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1557694795284568385}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1741834645827446747
@@ -2407,7 +2659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (3)
+      value: FuelPickup3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2517,7 +2769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7812549654654500346, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: m_Name
-      value: AsteroidSpawner
+      value: AsteroidSpawner0
       objectReference: {fileID: 0}
     - target: {fileID: 8759778213899400173, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2547,8 +2799,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (28)
+      value: CoinPickup36
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 6899607648627287101}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 65.58
@@ -2599,6 +2855,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1904987310119406166}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &6899607648627287101 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 1904987310119406166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1926708877644655299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2609,8 +2870,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (6)
+      value: CoinPickup9
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 6850679546466649256}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -64.09
@@ -2661,6 +2926,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1926708877644655299}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &6850679546466649256 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 1926708877644655299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2214886323893272760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2671,8 +2941,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (17)
+      value: CoinPickup20
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 6562677198383460051}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -126.63
@@ -2723,6 +2997,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2214886323893272760}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &6562677198383460051 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 2214886323893272760}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2329056218635951956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2731,6 +3010,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4059366961299164775}
     m_Modifications:
+    - target: {fileID: 4865442580839010273, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
+      value: -0.9074402
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865442580839010273, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
+      value: 0.7751007
+      objectReference: {fileID: 0}
     - target: {fileID: 5910162254106567728, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.98631287
@@ -2777,7 +3064,7 @@ PrefabInstance:
       objectReference: {fileID: 4297324148074782198}
     - target: {fileID: 8604195205758366560, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_Name
-      value: CrateLandingPad
+      value: CrateLandingPad0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2810,8 +3097,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (36)
+      value: CoinPickup4
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 7336595311494624021}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.28
@@ -2862,6 +3153,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2341689101593009534}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &7336595311494624021 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 2341689101593009534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2378076980294002470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2872,8 +3168,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (24)
+      value: CoinPickup32
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 7255064999712852301}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -125.2
@@ -2922,6 +3222,11 @@ PrefabInstance:
 --- !u!4 &574443656199329320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 2378076980294002470}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &7255064999712852301 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2378076980294002470}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2607313059086447316
@@ -2974,7 +3279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup
+      value: FuelPickup0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2986,7 +3291,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6393142932695356194, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
   m_PrefabInstance: {fileID: 2607313059086447316}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2719943954208777467
+--- !u!1001 &2851972227719567352
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2994,59 +3299,67 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4059366961299164775}
     m_Modifications:
-    - target: {fileID: 1935866449683045951, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_Name
-      value: LandingPad_x5 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 75.61
+      value: -139.6724
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 93.99
+      value: 37.51
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+    - target: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361197344883397508, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: -0.16511536
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361197344883397508, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 2.46167
+      objectReference: {fileID: 0}
+    - target: {fileID: 7011895370966188728, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
+      propertyPath: m_Name
+      value: LandingPad_x2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
---- !u!4 &1877889342576831892 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
+--- !u!4 &7185032112201613840 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-  m_PrefabInstance: {fileID: 2719943954208777467}
+  m_CorrespondingSourceObject: {fileID: 4909593205760873960, guid: 4d699e1c3cdc58f47a4b8960268cfa8d, type: 3}
+  m_PrefabInstance: {fileID: 2851972227719567352}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2871655973717847607
 PrefabInstance:
@@ -3058,8 +3371,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (9)
+      value: CoinPickup12
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 7094753401042403420}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -75.89
@@ -3110,6 +3427,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2871655973717847607}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &7094753401042403420 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 2871655973717847607}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3128069999452775916
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3120,8 +3442,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (40)
+      value: CoinPickup27
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 7982252464084896647}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -129.59
@@ -3172,6 +3498,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 3128069999452775916}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &7982252464084896647 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 3128069999452775916}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3336949009278220689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3182,8 +3513,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (34)
+      value: CoinPickup42
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 7773408901624141818}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 52.92
@@ -3232,6 +3567,11 @@ PrefabInstance:
 --- !u!4 &628054710088583327 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 3336949009278220689}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &7773408901624141818 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 3336949009278220689}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3511424732712513736
@@ -3284,7 +3624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523873839187668903, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: m_Name
-      value: CratePickup (4)
+      value: CratePickup4
       objectReference: {fileID: 0}
     - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: _cratePickup
@@ -3361,7 +3701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (10)
+      value: FuelPickup10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3383,7 +3723,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5602587036209580161, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
       propertyPath: m_Name
-      value: Turret (2)
+      value: Turret2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 2731078641845251897}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7214086376291871657, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3430,6 +3778,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+--- !u!61 &2731078641845251897 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1380658522405359148, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+  m_PrefabInstance: {fileID: 3949560195583172885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5967899819041966780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7214086376291871657, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
@@ -3445,8 +3798,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (5)
+      value: CoinPickup8
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 9121447509341486694}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -65.23
@@ -3497,6 +3854,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 4267846102224441357}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &9121447509341486694 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 4267846102224441357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4394856110360621383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3507,8 +3869,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (29)
+      value: CoinPickup37
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 8742086233645899564}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70.3
@@ -3559,6 +3925,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 4394856110360621383}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &8742086233645899564 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 4394856110360621383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4434047686352728333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3569,8 +3940,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (1)
+      value: CoinPickup1
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 8658009362310520678}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.39
@@ -3621,6 +3996,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 4434047686352728333}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &8658009362310520678 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 4434047686352728333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4596867326334900074
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3631,8 +4011,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (42)
+      value: CoinPickup29
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 8819404035481057537}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -130.54
@@ -3683,6 +4067,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 4596867326334900074}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &8819404035481057537 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 4596867326334900074}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4635593295359866474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3691,6 +4080,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4059366961299164775}
     m_Modifications:
+    - target: {fileID: 612881192186499542, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.4750061
+      objectReference: {fileID: 0}
     - target: {fileID: 6393142932695356194, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -131.47
@@ -3733,7 +4126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (6)
+      value: FuelPickup6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3755,8 +4148,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (25)
+      value: CoinPickup33
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 14270842773494560}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -119
@@ -3802,6 +4199,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &14270842773494560 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5016227157754312011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7162215556858577989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -3817,8 +4219,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (22)
+      value: CoinPickup25
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 182332142728020793}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -132.34
@@ -3864,6 +4270,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &182332142728020793 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5127433226830523730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7048195288842722396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -3919,7 +4330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523873839187668903, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: m_Name
-      value: CratePickup (2)
+      value: CratePickup2
       objectReference: {fileID: 0}
     - target: {fileID: 7582829910160158605, guid: e6cd4091ac5c5dc4a8df8808e9eb00a3, type: 3}
       propertyPath: _cratePickup
@@ -3956,8 +4367,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (32)
+      value: CoinPickup40
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 176306792684273555}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 57.57
@@ -4003,6 +4418,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &176306792684273555 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5178529739234284024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7000177407857713398 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4018,8 +4438,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (43)
+      value: CoinPickup30
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 966588446018367147}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -132.47
@@ -4065,6 +4489,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &966588446018367147 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5243747245439828160}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7943783810369728974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4080,8 +4509,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (20)
+      value: CoinPickup23
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 1093192460052169515}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -124.83
@@ -4127,6 +4560,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &1093192460052169515 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5369495289138752832}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7817178696824282190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4142,8 +4580,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (10)
+      value: CoinPickup13
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 1056523986590720709}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -81.61
@@ -4189,6 +4631,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &1056523986590720709 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5406023467535387822}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7925905075423591840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4244,7 +4691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (7)
+      value: FuelPickup7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4266,8 +4713,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (2)
+      value: CoinPickup2
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 799630588089930853}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.43
@@ -4313,6 +4764,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &799630588089930853 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5672090821581027854}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7516267616795544320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4330,13 +4786,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: LandingPad_x5
       objectReference: {fileID: 0}
+    - target: {fileID: 3599529916877229827, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: -0.01134491
+      objectReference: {fileID: 0}
+    - target: {fileID: 3599529916877229827, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.90177155
+      objectReference: {fileID: 0}
     - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -127.72
+      value: 75.71
       objectReference: {fileID: 0}
     - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 99.9
+      value: 93.95
       objectReference: {fileID: 0}
     - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4390,8 +4854,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (23)
+      value: CoinPickup31
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 775055017046660445}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -125.31
@@ -4437,6 +4905,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &775055017046660445 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5723520054021552950}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7608394196357909048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4452,8 +4925,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (39)
+      value: CoinPickup26
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 754175416632857677}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -130.62
@@ -4499,6 +4976,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &754175416632857677 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5753583613128997414}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7575231389453650728 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4514,8 +4996,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (21)
+      value: CoinPickup24
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 738667145642944813}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -124.88
@@ -4561,6 +5047,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &738667145642944813 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 5760049629382608710}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7572727462819362376 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4574,6 +5065,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4059366961299164775}
     m_Modifications:
+    - target: {fileID: 612881192186499542, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
+      value: 0.55000305
+      objectReference: {fileID: 0}
     - target: {fileID: 6393142932695356194, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -121.95
@@ -4616,7 +5111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (5)
+      value: FuelPickup5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4638,8 +5133,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (41)
+      value: CoinPickup28
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 1234054968075126054}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -130.21
@@ -4685,6 +5184,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &1234054968075126054 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 6093288042340592461}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8248272550917921347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4740,7 +5244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (9)
+      value: FuelPickup9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4762,8 +5266,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (35)
+      value: CoinPickup43
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 2087352065967691888}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.99
@@ -4809,6 +5317,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &2087352065967691888 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 6437975799967168027}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9196418602777134869 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4824,7 +5337,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (3)
+      value: CoinPickup3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 2043052346369245042}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: 0.0000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.49999237
       objectReference: {fileID: 0}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4871,6 +5396,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &2043052346369245042 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 6482344578252394777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9155148522668957719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4886,8 +5416,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5602587036209580161, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
       propertyPath: m_Name
-      value: Turret (1)
+      value: Turret1
       objectReference: {fileID: 0}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 5562986007156853031}
     - target: {fileID: 7214086376291871657, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
       propertyPath: m_LocalPosition.x
       value: 71.25
@@ -4936,6 +5470,11 @@ PrefabInstance:
 --- !u!4 &4181366332337908898 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7214086376291871657, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+  m_PrefabInstance: {fileID: 6780916704497878795}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &5562986007156853031 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1380658522405359148, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
   m_PrefabInstance: {fileID: 6780916704497878795}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6906149668583513037
@@ -5026,8 +5565,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (33)
+      value: CoinPickup41
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 2728552006307628417}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 56.16
@@ -5073,6 +5616,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &2728552006307628417 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 6949697248335850474}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5082943077070969572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5088,8 +5636,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (15)
+      value: CoinPickup18
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 3229882057129255536}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -133.84
@@ -5135,6 +5687,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &3229882057129255536 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 7601323942127389723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5730028732155247893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5150,8 +5707,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (19)
+      value: CoinPickup22
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 3004872567035988473}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -130.79
@@ -5197,6 +5758,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &3004872567035988473 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 7790375138172282770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5396594343144511132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5212,8 +5778,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (18)
+      value: CoinPickup21
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 2975859695374788777}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -126.86
@@ -5259,6 +5829,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &2975859695374788777 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 7846374340638754498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5340036587697387468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5274,7 +5849,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5602587036209580161, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
       propertyPath: m_Name
-      value: Turret
+      value: Turret0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6249649621001894261, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
+      value: 0.6791458
+      objectReference: {fileID: 0}
+    - target: {fileID: 6249649621001894261, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
+      value: 2.0785751
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 8978423042297097721}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: -0.0000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
+      value: -0.009170532
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.49999237
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579210834493709058, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
+      value: 3.0789337
       objectReference: {fileID: 0}
     - target: {fileID: 7214086376291871657, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5326,6 +5929,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7214086376291871657, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
   m_PrefabInstance: {fileID: 8048163103513945045}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &8978423042297097721 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1380658522405359148, guid: f94b39bb344e98f429fafe7879bf9148, type: 3}
+  m_PrefabInstance: {fileID: 8048163103513945045}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8295313764565956754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5336,8 +5944,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (16)
+      value: CoinPickup19
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 3941024260694775545}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -132.55
@@ -5383,6 +5995,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &3941024260694775545 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 8295313764565956754}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6189822706315512220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5398,8 +6015,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (7)
+      value: CoinPickup10
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 3503550240975798301}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -64.7
@@ -5445,6 +6066,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &3503550240975798301 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 8444415490627792502}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6037324040222613368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5500,7 +6126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6944807272527760726, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_Name
-      value: FuelPickup (1)
+      value: FuelPickup1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5522,8 +6148,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup
+      value: CoinPickup0
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 3657316791811072360}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.065403
@@ -5569,6 +6199,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &3657316791811072360 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 8606077050325585667}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5879053924136500749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5584,8 +6219,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (13)
+      value: CoinPickup16
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 4361436437909024174}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -133.72
@@ -5631,10 +6270,89 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &4361436437909024174 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 8730619377897374661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6904318457936802507 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 8730619377897374661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8906420745386194054
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4059366961299164775}
+    m_Modifications:
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 52.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 47.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647788962531713628, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: -0.114974976
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647788962531713628, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
+      value: -0.9074478
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647788962531713628, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 3.2182312
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604195205758366560, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+      propertyPath: m_Name
+      value: LandingPad0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+--- !u!4 &2998530092505256118 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5910162254106567728, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
+  m_PrefabInstance: {fileID: 8906420745386194054}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8911730835105394606
 PrefabInstance:
@@ -5646,8 +6364,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (11)
+      value: CoinPickup14
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 4468512829169598917}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -78.6
@@ -5693,6 +6415,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &4468512829169598917 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 8911730835105394606}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6725183648826646176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5708,8 +6435,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup (26)
+      value: CoinPickup34
       objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_PreviousShadowShape2DSource
+      value: 
+      objectReference: {fileID: 4293213426593890052}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -121.9
@@ -5755,6 +6486,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+--- !u!58 &4293213426593890052 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+  m_PrefabInstance: {fileID: 9095870027858760047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6396079620389412961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}

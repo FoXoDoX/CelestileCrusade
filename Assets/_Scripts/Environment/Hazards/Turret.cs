@@ -66,11 +66,6 @@ namespace My.Scripts.Environment.Hazards
             CacheTarget();
         }
 
-        private void OnDestroy()
-        {
-            CleanupTween();
-        }
-
         private void Update()
         {
             if (!_isActive) return;

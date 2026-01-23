@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,14 +9,14 @@ namespace My.Scripts.Environment.Background
         [Serializable]
         public class ParallaxLayer
         {
-            [Tooltip("Рендерер слоя")]
+            [Tooltip("Р РµРЅРґРµСЂРµСЂ СЃР»РѕСЏ")]
             public Renderer LayerRenderer;
 
-            [Tooltip("Множитель параллакса (0 = статичный, 1 = движется вместе с камерой)")]
+            [Tooltip("РњРЅРѕР¶РёС‚РµР»СЊ РїР°СЂР°Р»Р»Р°РєСЃР° (0 = СЃС‚Р°С‚РёС‡РЅС‹Р№, 1 = РґРІРёР¶РµС‚СЃСЏ РІРјРµСЃС‚Рµ СЃ РєР°РјРµСЂРѕР№)")]
             [Range(0f, 1f)]
             public float ParallaxFactor = 0.1f;
 
-            [Tooltip("Масштаб текстуры (меньше = крупнее звёзды)")]
+            [Tooltip("РњР°СЃС€С‚Р°Р± С‚РµРєСЃС‚СѓСЂС‹ (РјРµРЅСЊС€Рµ = РєСЂСѓРїРЅРµРµ Р·РІС‘Р·РґС‹)")]
             [Range(0.01f, 5f)]
             public float TextureScale = 1f;
 
@@ -81,16 +81,16 @@ namespace My.Scripts.Environment.Background
             {
                 float aspectRatio = (float)tex.width / tex.height; // 768/512 = 1.5
 
-                // ИСПРАВЛЕНИЕ: делим X на aspectRatio, чтобы компенсировать растяжение
+                // РРЎРџР РђР’Р›Р•РќРР•: РґРµР»РёРј X РЅР° aspectRatio, С‡С‚РѕР±С‹ РєРѕРјРїРµРЅСЃРёСЂРѕРІР°С‚СЊ СЂР°СЃС‚СЏР¶РµРЅРёРµ
                 layer.CorrectedTiling = new Vector2(
-                    layer.TextureScale,                      // X оставляем как есть
-                    layer.TextureScale * aspectRatio         // Y умножаем на aspect ratio
+                    layer.TextureScale,                      // X РѕСЃС‚Р°РІР»СЏРµРј РєР°Рє РµСЃС‚СЊ
+                    layer.TextureScale * aspectRatio         // Y СѓРјРЅРѕР¶Р°РµРј РЅР° aspect ratio
                 );
 
-                // Или альтернативный вариант:
+                // РР»Рё Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Р№ РІР°СЂРёР°РЅС‚:
                 // layer.CorrectedTiling = new Vector2(
-                //     layer.TextureScale / aspectRatio,     // X делим на aspect ratio
-                //     layer.TextureScale                    // Y оставляем как есть
+                //     layer.TextureScale / aspectRatio,     // X РґРµР»РёРј РЅР° aspect ratio
+                //     layer.TextureScale                    // Y РѕСЃС‚Р°РІР»СЏРµРј РєР°Рє РµСЃС‚СЊ
                 // );
 
                 Debug.Log($"Texture: {tex.name}, Size: {tex.width}x{tex.height}, " +
@@ -119,7 +119,7 @@ namespace My.Scripts.Environment.Background
             {
                 if (layer.Material == null) continue;
 
-                // Простой offset без учёта tiling
+                // РџСЂРѕСЃС‚РѕР№ offset Р±РµР· СѓС‡С‘С‚Р° tiling
                 Vector2 parallaxOffset = new Vector2(
                     -targetDelta.x * layer.ParallaxFactor,
                     -targetDelta.y * layer.ParallaxFactor
@@ -158,7 +158,7 @@ namespace My.Scripts.Environment.Background
                         {
                             Texture tex = null;
 
-                            // Получаем текстуру из SpriteRenderer
+                            // РџРѕР»СѓС‡Р°РµРј С‚РµРєСЃС‚СѓСЂСѓ РёР· SpriteRenderer
                             SpriteRenderer spriteRenderer = layer.LayerRenderer as SpriteRenderer;
                             if (spriteRenderer != null && spriteRenderer.sprite != null)
                             {

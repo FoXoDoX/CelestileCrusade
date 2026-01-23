@@ -89,7 +89,6 @@ namespace My.Scripts.UI.Popups
 
         private void InitializeAnimationState()
         {
-            // Начальное состояние: белый фон активен, обычный фон неактивен
             if (_whiteBackground != null)
             {
                 _whiteBackground.SetActive(true);
@@ -100,10 +99,8 @@ namespace My.Scripts.UI.Popups
                 _background.SetActive(false);
             }
 
-            // Устанавливаем сжатый масштаб
             transform.localScale = _squeezeScale;
 
-            // Делаем текст полностью прозрачным в начале
             if (_textMesh != null)
             {
                 Color color = _textMesh.color;

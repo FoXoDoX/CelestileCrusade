@@ -1,4 +1,4 @@
-using My.Scripts.Core.Data;
+п»їusing My.Scripts.Core.Data;
 using My.Scripts.Core.Utility;
 using My.Scripts.EventBus;
 using My.Scripts.Gameplay.Player;
@@ -55,13 +55,13 @@ namespace My.Scripts.Managers
         {
             _popupQuaternion = Quaternion.Euler(_popupRotation);
 
-            // Подписываемся на загрузку сцены
+            // РџРѕРґРїРёСЃС‹РІР°РµРјСЃСЏ РЅР° Р·Р°РіСЂСѓР·РєСѓ СЃС†РµРЅС‹
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void Start()
         {
-            // Инициализируем при первом запуске
+            // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РїСЂРё РїРµСЂРІРѕРј Р·Р°РїСѓСЃРєРµ
             InitializeForCurrentScene();
         }
 
@@ -89,16 +89,16 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods — Scene Management
+        #region Private Methods вЂ” Scene Management
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             Debug.Log($"[VisualGameManager] Scene loaded: {scene.name}");
 
-            // Сбрасываем состояние при загрузке новой сцены
+            // РЎР±СЂР°СЃС‹РІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ РїСЂРё Р·Р°РіСЂСѓР·РєРµ РЅРѕРІРѕР№ СЃС†РµРЅС‹
             ResetState();
 
-            // Переинициализируем ссылки для новой сцены
+            // РџРµСЂРµРёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЃСЃС‹Р»РєРё РґР»СЏ РЅРѕРІРѕР№ СЃС†РµРЅС‹
             InitializeForCurrentScene();
         }
 
@@ -120,7 +120,7 @@ namespace My.Scripts.Managers
 
         private void FindGlobalVolume()
         {
-            // Ищем Volume на текущей сцене
+            // РС‰РµРј Volume РЅР° С‚РµРєСѓС‰РµР№ СЃС†РµРЅРµ
             _globalVolume = FindFirstObjectByType<Volume>();
 
             if (_globalVolume == null)
@@ -135,7 +135,7 @@ namespace My.Scripts.Managers
 
         private void FindCameraEffects()
         {
-            // Ищем Impulse Sources если они не назначены или уничтожены
+            // РС‰РµРј Impulse Sources РµСЃР»Рё РѕРЅРё РЅРµ РЅР°Р·РЅР°С‡РµРЅС‹ РёР»Рё СѓРЅРёС‡С‚РѕР¶РµРЅС‹
             if (_pickupImpulseSource == null)
             {
                 var sources = FindObjectsByType<CinemachineImpulseSource>(FindObjectsSortMode.None);
@@ -165,7 +165,7 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods — Initialization
+        #region Private Methods вЂ” Initialization
 
         private void InitializePostProcessing()
         {
@@ -189,7 +189,7 @@ namespace My.Scripts.Managers
             }
             else
             {
-                // Убеждаемся что intensity можно изменять
+                // РЈР±РµР¶РґР°РµРјСЃСЏ С‡С‚Рѕ intensity РјРѕР¶РЅРѕ РёР·РјРµРЅСЏС‚СЊ
                 _chromaticAberration.intensity.overrideState = true;
                 Debug.Log("[VisualGameManager] ChromaticAberration initialized successfully");
             }
@@ -197,7 +197,7 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods — Event Subscription
+        #region Private Methods вЂ” Event Subscription
 
         private void SubscribeToEvents()
         {
@@ -231,7 +231,7 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods — Event Handlers
+        #region Private Methods вЂ” Event Handlers
 
         private void OnCoinPickup(PickupEventData data)
         {
@@ -261,9 +261,9 @@ namespace My.Scripts.Managers
             SpawnScorePopup(
                 popupPosition,
                 $"+{GameManager.SCORE_PER_CRATE}",
-                Color.yellow,
-                Color.black,
-                useOutline: true
+                backgroundColor: Color.yellow,
+                textColor: Color.black,
+                isBold: true
             );
         }
 
@@ -294,30 +294,30 @@ namespace My.Scripts.Managers
             }
             else if (data.State == Lander.State.WaitingToStart || data.State == Lander.State.Normal)
             {
-                // Сбрасываем при начале новой игры
+                // РЎР±СЂР°СЃС‹РІР°РµРј РїСЂРё РЅР°С‡Р°Р»Рµ РЅРѕРІРѕР№ РёРіСЂС‹
                 _isGameOver = false;
             }
         }
 
         #endregion
 
-        #region Private Methods — Visual Effects
+        #region Private Methods вЂ” Visual Effects
 
         private void SpawnScorePopup(
-            Vector3 position,
-            string text,
-            Color? textColor = null,
-            Color? outlineColor = null,
-            bool useOutline = false)
+    Vector3 position,
+    string text,
+    Color? backgroundColor = null,
+    Color? textColor = null,
+    bool isBold = false)
         {
             if (_scorePopupPrefab == null) return;
 
             Vector3 popupPosition = position + _popupOffset;
             var popup = Instantiate(_scorePopupPrefab, popupPosition, _popupQuaternion);
 
-            if (textColor.HasValue && outlineColor.HasValue)
+            if (backgroundColor.HasValue && textColor.HasValue)
             {
-                popup.Setup(text, textColor.Value, outlineColor.Value, useOutline);
+                popup.Setup(text, backgroundColor.Value, textColor.Value, isBold);
             }
             else
             {
@@ -363,11 +363,11 @@ namespace My.Scripts.Managers
 
         #endregion
 
-        #region Private Methods — Post Processing
+        #region Private Methods вЂ” Post Processing
 
         private void UpdateChromaticAberration()
         {
-            // Проверяем валидность ссылок
+            // РџСЂРѕРІРµСЂСЏРµРј РІР°Р»РёРґРЅРѕСЃС‚СЊ СЃСЃС‹Р»РѕРє
             if (_chromaticAberration == null || _globalVolume == null)
             {
                 return;

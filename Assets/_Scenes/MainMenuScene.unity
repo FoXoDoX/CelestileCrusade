@@ -5442,7 +5442,7 @@ MonoBehaviour:
   _crateDeliveredClip: {fileID: 8300000, guid: 496261e43e61d474299882d9a0b3e657, type: 3}
   _keyPickupClip: {fileID: 8300000, guid: ff638fa615d78fa429828ddf1f771ac8, type: 3}
   _keyDeliveredClip: {fileID: 8300000, guid: b206b1999ea9d4b4386afa4aaeac301f, type: 3}
-  _progressBarClip: {fileID: 8300000, guid: 11bb8151893a04948b805b5f8e751e6f, type: 3}
+  _progressBarClip: {fileID: 8300000, guid: fc3588c031ed0bf4492ed338811a3b79, type: 3}
   _windClip: {fileID: 8300000, guid: da6fa0e8b45e90f4aa6f16dbcde4b0c7, type: 3}
   _turretShootClip: {fileID: 8300000, guid: 2594c2e94a9031f4ebc2ef1da8335737, type: 3}
   _thrusterClip: {fileID: 8300000, guid: 65aa33b863887cc4aa908193a241ee92, type: 3}

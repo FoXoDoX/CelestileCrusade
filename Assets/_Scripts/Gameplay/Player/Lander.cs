@@ -1,5 +1,6 @@
 using My.Scripts.Core.Data;
 using My.Scripts.Core.Utility;
+using My.Scripts.Environment.Light;
 using My.Scripts.EventBus;
 using My.Scripts.Gameplay.Crate;
 using My.Scripts.Gameplay.KeyDoor;

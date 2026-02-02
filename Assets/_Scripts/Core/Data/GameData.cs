@@ -11,7 +11,7 @@ namespace My.Scripts.Core.Data
         private const float DEFAULT_MUSIC_VOLUME = 0.5f;
         private const float DEFAULT_SOUND_VOLUME = 0.7f;
         private const bool DEFAULT_FULLSCREEN = true;
-        private const int DEFAULT_GRAPHICS_QUALITY = 2; // High (0=Low, 1=Medium, 2=High)
+        private const int DEFAULT_GRAPHICS_QUALITY = 2;
 
         #endregion
 
@@ -21,6 +21,7 @@ namespace My.Scripts.Core.Data
         private static int _totalScore;
         private static int _highestCompletedLevel;
         private static Dictionary<int, int> _levelStars;
+        private static HashSet<int> _completedTutorials;
         private static bool _isInitialized;
 
         #endregion
@@ -49,6 +50,11 @@ namespace My.Scripts.Core.Data
 
         public static int HighestCompletedLevel => _highestCompletedLevel;
 
+        /// <summary>
+        /// Это первый запуск игры (туториал первого уровня ещё не был показан).
+        /// </summary>
+        public static bool IsFirstLaunch => !IsTutorialCompletedForLevel(1);
+
         #endregion
 
         #region Audio Settings
@@ -74,7 +80,6 @@ namespace My.Scripts.Core.Data
 
         public static void SetGraphicsQuality(int qualityLevel)
         {
-            // Ограничиваем диапазон количеством доступных уровней качества
             int maxQuality = QualitySettings.names.Length - 1;
             GraphicsQuality = Mathf.Clamp(qualityLevel, 0, maxQuality);
 
@@ -98,6 +103,72 @@ namespace My.Scripts.Core.Data
         public static void SetFullscreen(bool isFullscreen)
         {
             IsFullscreen = isFullscreen;
+        }
+
+        #endregion
+
+        #region Tutorial Methods
+
+        /// <summary>
+        /// Проверяет, пройден ли туториал для указанного уровня.
+        /// </summary>
+        public static bool IsTutorialCompletedForLevel(int levelNumber)
+        {
+            EnsureInitialized();
+            return _completedTutorials.Contains(levelNumber);
+        }
+
+        /// <summary>
+        /// Отмечает туториал указанного уровня как пройденный.
+        /// Автоматически сохраняет прогресс.
+        /// </summary>
+        public static void MarkTutorialCompletedForLevel(int levelNumber)
+        {
+            EnsureInitialized();
+
+            if (_completedTutorials.Contains(levelNumber)) return;
+
+            _completedTutorials.Add(levelNumber);
+            SaveSystem.Save();
+
+            Debug.Log($"[GameData] Tutorial for level {levelNumber} marked as completed");
+        }
+
+        /// <summary>
+        /// Сбрасывает состояние туториала для указанного уровня.
+        /// </summary>
+        public static void ResetTutorialForLevel(int levelNumber)
+        {
+            EnsureInitialized();
+
+            if (_completedTutorials.Remove(levelNumber))
+            {
+                SaveSystem.Save();
+                Debug.Log($"[GameData] Tutorial for level {levelNumber} reset");
+            }
+        }
+
+        /// <summary>
+        /// Сбрасывает все туториалы.
+        /// </summary>
+        public static void ResetAllTutorials()
+        {
+            EnsureInitialized();
+            _completedTutorials.Clear();
+            SaveSystem.Save();
+
+            Debug.Log("[GameData] All tutorials reset");
+        }
+
+        /// <summary>
+        /// Возвращает список пройденных туториалов (для отладки).
+        /// </summary>
+        public static int[] GetCompletedTutorials()
+        {
+            EnsureInitialized();
+            int[] result = new int[_completedTutorials.Count];
+            _completedTutorials.CopyTo(result);
+            return result;
         }
 
         #endregion
@@ -152,6 +223,7 @@ namespace My.Scripts.Core.Data
             _currentLevel = 1;
             _totalScore = 0;
             _highestCompletedLevel = 0;
+
             MusicVolume = DEFAULT_MUSIC_VOLUME;
             SoundVolume = DEFAULT_SOUND_VOLUME;
             GraphicsQuality = DEFAULT_GRAPHICS_QUALITY;
@@ -161,9 +233,10 @@ namespace My.Scripts.Core.Data
             IsFullscreen = DEFAULT_FULLSCREEN;
 
             _levelStars = new Dictionary<int, int>();
+            _completedTutorials = new HashSet<int>();
             _isInitialized = true;
 
-            Debug.Log("[GameData] All progress reset");
+            Debug.Log("[GameData] All progress reset (including all tutorials)");
         }
 
         #endregion
@@ -201,7 +274,10 @@ namespace My.Scripts.Core.Data
                 });
             }
 
-            Debug.Log($"[GameData] Saved: Graphics={GraphicsQuality}, Resolution={ScreenWidth}x{ScreenHeight}, Fullscreen={IsFullscreen}");
+            // Tutorials
+            data.completedTutorials = new List<int>(_completedTutorials);
+
+            Debug.Log($"[GameData] Saved: Tutorials={_completedTutorials.Count}, Graphics={GraphicsQuality}, Resolution={ScreenWidth}x{ScreenHeight}");
         }
 
         public static void Load(GameSaveData data)
@@ -221,7 +297,7 @@ namespace My.Scripts.Core.Data
 
             _isInitialized = true;
 
-            Debug.Log($"[GameData] Loaded: Graphics={GraphicsQuality}, Fullscreen={IsFullscreen}, Resolution={ScreenWidth}x{ScreenHeight}");
+            Debug.Log($"[GameData] Loaded: Tutorials={_completedTutorials.Count}, Graphics={GraphicsQuality}, Fullscreen={IsFullscreen}");
         }
 
         private static void LoadDefaults()
@@ -237,11 +313,12 @@ namespace My.Scripts.Core.Data
             ScreenHeight = nativeResolution.height;
             IsFullscreen = DEFAULT_FULLSCREEN;
 
-            // Применяем настройки
+            _completedTutorials = new HashSet<int>();
+
             QualitySettings.SetQualityLevel(GraphicsQuality);
             Screen.SetResolution(ScreenWidth, ScreenHeight, IsFullscreen);
 
-            Debug.Log($"[GameData] Applied defaults: Graphics={GraphicsQuality}, {ScreenWidth}x{ScreenHeight}, Fullscreen={IsFullscreen}");
+            Debug.Log($"[GameData] Applied defaults: Graphics={GraphicsQuality}");
         }
 
         private static void LoadFromSaveData(GameSaveData data)
@@ -258,6 +335,16 @@ namespace My.Scripts.Core.Data
             ScreenWidth = data.screenWidth;
             ScreenHeight = data.screenHeight;
             IsFullscreen = data.isFullscreen;
+
+            // Tutorials
+            _completedTutorials = new HashSet<int>();
+            if (data.completedTutorials != null)
+            {
+                foreach (int levelNumber in data.completedTutorials)
+                {
+                    _completedTutorials.Add(levelNumber);
+                }
+            }
 
             // Применяем настройки графики
             QualitySettings.SetQualityLevel(GraphicsQuality);
@@ -304,6 +391,7 @@ namespace My.Scripts.Core.Data
             if (_isInitialized) return;
 
             _levelStars ??= new Dictionary<int, int>();
+            _completedTutorials ??= new HashSet<int>();
             _isInitialized = true;
 
             Debug.LogWarning("[GameData] Force initialized with empty data");
@@ -326,6 +414,7 @@ namespace My.Scripts.Core.Data
             _currentLevel = 1;
             _totalScore = 0;
             _highestCompletedLevel = 0;
+            _completedTutorials = null;
             _levelStars = null;
             _isInitialized = false;
 
@@ -358,6 +447,9 @@ namespace My.Scripts.Core.Data
         // Progress
         public int highestCompletedLevel;
         public List<LevelStarData> levelStarsData;
+
+        // Tutorials
+        public List<int> completedTutorials;
     }
 
     [System.Serializable]

@@ -1,4 +1,4 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,16 +9,23 @@ namespace My.Scripts.Environment.Background
         [Serializable]
         public class ParallaxLayer
         {
-            [Tooltip("Р РµРЅРґРµСЂРµСЂ СЃР»РѕСЏ")]
+            [Tooltip("Рендерер слоя")]
             public Renderer LayerRenderer;
 
-            [Tooltip("РњРЅРѕР¶РёС‚РµР»СЊ РїР°СЂР°Р»Р»Р°РєСЃР° (0 = СЃС‚Р°С‚РёС‡РЅС‹Р№, 1 = РґРІРёР¶РµС‚СЃСЏ РІРјРµСЃС‚Рµ СЃ РєР°РјРµСЂРѕР№)")]
+            [Tooltip("Множитель параллакса (0 = статичный, 1 = движется вместе с камерой)")]
             [Range(0f, 1f)]
             public float ParallaxFactor = 0.1f;
 
-            [Tooltip("РњР°СЃС€С‚Р°Р± С‚РµРєСЃС‚СѓСЂС‹ (РјРµРЅСЊС€Рµ = РєСЂСѓРїРЅРµРµ Р·РІС‘Р·РґС‹)")]
+            [Tooltip("Масштаб текстуры (меньше = крупнее элементы)")]
             [Range(0.01f, 5f)]
             public float TextureScale = 1f;
+
+            [Tooltip("Количество вариантов в атласе (по горизонтали)")]
+            [Range(1, 16)]
+            public int VariantsCount = 1;
+
+            [Tooltip("Сид для рандомизации (разные значения = разный паттерн)")]
+            public float RandomSeed = 0f;
 
             [HideInInspector]
             public Material Material;
@@ -33,9 +40,16 @@ namespace My.Scripts.Environment.Background
         [Header("Parallax Layers")]
         [SerializeField] private List<ParallaxLayer> _layers = new();
 
+        [Header("Randomization")]
+        [SerializeField] private bool _randomizeSeedsOnStart = true;
+
         private Vector3 _startTargetPosition;
+
+        // Shader property IDs
         private static readonly int ParallaxOffsetProperty = Shader.PropertyToID("_ParallaxOffset");
         private static readonly int TilingProperty = Shader.PropertyToID("_Tiling");
+        private static readonly int VariantsCountProperty = Shader.PropertyToID("_VariantsCount");
+        private static readonly int SeedProperty = Shader.PropertyToID("_Seed");
 
         private void Start()
         {
@@ -52,7 +66,13 @@ namespace My.Scripts.Environment.Background
                 if (layer.LayerRenderer != null)
                 {
                     layer.Material = layer.LayerRenderer.material;
-                    ApplyTiling(layer);
+
+                    if (_randomizeSeedsOnStart)
+                    {
+                        layer.RandomSeed = UnityEngine.Random.Range(0f, 1000f);
+                    }
+
+                    ApplyLayerSettings(layer);
                 }
                 else
                 {
@@ -61,49 +81,59 @@ namespace My.Scripts.Environment.Background
             }
         }
 
+        private void ApplyLayerSettings(ParallaxLayer layer)
+        {
+            if (layer.Material == null) return;
+
+            // Применяем tiling
+            ApplyTiling(layer);
+
+            // Применяем настройки вариантов
+            layer.Material.SetFloat(VariantsCountProperty, layer.VariantsCount);
+            layer.Material.SetFloat(SeedProperty, layer.RandomSeed);
+        }
+
         private void ApplyTiling(ParallaxLayer layer)
         {
             if (layer.Material == null) return;
 
-            Texture tex = null;
-
-            SpriteRenderer spriteRenderer = layer.LayerRenderer as SpriteRenderer;
-            if (spriteRenderer != null && spriteRenderer.sprite != null)
-            {
-                tex = spriteRenderer.sprite.texture;
-            }
-            else
-            {
-                tex = layer.Material.mainTexture;
-            }
+            Texture tex = GetLayerTexture(layer);
 
             if (tex != null && tex.height > 0)
             {
-                float aspectRatio = (float)tex.width / tex.height; // 768/512 = 1.5
+                // Для атласа учитываем, что ширина делится на количество вариантов
+                float singleVariantWidth = (float)tex.width / layer.VariantsCount;
+                float aspectRatio = singleVariantWidth / tex.height;
 
-                // РРЎРџР РђР’Р›Р•РќРР•: РґРµР»РёРј X РЅР° aspectRatio, С‡С‚РѕР±С‹ РєРѕРјРїРµРЅСЃРёСЂРѕРІР°С‚СЊ СЂР°СЃС‚СЏР¶РµРЅРёРµ
                 layer.CorrectedTiling = new Vector2(
-                    layer.TextureScale,                      // X РѕСЃС‚Р°РІР»СЏРµРј РєР°Рє РµСЃС‚СЊ
-                    layer.TextureScale * aspectRatio         // Y СѓРјРЅРѕР¶Р°РµРј РЅР° aspect ratio
+                    layer.TextureScale,
+                    layer.TextureScale * aspectRatio
                 );
 
-                // РР»Рё Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Р№ РІР°СЂРёР°РЅС‚:
-                // layer.CorrectedTiling = new Vector2(
-                //     layer.TextureScale / aspectRatio,     // X РґРµР»РёРј РЅР° aspect ratio
-                //     layer.TextureScale                    // Y РѕСЃС‚Р°РІР»СЏРµРј РєР°Рє РµСЃС‚СЊ
-                // );
-
-                Debug.Log($"Texture: {tex.name}, Size: {tex.width}x{tex.height}, " +
-                          $"AspectRatio: {aspectRatio:F2}, " +
-                          $"CorrectedTiling: {layer.CorrectedTiling}");
+                Debug.Log($"[Parallax] Texture: {tex.name}, " +
+                          $"Atlas size: {tex.width}x{tex.height}, " +
+                          $"Variants: {layer.VariantsCount}, " +
+                          $"Single variant aspect: {aspectRatio:F2}, " +
+                          $"Tiling: {layer.CorrectedTiling}");
             }
             else
             {
                 layer.CorrectedTiling = new Vector2(layer.TextureScale, layer.TextureScale);
-                Debug.LogWarning("Texture is null or has zero height!");
+                Debug.LogWarning("[Parallax] Texture is null or has zero height!");
             }
 
             layer.Material.SetVector(TilingProperty, layer.CorrectedTiling);
+        }
+
+        private Texture GetLayerTexture(ParallaxLayer layer)
+        {
+            if (layer.LayerRenderer is SpriteRenderer spriteRenderer &&
+                spriteRenderer.sprite != null)
+            {
+                return spriteRenderer.sprite.texture;
+            }
+
+            return layer.Material?.mainTexture;
         }
 
         private void Update()
@@ -119,13 +149,27 @@ namespace My.Scripts.Environment.Background
             {
                 if (layer.Material == null) continue;
 
-                // РџСЂРѕСЃС‚РѕР№ offset Р±РµР· СѓС‡С‘С‚Р° tiling
                 Vector2 parallaxOffset = new Vector2(
                     -targetDelta.x * layer.ParallaxFactor,
                     -targetDelta.y * layer.ParallaxFactor
                 );
 
                 layer.Material.SetVector(ParallaxOffsetProperty, parallaxOffset);
+            }
+        }
+
+        /// <summary>
+        /// Перегенерировать случайные сиды для всех слоёв
+        /// </summary>
+        public void RandomizeAllSeeds()
+        {
+            foreach (var layer in _layers)
+            {
+                layer.RandomSeed = UnityEngine.Random.Range(0f, 1000f);
+                if (layer.Material != null)
+                {
+                    layer.Material.SetFloat(SeedProperty, layer.RandomSeed);
+                }
             }
         }
 
@@ -145,38 +189,46 @@ namespace My.Scripts.Environment.Background
         {
             foreach (var layer in _layers)
             {
-                if (layer.LayerRenderer != null)
+                if (layer.LayerRenderer == null) continue;
+
+                if (Application.isPlaying && layer.Material != null)
                 {
-                    if (Application.isPlaying && layer.Material != null)
+                    ApplyLayerSettings(layer);
+                }
+                else if (!Application.isPlaying)
+                {
+                    var sharedMat = layer.LayerRenderer.sharedMaterial;
+                    if (sharedMat != null)
                     {
-                        ApplyTiling(layer);
-                    }
-                    else if (!Application.isPlaying)
-                    {
-                        var sharedMat = layer.LayerRenderer.sharedMaterial;
-                        if (sharedMat != null)
-                        {
-                            Texture tex = null;
-
-                            // РџРѕР»СѓС‡Р°РµРј С‚РµРєСЃС‚СѓСЂСѓ РёР· SpriteRenderer
-                            SpriteRenderer spriteRenderer = layer.LayerRenderer as SpriteRenderer;
-                            if (spriteRenderer != null && spriteRenderer.sprite != null)
-                            {
-                                tex = spriteRenderer.sprite.texture;
-                            }
-
-                            if (tex != null && tex.height > 0)
-                            {
-                                float aspectRatio = (float)tex.width / tex.height;
-                                Vector2 correctedTiling = new Vector2(
-                                    layer.TextureScale,
-                                    layer.TextureScale * aspectRatio
-                                );
-                                sharedMat.SetVector(TilingProperty, correctedTiling);
-                            }
-                        }
+                        ApplyEditorSettings(layer, sharedMat);
                     }
                 }
+            }
+        }
+
+        private void ApplyEditorSettings(ParallaxLayer layer, Material mat)
+        {
+            Texture tex = null;
+
+            if (layer.LayerRenderer is SpriteRenderer spriteRenderer &&
+                spriteRenderer.sprite != null)
+            {
+                tex = spriteRenderer.sprite.texture;
+            }
+
+            if (tex != null && tex.height > 0)
+            {
+                float singleVariantWidth = (float)tex.width / layer.VariantsCount;
+                float aspectRatio = singleVariantWidth / tex.height;
+
+                Vector2 correctedTiling = new Vector2(
+                    layer.TextureScale,
+                    layer.TextureScale * aspectRatio
+                );
+
+                mat.SetVector(TilingProperty, correctedTiling);
+                mat.SetFloat(VariantsCountProperty, layer.VariantsCount);
+                mat.SetFloat(SeedProperty, layer.RandomSeed);
             }
         }
 #endif

@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1945c8a673a9143bf8cab318c2c495, type: 3}
+  m_Name: TutorialData_Level2
+  m_EditorClassIdentifier: Assembly-CSharp::My.Data.Tutorials.TutorialData
+  LevelNumber: 2
+  Blocks:
+  - Text: 'You can plan your route in advance to choose
+
+      the most optimal trajectory.
+      Once this tooltip
+
+      disappears, use       to zoom in and out,
+
+      and      
+      or       to move the camera around the level.'
+    NormalizedX: 0.5
+    NormalizedY: 0.5
+    PixelOffset: {x: 0, y: 0}
+    Pivot: {x: 0, y: 0}
+    Images:
+    - ImageObjectName: MouseWheel
+      AddFadeInAnimation: 1
+      FadeInDuration: 0.5
+      FadeInDelay: 3.4
+      AddArrowAnimation: 0
+      Direction: 0
+      MoveDistance: 0
+      AnimationDuration: 0
+    - ImageObjectName: MouseLeftClick
+      AddFadeInAnimation: 1
+      FadeInDuration: 0.5
+      FadeInDelay: 3.9
+      AddArrowAnimation: 0
+      Direction: 0
+      MoveDistance: 0
+      AnimationDuration: 0
+    - ImageObjectName: MouseRightClick
+      AddFadeInAnimation: 1
+      FadeInDuration: 0.5
+      FadeInDelay: 4
+      AddArrowAnimation: 0
+      Direction: 0
+      MoveDistance: 0
+      AnimationDuration: 0

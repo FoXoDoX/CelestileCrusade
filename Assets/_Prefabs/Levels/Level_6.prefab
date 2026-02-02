@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 2500897876002731196}
   - component: {fileID: 454145550415634456}
   - component: {fileID: 6170579465389559112}
+  - component: {fileID: 3612443578124089383}
   m_Layer: 0
   m_Name: MainTerrain
   m_TagString: Untagged
@@ -1060,7 +1061,7 @@ MonoBehaviour:
   m_EnableTangents: 0
   m_GeometryCached: 0
   m_UTess2D: 1
-  m_UpdateShadow: 0
+  m_UpdateShadow: 1
   m_ShadowDetail: 16
   m_ShadowOffset: 0.5
   m_BoundsScale: 2
@@ -1153,7 +1154,92 @@ MonoBehaviour:
   - {x: 197.00002, y: 49.81481}
   - {x: 197, y: -43}
   - {x: -143.33757, y: -39.10234}
-  m_ShadowSegment: []
+  m_ShadowSegment:
+  - {x: -143.33757, y: -39.10234}
+  - {x: -143, y: -4}
+  - {x: -131.78612, y: -3.2587082}
+  - {x: -123.998344, y: 0.5059936}
+  - {x: -121.57179, y: 4.9477367}
+  - {x: -113.10685, y: 6.569813}
+  - {x: -105.65385, y: 10.841947}
+  - {x: -104.73824, y: 16.006397}
+  - {x: -100.62249, y: 22.637333}
+  - {x: -94.37264, y: 22.637333}
+  - {x: -93.22937, y: 16.997229}
+  - {x: -89.8758, y: 15.01557}
+  - {x: -88.36484, y: 12.025382}
+  - {x: -75.964, y: 12.731427}
+  - {x: -69.211525, y: 16.768948}
+  - {x: -68.85452, y: 22.360714}
+  - {x: -65.2453, y: 26.662128}
+  - {x: -56.620403, y: 23.827606}
+  - {x: -49.14612, y: 23.980576}
+  - {x: -44.0165, y: 19.840881}
+  - {x: -39.606823, y: 20.740814}
+  - {x: -39.786804, y: 26.860363}
+  - {x: -33.217297, y: 36.309666}
+  - {x: -31.055311, y: 41.70169}
+  - {x: -26.768915, y: 45.743153}
+  - {x: -26.279041, y: 53.94854}
+  - {x: -20.144476, y: 48.09166}
+  - {x: -12.249594, y: 46.550346}
+  - {x: -9.982423, y: 57.186546}
+  - {x: -3.8070567, y: 63.773605}
+  - {x: -5.563585, y: 70.1511}
+  - {x: -5.0421295, y: 79.14341}
+  - {x: -2.2975225, y: 85.73047}
+  - {x: 3.9571378, y: 83.29876}
+  - {x: 5.443697, y: 76.45023}
+  - {x: 7.674196, y: 70.86637}
+  - {x: 19.620436, y: 70.718506}
+  - {x: 26.518026, y: 69.31634}
+  - {x: 28.985249, y: 73.0372}
+  - {x: 33.918697, y: 71.49325}
+  - {x: 34.4281, y: 75.83866}
+  - {x: 36.480347, y: 77.96984}
+  - {x: 31.398249, y: 81.646255}
+  - {x: 29.23809, y: 85.74066}
+  - {x: 34.70103, y: 86.6235}
+  - {x: 41.395603, y: 90.405266}
+  - {x: 43.01895, y: 96.43345}
+  - {x: 41.80101, y: 100.55234}
+  - {x: 47.893574, y: 100.26221}
+  - {x: 50.6053, y: 104.41269}
+  - {x: 47.5512, y: 108.75807}
+  - {x: 57.531338, y: 111.3246}
+  - {x: 61.738346, y: 114.58504}
+  - {x: 63.00045, y: 118.266174}
+  - {x: 69.36251, y: 125.45282}
+  - {x: 75.700615, y: 129.25587}
+  - {x: 77.81531, y: 141.41545}
+  - {x: 85.04773, y: 153.09387}
+  - {x: 86.721756, y: 158.61046}
+  - {x: 88.46581, y: 179.0533}
+  - {x: 92.15959, y: 172.73721}
+  - {x: 97.199326, y: 168.72809}
+  - {x: 105.829346, y: 168.40659}
+  - {x: 110.515335, y: 168.12624}
+  - {x: 113.22367, y: 171.43643}
+  - {x: 117.13573, y: 173.09154}
+  - {x: 123.75612, y: 178.20729}
+  - {x: 119.24221, y: 184.67722}
+  - {x: 113.97599, y: 186.18185}
+  - {x: 110.312614, y: 181.87547}
+  - {x: 109.386856, y: 189.26634}
+  - {x: 106.5848, y: 189.36157}
+  - {x: 104.81159, y: 191.03627}
+  - {x: 102.00401, y: 187.73613}
+  - {x: 99.83675, y: 182.90906}
+  - {x: 95.05894, y: 186.35696}
+  - {x: 92.75703, y: 191.60947}
+  - {x: 100.59632, y: 207.00237}
+  - {x: 108.68706, y: 242.29745}
+  - {x: 130.72966, y: 296.34607}
+  - {x: 139.79355, y: 314.52875}
+  - {x: 197, y: 315}
+  - {x: 197.00002, y: 49.81481}
+  - {x: 197, y: -43}
+  - {x: -143.33757, y: -39.10234}
 --- !u!60 &6170579465389559112
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1286,6 +1372,59 @@ PolygonCollider2D:
       - {x: 197, y: -43}
       - {x: -143.33757, y: -39.10234}
   m_UseDelaunayMesh: 0
+--- !u!114 &3612443578124089383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5499129489696913982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
+  m_ShadowGroup: 0
+  m_Priority: 5
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 21a4872a7f83599c00000000
+  m_ShapePath:
+  - {x: -143.33757, y: -43, z: 0}
+  - {x: -143.33757, y: 315, z: 0}
+  - {x: 197.00002, y: 315, z: 0}
+  - {x: 197.00002, y: -43, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 6170579465389559112}
+  m_ShadowShape2DProvider:
+    rid: 3915070665090138184
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: 36.500824, y: 13.933189, z: 0}
+      m_Extent: {x: 160.49918, y: 56.93319, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 10
+  m_CastingOption: 2
+  m_PreviousTrimEdge: 0
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 6170579465389559112}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3915070665090138184
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
 --- !u!1 &6424933965511779996
 GameObject:
   m_ObjectHideFlags: 0

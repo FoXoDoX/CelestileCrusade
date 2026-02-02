@@ -108,6 +108,41 @@ namespace My.Scripts.Input
             _inputActions?.Disable();
         }
 
+        /// <summary>
+        /// Отключает только геймплейные действия (движение, рестарт),
+        /// но оставляет Menu (Esc) активным для паузы.
+        /// </summary>
+        public void DisableGameplayInput()
+        {
+            if (_inputActions == null) return;
+
+            _inputActions.Player.LanderUp.Disable();
+            _inputActions.Player.LanderLeft.Disable();
+            _inputActions.Player.LanderRight.Disable();
+            _inputActions.Player.Movement.Disable();
+            _inputActions.Player.RestartLevel.Disable();
+            // Menu остаётся включённым!
+
+            _inputActions.Camera.Disable();
+        }
+
+        /// <summary>
+        /// Включает все геймплейные действия обратно.
+        /// </summary>
+        public void EnableGameplayInput()
+        {
+            if (_inputActions == null) return;
+
+            _inputActions.Player.LanderUp.Enable();
+            _inputActions.Player.LanderLeft.Enable();
+            _inputActions.Player.LanderRight.Enable();
+            _inputActions.Player.Movement.Enable();
+            _inputActions.Player.RestartLevel.Enable();
+            _inputActions.Player.Menu.Enable(); // На всякий случай
+
+            _inputActions.Camera.Enable();
+        }
+
         public void EnableCameraInput()
         {
             _inputActions?.Camera.Enable();

@@ -38,6 +38,7 @@ namespace My.Scripts.UI
         private bool _isGameOver;
         private bool _isLowFuelWarningActive;
         private bool _isSubscribed;
+        private bool _isTutorialActive;
 
         #endregion
 
@@ -50,20 +51,20 @@ namespace My.Scripts.UI
 
         private void Start()
         {
-            SubscribeToUIEvents();  // ѕодписка один раз
-            Hide();
+            SubscribeToEvents();
+            CheckInitialTutorialState();
+            UpdateVisibility();
             HideLowFuelWarning();
         }
 
         private void OnDestroy()
         {
-            UnsubscribeFromUIEvents();  // ќтписка только при уничтожении
+            UnsubscribeFromEvents();
             StopBlinking();
         }
 
         private void Update()
         {
-            // ќбновл€ем только если активны
             if (!gameObject.activeInHierarchy) return;
             if (_isGameOver) return;
 
@@ -84,23 +85,41 @@ namespace My.Scripts.UI
             }
         }
 
+        private void CheckInitialTutorialState()
+        {
+            // ѕровер€ем, есть ли TutorialManager на сцене при старте
+            var tutorialManager = FindFirstObjectByType<TutorialManager>();
+            _isTutorialActive = tutorialManager != null && tutorialManager.IsTutorialActive;
+        }
+
         #endregion
 
         #region Private Methods Ч Event Subscription
 
-        private void SubscribeToUIEvents()
+        private void SubscribeToEvents()
         {
             if (_isSubscribed) return;
+            if (!EventManager.HasInstance) return;
 
-            EventManager.Instance?.AddHandler<LanderStateData>(
+            EventManager.Instance.AddHandler<LanderStateData>(
                 GameEvents.LanderStateChanged,
                 OnLanderStateChanged
+            );
+
+            EventManager.Instance.AddHandler(
+                GameEvents.TutorialStarted,
+                OnTutorialStarted
+            );
+
+            EventManager.Instance.AddHandler(
+                GameEvents.TutorialCompleted,
+                OnTutorialCompleted
             );
 
             _isSubscribed = true;
         }
 
-        private void UnsubscribeFromUIEvents()
+        private void UnsubscribeFromEvents()
         {
             if (!_isSubscribed) return;
             if (!EventManager.HasInstance) return;
@@ -108,6 +127,16 @@ namespace My.Scripts.UI
             EventManager.Instance.RemoveHandler<LanderStateData>(
                 GameEvents.LanderStateChanged,
                 OnLanderStateChanged
+            );
+
+            EventManager.Instance.RemoveHandler(
+                GameEvents.TutorialStarted,
+                OnTutorialStarted
+            );
+
+            EventManager.Instance.RemoveHandler(
+                GameEvents.TutorialCompleted,
+                OnTutorialCompleted
             );
 
             _isSubscribed = false;
@@ -122,6 +151,7 @@ namespace My.Scripts.UI
             switch (data.State)
             {
                 case Lander.State.WaitingToStart:
+                    UpdateVisibility();
                     break;
 
                 case Lander.State.Normal:
@@ -132,6 +162,18 @@ namespace My.Scripts.UI
                     HandleGameOver();
                     break;
             }
+        }
+
+        private void OnTutorialStarted()
+        {
+            _isTutorialActive = true;
+            Show();
+        }
+
+        private void OnTutorialCompleted()
+        {
+            _isTutorialActive = false;
+            UpdateVisibility();
         }
 
         #endregion
@@ -232,6 +274,26 @@ namespace My.Scripts.UI
         #endregion
 
         #region Private Methods Ч Visibility
+
+        private void UpdateVisibility()
+        {
+            // ≈сли туториал активен Ч показываем UI
+            if (_isTutorialActive)
+            {
+                Show();
+                return;
+            }
+
+            // ≈сли туториала нет и Lander не в Normal Ч скрываем
+            if (!Lander.HasInstance || Lander.Instance.CurrentState != Lander.State.Normal)
+            {
+                Hide();
+                return;
+            }
+
+            // Lander в Normal Ч показываем
+            Show();
+        }
 
         private void HandleGameOver()
         {

@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5429b7189f8101f4b8ebba83c9bd444b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 25692b800c0039a45aa846cb7ea6e3fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -213,21 +213,23 @@ MonoBehaviour:
   m_AlphaCutoff: 0.1
   m_ApplyToSortingLayers: 21a4872a7f83599c00000000
   m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  m_ShapePathHash: 0
+  - {x: -0.50319934, y: -0.18006945, z: 0}
+  - {x: -0.26645064, y: 0.2632513, z: 0}
+  - {x: 0.34849155, y: 0.24940157, z: 0}
+  - {x: 0.49040186, y: -0.0022912025, z: 0}
+  - {x: 0.18326867, y: -0.1960659, z: 0}
+  - {x: -0.2913698, y: -0.3040781, z: 0}
+  m_ShapePathHash: 1119308133
   m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 5021385235203632747}
+  m_ShadowShape2DComponent: {fileID: 0}
   m_ShadowShape2DProvider:
-    rid: 6516919309385597003
-  m_ShadowCastingSource: 2
+    rid: -2
+  m_ShadowCastingSource: 1
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0}
+      m_Center: {x: -0.0063987374, y: -0.020413399, z: 0}
+      m_Extent: {x: 0.4968006, y: 0.2836647, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0
@@ -236,11 +238,10 @@ MonoBehaviour:
   m_CastingOption: 1
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: 1
-  m_PreviousShadowCastingSource: 2
-  m_PreviousShadowShape2DSource: {fileID: 0}
+  m_PreviousShadowCastingSource: 1
+  m_PreviousShadowShape2DSource: {fileID: 5021385235203632747}
   references:
     version: 2
     RefIds:
-    - rid: 6516919309385597003
-      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 
 namespace My.Scripts.Environment.Hazards
@@ -10,6 +11,7 @@ namespace My.Scripts.Environment.Hazards
         [Header("Spawn Settings")]
         public GameObject asteroidPrefab;
         public float respawnTime = 3f;
+        public int poolSize = 5;
 
         [Header("Path Settings")]
         public float movementSpeed = 8f;
@@ -18,11 +20,49 @@ namespace My.Scripts.Environment.Hazards
 
         private Vector3[] pathPoints;
         private List<Transform> pathPointTransforms = new List<Transform>();
+        private Queue<GameObject> asteroidPool = new Queue<GameObject>();
 
         void Start()
         {
             CollectPathPoints();
+            InitializePool();
             StartCoroutine(SpawnCycle());
+        }
+
+        void InitializePool()
+        {
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject asteroid = Instantiate(asteroidPrefab, transform);
+                asteroid.SetActive(false);
+                asteroidPool.Enqueue(asteroid);
+            }
+        }
+
+        GameObject GetFromPool()
+        {
+            if (asteroidPool.Count > 0)
+            {
+                var asteroid = asteroidPool.Dequeue();
+                asteroid.SetActive(true);
+                return asteroid;
+            }
+
+            // Если пул пуст — создаём новый
+            return Instantiate(asteroidPrefab, transform);
+        }
+
+        void ReturnToPool(GameObject asteroid)
+        {
+            if (asteroid == null) return;
+
+            DOTween.Kill(asteroid.transform);
+
+            asteroid.transform.localPosition = Vector3.zero;
+            asteroid.transform.localRotation = Quaternion.identity;
+            asteroid.SetActive(false);
+
+            asteroidPool.Enqueue(asteroid);
         }
 
         void CollectPathPoints()
@@ -43,11 +83,6 @@ namespace My.Scripts.Environment.Hazards
             {
                 pathPoints[i] = pathPointTransforms[i].localPosition;
             }
-
-            if (pathPoints.Length == 0)
-            {
-                Debug.LogWarning("Не найдено дочерних объектов для использования в качестве точек пути!");
-            }
         }
 
         IEnumerator SpawnCycle()
@@ -56,13 +91,11 @@ namespace My.Scripts.Environment.Hazards
             {
                 if (pathPoints == null || pathPoints.Length == 0)
                 {
-                    Debug.LogWarning("Нет точек пути! Ждем 1 секунду и проверяем снова.");
                     yield return new WaitForSeconds(1f);
                     continue;
                 }
 
-                GameObject asteroid = Instantiate(asteroidPrefab, transform.position, Quaternion.identity);
-                asteroid.transform.SetParent(transform);
+                GameObject asteroid = GetFromPool();
                 asteroid.transform.localPosition = Vector3.zero;
 
                 yield return StartCoroutine(MoveAndRotateAsteroid(asteroid));
@@ -76,14 +109,21 @@ namespace My.Scripts.Environment.Hazards
             float pathLength = CalculatePathLength(pathPoints);
             float moveDuration = pathLength / movementSpeed;
 
-            Tween moveTween = asteroid.transform.DOLocalPath(pathPoints, moveDuration, pathType).SetEase(Ease.Linear);
+            Tween moveTween = asteroid.transform
+                .DOLocalPath(pathPoints, moveDuration, pathType)
+                .SetEase(Ease.Linear);
 
-            Tween rotateTween = asteroid.transform.DORotate(rotationSpeed * moveDuration, moveDuration, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
+            Tween rotateTween = asteroid.transform
+                .DORotate(rotationSpeed * moveDuration, moveDuration, RotateMode.LocalAxisAdd)
+                .SetEase(Ease.Linear)
+                .SetLoops(-1, LoopType.Incremental);
 
             yield return moveTween.WaitForCompletion();
 
             rotateTween.Kill();
-            Destroy(asteroid);
+
+            // Возвращаем в пул вместо уничтожения
+            ReturnToPool(asteroid);
         }
 
         private float CalculatePathLength(Vector3[] points)
@@ -98,69 +138,9 @@ namespace My.Scripts.Environment.Hazards
             return length;
         }
 
-        void OnDrawGizmos()
-        {
-            if (pathPoints == null || pathPoints.Length == 0)
-            {
-                CollectPathPointsForGizmos();
-            }
-
-            if (pathPoints == null || pathPoints.Length == 0)
-                return;
-
-            Gizmos.color = Color.yellow;
-            for (int i = 0; i < pathPoints.Length; i++)
-            {
-                Vector3 worldPoint = transform.TransformPoint(pathPoints[i]);
-
-                Gizmos.DrawSphere(worldPoint, 0.2f);
-
-                if (i > 0)
-                {
-                    Vector3 prevWorldPoint = transform.TransformPoint(pathPoints[i - 1]);
-                    Gizmos.DrawLine(prevWorldPoint, worldPoint);
-                }
-            }
-
-            if (pathPoints.Length > 0)
-            {
-                Gizmos.color = Color.green;
-                Vector3 firstWorldPoint = transform.TransformPoint(pathPoints[0]);
-                Gizmos.DrawSphere(firstWorldPoint, 0.25f);
-            }
-
-            if (pathPoints.Length > 1)
-            {
-                Gizmos.color = Color.red;
-                Vector3 lastWorldPoint = transform.TransformPoint(pathPoints[pathPoints.Length - 1]);
-                Gizmos.DrawSphere(lastWorldPoint, 0.25f);
-            }
-        }
-
-        void CollectPathPointsForGizmos()
-        {
-            pathPointTransforms.Clear();
-
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                Transform child = transform.GetChild(i);
-
-                if (asteroidPrefab == null || child.gameObject != asteroidPrefab)
-                {
-                    pathPointTransforms.Add(child);
-                }
-            }
-
-            pathPoints = new Vector3[pathPointTransforms.Count];
-            for (int i = 0; i < pathPointTransforms.Count; i++)
-            {
-                pathPoints[i] = pathPointTransforms[i].localPosition;
-            }
-        }
-
         void OnDestroy()
         {
-            DOTween.Kill(this.gameObject);
+            DOTween.Kill(transform);
         }
     }
 }

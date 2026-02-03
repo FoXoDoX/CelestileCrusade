@@ -193,21 +193,21 @@ MonoBehaviour:
   m_AlphaCutoff: 0.1
   m_ApplyToSortingLayers: 21a4872a7f83599c00000000
   m_ShapePath:
-  - {x: -0.8333333, y: -0.83333325, z: 0}
-  - {x: -0.8333333, y: 0.8333335, z: 0}
-  - {x: 0.8333333, y: 0.8333335, z: 0}
-  - {x: 0.8333333, y: -0.83333325, z: 0}
-  m_ShapePathHash: 0
+  - {x: -0.46255141, y: -3.0580251, z: 0}
+  - {x: -0.4497657, y: 3.0068831, z: 0}
+  - {x: 0.46255144, y: 3.0068827, z: 0}
+  - {x: 0.42419466, y: -3.07081, z: 0}
+  m_ShapePathHash: -1892076496
   m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 1380658522405359148}
+  m_ShadowShape2DComponent: {fileID: 0}
   m_ShadowShape2DProvider:
-    rid: 6516919309385597025
-  m_ShadowCastingSource: 2
+    rid: -2
+  m_ShadowCastingSource: 1
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0, y: -0.009178162, z: 0}
-      m_Extent: {x: 0.49998474, y: 3.0789413, z: 0}
+      m_Center: {x: 0, y: -0.031963587, z: 0}
+      m_Extent: {x: 0.46255141, y: 3.0388465, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0
@@ -216,14 +216,13 @@ MonoBehaviour:
   m_CastingOption: 2
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: 1
-  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowCastingSource: 1
   m_PreviousShadowShape2DSource: {fileID: 1380658522405359148}
   references:
     version: 2
     RefIds:
-    - rid: 6516919309385597025
-      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &1872030142961114748
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,21 +524,21 @@ MonoBehaviour:
   m_AlphaCutoff: 0.1
   m_ApplyToSortingLayers: 21a4872a7f83599c00000000
   m_ShapePath:
-  - {x: -0.8333333, y: -0.8333333, z: 0}
-  - {x: -0.8333333, y: 0.8333333, z: 0}
-  - {x: 0.8333333, y: 0.8333333, z: 0}
-  - {x: 0.8333333, y: -0.8333333, z: 0}
-  m_ShapePathHash: 0
+  - {x: -2.143076, y: -1.4258358, z: 0}
+  - {x: -2.4705126, y: 2.6108415, z: 0}
+  - {x: 2.3613663, y: 2.6264334, z: 0}
+  - {x: 2.0962992, y: -1.3790594, z: 0}
+  m_ShapePathHash: 1434535824
   m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 1107126046398295108}
+  m_ShadowShape2DComponent: {fileID: 0}
   m_ShadowShape2DProvider:
-    rid: 6516919309385597024
-  m_ShadowCastingSource: 2
+    rid: -2
+  m_ShadowCastingSource: 1
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: -0.009178162, y: 0.67915344, z: 0}
-      m_Extent: {x: 2.5099258, y: 2.0785675, z: 0}
+      m_Center: {x: -0.054573298, y: 0.60029864, z: 0}
+      m_Extent: {x: 2.4159393, y: 2.0261345, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0
@@ -548,14 +547,13 @@ MonoBehaviour:
   m_CastingOption: 2
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: 1
-  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowCastingSource: 1
   m_PreviousShadowShape2DSource: {fileID: 1107126046398295108}
   references:
     version: 2
     RefIds:
-    - rid: 6516919309385597024
-      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &7718643863123285082
 GameObject:
   m_ObjectHideFlags: 0

@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e52bce8d4da9449f757623ed6ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
-  _levelNumber: 1
+  _levelNumber: 9
   _hasTutorial: 1
   _landerStartPosition: {fileID: 8888277193072619499}
   _cameraStartTarget: {fileID: 1382785582288456747}
@@ -783,6 +783,14 @@ PrefabInstance:
       propertyPath: m_PreviousShadowShape2DSource
       value: 
       objectReference: {fileID: 6446032674857919614}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.28
@@ -933,8 +941,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8023608104383196830}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
       value: 0.0000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
@@ -1135,6 +1151,14 @@ PrefabInstance:
       propertyPath: m_PreviousShadowShape2DSource
       value: 
       objectReference: {fileID: 9028647062405809601}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -40.83
@@ -1272,6 +1296,14 @@ PrefabInstance:
       propertyPath: m_PreviousShadowShape2DSource
       value: 
       objectReference: {fileID: 1835352915681471783}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.44
@@ -1343,6 +1375,14 @@ PrefabInstance:
       propertyPath: m_PreviousShadowShape2DSource
       value: 
       objectReference: {fileID: 3779186548905134829}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.4

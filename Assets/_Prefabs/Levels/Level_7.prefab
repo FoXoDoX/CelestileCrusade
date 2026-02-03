@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameLevel
   _levelNumber: 7
+  _hasTutorial: 0
   _landerStartPosition: {fileID: 8888277193072619499}
   _cameraStartTarget: {fileID: 5461951159502678277}
   _normalOrthographicSize: 12

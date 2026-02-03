@@ -17,7 +17,7 @@ namespace My.Scripts.Gameplay.Player
 
         private const float GRAVITY_NORMAL = 0.8f;
         private const float FORCE_UP = 20f;
-        private const float TURN_SPEED = 3f;
+        private const float TURN_SPEED = 5f;
         private const float GAMEPAD_DEAD_ZONE = 0.4f;
         private const float SOFT_LANDING_VELOCITY = 5f;
         private const float MIN_DOT_VECTOR = 0.90f;

@@ -97,4 +97,5 @@ namespace My.Scripts.Environment.Light
             Gizmos.DrawWireSphere(transform.position, _shadowRange);
         }
     }
+
 }

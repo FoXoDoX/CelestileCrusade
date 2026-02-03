@@ -167,7 +167,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5081002157874940159}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
   m_Name: 
@@ -182,21 +182,23 @@ MonoBehaviour:
   m_AlphaCutoff: 0.1
   m_ApplyToSortingLayers: 21a4872a7f83599c00000000
   m_ShapePath:
-  - {x: -0.14285715, y: -0.14285715, z: 0}
-  - {x: -0.14285715, y: 0.14285715, z: 0}
-  - {x: 0.14285715, y: 0.14285715, z: 0}
-  - {x: 0.14285715, y: -0.14285715, z: 0}
-  m_ShapePathHash: 0
+  - {x: -0.38115346, y: -0.5808072, z: 0}
+  - {x: -0.6585349, y: 0.05635387, z: 0}
+  - {x: -0.24590422, y: 0.68707454, z: 0}
+  - {x: 0.39081413, y: 0.6419914, z: 0}
+  - {x: 0.68429714, y: 0.020931436, z: 0}
+  - {x: 0.26200533, y: -0.6194499, z: 0}
+  m_ShapePathHash: 2030693813
   m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 6030856540023305233}
+  m_ShadowShape2DComponent: {fileID: 0}
   m_ShadowShape2DProvider:
-    rid: 6516919309385597020
-  m_ShadowCastingSource: 2
+    rid: -2
+  m_ShadowCastingSource: 1
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.69999695, y: 0.69999695, z: 0}
+      m_Center: {x: 0.01288116, y: 0.033812344, z: 0}
+      m_Extent: {x: 0.67141604, y: 0.65326226, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0
@@ -205,11 +207,10 @@ MonoBehaviour:
   m_CastingOption: 2
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: 1
-  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowCastingSource: 1
   m_PreviousShadowShape2DSource: {fileID: 6030856540023305233}
   references:
     version: 2
     RefIds:
-    - rid: 6516919309385597020
-      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }

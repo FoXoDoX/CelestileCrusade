@@ -77,7 +77,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5762997364625397823}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
   m_Name: 
@@ -92,21 +92,23 @@ MonoBehaviour:
   m_AlphaCutoff: 0.1
   m_ApplyToSortingLayers: 21a4872a7f83599c00000000
   m_ShapePath:
-  - {x: -0.14285715, y: -0.14285715, z: 0}
-  - {x: -0.14285715, y: 0.14285715, z: 0}
-  - {x: 0.14285715, y: 0.14285715, z: 0}
-  - {x: 0.14285715, y: -0.14285715, z: 0}
-  m_ShapePathHash: 0
+  - {x: -0.37712494, y: -0.61139286, z: 0}
+  - {x: -0.65387225, y: 0.0907978, z: 0}
+  - {x: -0.23251516, y: 0.68369776, z: 0}
+  - {x: 0.43207675, y: 0.6460993, z: 0}
+  - {x: 0.6707533, y: 0.001139709, z: 0}
+  - {x: 0.32217327, y: -0.59982413, z: 0}
+  m_ShapePathHash: -560266642
   m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 857735886156694370}
+  m_ShadowShape2DComponent: {fileID: 0}
   m_ShadowShape2DProvider:
-    rid: 6516919309385597021
-  m_ShadowCastingSource: 2
+    rid: -2
+  m_ShadowCastingSource: 1
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.6799927, y: 0.6799927, z: 0}
+      m_Center: {x: 0.008440495, y: 0.036152482, z: 0}
+      m_Extent: {x: 0.66231275, y: 0.64754534, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0
@@ -115,14 +117,13 @@ MonoBehaviour:
   m_CastingOption: 2
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: 1
-  m_PreviousShadowCastingSource: 2
-  m_PreviousShadowShape2DSource: {fileID: 0}
+  m_PreviousShadowCastingSource: 1
+  m_PreviousShadowShape2DSource: {fileID: 857735886156694370}
   references:
     version: 2
     RefIds:
-    - rid: 6516919309385597021
-      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &9026828497657414451
 GameObject:
   m_ObjectHideFlags: 0

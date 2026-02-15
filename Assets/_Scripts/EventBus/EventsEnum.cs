@@ -20,7 +20,8 @@ namespace My.Scripts.EventBus
 
         // === Pickups ===
         CoinPickup,
-        FuelPickup,
+        EnergyBookPickup,
+        EnergyBookParticle,
         CratePickup,
         KeyPickup,
         KeyDelivered,

@@ -36,6 +36,7 @@ namespace My.Scripts.Managers
         [SerializeField] private float _pickupImpulsePower = 0.5f;
         [SerializeField] private float _crashImpulsePower = 50f;
         [SerializeField] private Vector3 _popupOffset = new(1.5f, 2f, 0f);
+        [SerializeField] private Vector3 _energyBookPopupOffset = new(1f, 1.5f, 0f);
         [SerializeField] private Vector3 _popupRotation = new(0f, 0f, -20f);
 
         #endregion
@@ -205,7 +206,7 @@ namespace My.Scripts.Managers
             if (em == null) return;
 
             em.AddHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
-            em.AddHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
+            em.AddHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.AddHandler(GameEvents.KeyPickup, OnKeyPickup);
             em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler(GameEvents.CrateCracked, OnCrateCracked);
@@ -220,7 +221,7 @@ namespace My.Scripts.Managers
             if (em == null) return;
 
             em.RemoveHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
-            em.RemoveHandler<PickupEventData>(GameEvents.FuelPickup, OnFuelPickup);
+            em.RemoveHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.RemoveHandler(GameEvents.KeyPickup, OnKeyPickup);
             em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler(GameEvents.CrateCracked, OnCrateCracked);
@@ -240,9 +241,9 @@ namespace My.Scripts.Managers
             GeneratePickupImpulse();
         }
 
-        private void OnFuelPickup(PickupEventData data)
+        private void OnEnergyBookPickup(PickupEventData data)
         {
-            SpawnScorePopup(data.Position, "+FUEL");
+            SpawnScorePopup(data.Position + _energyBookPopupOffset, "+ENERGY");
             SpawnPickupVfx(data.Position);
             GeneratePickupImpulse();
         }

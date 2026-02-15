@@ -1,7 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 
 namespace My.Scripts.Environment.Hazards
@@ -21,6 +20,8 @@ namespace My.Scripts.Environment.Hazards
         private Vector3[] pathPoints;
         private List<Transform> pathPointTransforms = new List<Transform>();
         private Queue<GameObject> asteroidPool = new Queue<GameObject>();
+        private List<GameObject> allAsteroids = new List<GameObject>();
+        private bool _isDestroyed;
 
         void Start()
         {
@@ -36,6 +37,7 @@ namespace My.Scripts.Environment.Hazards
                 GameObject asteroid = Instantiate(asteroidPrefab, transform);
                 asteroid.SetActive(false);
                 asteroidPool.Enqueue(asteroid);
+                allAsteroids.Add(asteroid);
             }
         }
 
@@ -48,14 +50,17 @@ namespace My.Scripts.Environment.Hazards
                 return asteroid;
             }
 
-            // ���� ��� ���� � ������ �����
-            return Instantiate(asteroidPrefab, transform);
+            // Если пул пуст — создаём новый
+            var newAsteroid = Instantiate(asteroidPrefab, transform);
+            allAsteroids.Add(newAsteroid);
+            return newAsteroid;
         }
 
         void ReturnToPool(GameObject asteroid)
         {
             if (asteroid == null) return;
 
+            // Убиваем ВСЕ твины на этом конкретном объекте
             DOTween.Kill(asteroid.transform);
 
             asteroid.transform.localPosition = Vector3.zero;
@@ -87,7 +92,7 @@ namespace My.Scripts.Environment.Hazards
 
         IEnumerator SpawnCycle()
         {
-            while (true)
+            while (!_isDestroyed)
             {
                 if (pathPoints == null || pathPoints.Length == 0)
                 {
@@ -100,30 +105,42 @@ namespace My.Scripts.Environment.Hazards
 
                 yield return StartCoroutine(MoveAndRotateAsteroid(asteroid));
 
+                if (_isDestroyed) yield break;
+
                 yield return new WaitForSeconds(respawnTime);
             }
         }
 
         IEnumerator MoveAndRotateAsteroid(GameObject asteroid)
         {
+            if (asteroid == null || !asteroid.activeInHierarchy) yield break;
+
             float pathLength = CalculatePathLength(pathPoints);
             float moveDuration = pathLength / movementSpeed;
 
             Tween moveTween = asteroid.transform
                 .DOLocalPath(pathPoints, moveDuration, pathType)
-                .SetEase(Ease.Linear);
+                .SetEase(Ease.Linear)
+                .SetLink(asteroid);     // ← автоматический Kill при деактивации/уничтожении
 
             Tween rotateTween = asteroid.transform
                 .DORotate(rotationSpeed * moveDuration, moveDuration, RotateMode.LocalAxisAdd)
                 .SetEase(Ease.Linear)
-                .SetLoops(-1, LoopType.Incremental);
+                .SetLoops(-1, LoopType.Incremental)
+                .SetLink(asteroid);     // ← автоматический Kill при деактивации/уничтожении
 
             yield return moveTween.WaitForCompletion();
 
-            rotateTween.Kill();
+            // На случай если SetLink не убил (объект ещё жив)
+            if (rotateTween != null && rotateTween.IsActive())
+            {
+                rotateTween.Kill();
+            }
 
-            // ���������� � ��� ������ �����������
-            ReturnToPool(asteroid);
+            if (!_isDestroyed)
+            {
+                ReturnToPool(asteroid);
+            }
         }
 
         private float CalculatePathLength(Vector3[] points)
@@ -140,7 +157,21 @@ namespace My.Scripts.Environment.Hazards
 
         void OnDestroy()
         {
+            _isDestroyed = true;
+
+            // Убиваем твины ВСЕХ астероидов, не только спавнера
+            foreach (var asteroid in allAsteroids)
+            {
+                if (asteroid != null)
+                {
+                    DOTween.Kill(asteroid.transform);
+                }
+            }
+
             DOTween.Kill(transform);
+
+            allAsteroids.Clear();
+            asteroidPool.Clear();
         }
     }
 }

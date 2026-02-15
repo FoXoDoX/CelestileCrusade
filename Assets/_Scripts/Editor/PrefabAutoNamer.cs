@@ -14,6 +14,7 @@ public static class PrefabAutoNamer
     {
         "CoinPickup",
         "FuelPickup",
+        "EnergyBookPickup",
         "CratePickup",
         "LandingPad",
         "CrateLandingPad",

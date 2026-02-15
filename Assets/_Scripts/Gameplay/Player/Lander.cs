@@ -1,4 +1,4 @@
-using My.Scripts.Core.Data;
+п»їusing My.Scripts.Core.Data;
 using My.Scripts.Core.Utility;
 using My.Scripts.Environment.Light;
 using My.Scripts.EventBus;
@@ -23,7 +23,6 @@ namespace My.Scripts.Gameplay.Player
         private const float MIN_DOT_VECTOR = 0.90f;
         private const float MAX_SCORE_PER_CATEGORY = 100f;
         private const float FUEL_CONSUMPTION_RATE = 1f;
-        private const float FUEL_PICKUP_AMOUNT = 15f;
 
         #endregion
 
@@ -102,7 +101,7 @@ namespace My.Scripts.Gameplay.Player
                     HandleNormalState();
                     break;
                 case State.GameOver:
-                    // Ничего не делаем
+                    // РќРёС‡РµРіРѕ РЅРµ РґРµР»Р°РµРј
                     break;
             }
         }
@@ -119,7 +118,7 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Public Methods — Fuel
+        #region Public Methods вЂ” Fuel
 
         public float GetFuel() => _fuelAmount;
 
@@ -130,12 +129,12 @@ namespace My.Scripts.Gameplay.Player
             _fuelAmount = Mathf.Min(_fuelAmount + amount, _fuelAmountMax);
         }
 
-        // Для обратной совместимости
+        // Р”Р»СЏ РѕР±СЂР°С‚РЅРѕР№ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё
         public void SetFuel(float addAmount) => AddFuel(addAmount);
 
         #endregion
 
-        #region Public Methods — Velocity
+        #region Public Methods вЂ” Velocity
 
         public float GetSpeedX() => _rigidbody != null ? _rigidbody.linearVelocity.x : 0f;
 
@@ -145,7 +144,7 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Public Methods — Crate
+        #region Public Methods вЂ” Crate
 
         public void HandleCratePickup()
         {
@@ -153,8 +152,8 @@ namespace My.Scripts.Gameplay.Player
 
             BroadcastEvent(GameEvents.CratePickup);
 
-            // Спавним верёвку с ящиком в позиции лендера
-            // RopeWithCrate сам найдёт Lander.Instance и настроит всё в Start()
+            // РЎРїР°РІРЅРёРј РІРµСЂС‘РІРєСѓ СЃ СЏС‰РёРєРѕРј РІ РїРѕР·РёС†РёРё Р»РµРЅРґРµСЂР°
+            // RopeWithCrate СЃР°Рј РЅР°Р№РґС‘С‚ Lander.Instance Рё РЅР°СЃС‚СЂРѕРёС‚ РІСЃС‘ РІ Start()
             _currentRopeWithCrate = Instantiate(
                 _ropeWithCratePrefab,
                 transform.position,
@@ -174,7 +173,7 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Public Methods — Key
+        #region Public Methods вЂ” Key
 
         public void HandleKeyDeliver(Key.KeyType keyType)
         {
@@ -183,7 +182,7 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Private Methods — State Handling
+        #region Private Methods вЂ” State Handling
 
         private void HandleWaitingToStart()
         {
@@ -210,7 +209,7 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Private Methods — Input & Movement
+        #region Private Methods вЂ” Input & Movement
 
         private bool IsAnyMovementInput()
         {
@@ -260,21 +259,21 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Private Methods — Collision
+        #region Private Methods вЂ” Collision
 
         private void HandleCollision(Collision2D collision)
         {
-            // Проверяем, это посадочная площадка?
+            // РџСЂРѕРІРµСЂСЏРµРј, СЌС‚Рѕ РїРѕСЃР°РґРѕС‡РЅР°СЏ РїР»РѕС‰Р°РґРєР°?
             if (!collision.gameObject.TryGetComponent(out LandingPad landingPad))
             {
-                // Разбились о землю
+                // Р Р°Р·Р±РёР»РёСЃСЊ Рѕ Р·РµРјР»СЋ
                 CrashLanding(LandingType.WrongLandingArea);
                 return;
             }
 
             float relativeVelocity = collision.relativeVelocity.magnitude;
 
-            // Проверяем скорость
+            // РџСЂРѕРІРµСЂСЏРµРј СЃРєРѕСЂРѕСЃС‚СЊ
             if (relativeVelocity > SOFT_LANDING_VELOCITY)
             {
                 BroadcastLanded(LanderLandedData.CrashedTooFast(relativeVelocity));
@@ -282,7 +281,7 @@ namespace My.Scripts.Gameplay.Player
                 return;
             }
 
-            // Проверяем угол
+            // РџСЂРѕРІРµСЂСЏРµРј СѓРіРѕР»
             float dotVector = Vector2.Dot(Vector2.up, transform.up);
             if (dotVector < MIN_DOT_VECTOR)
             {
@@ -291,7 +290,7 @@ namespace My.Scripts.Gameplay.Player
                 return;
             }
 
-            // Успешная посадка!
+            // РЈСЃРїРµС€РЅР°СЏ РїРѕСЃР°РґРєР°!
             SuccessfulLanding(landingPad, dotVector, relativeVelocity);
         }
 
@@ -304,7 +303,7 @@ namespace My.Scripts.Gameplay.Player
 
         private void SuccessfulLanding(LandingPad landingPad, float dotVector, float relativeVelocity)
         {
-            // Уничтожаем Rigidbody чтобы зафиксировать позицию
+            // РЈРЅРёС‡С‚РѕР¶Р°РµРј Rigidbody С‡С‚РѕР±С‹ Р·Р°С„РёРєСЃРёСЂРѕРІР°С‚СЊ РїРѕР·РёС†РёСЋ
             Destroy(_rigidbody);
 
             int score = CalculateLandingScore(dotVector, relativeVelocity, landingPad.ScoreMultiplier);
@@ -323,12 +322,12 @@ namespace My.Scripts.Gameplay.Player
 
         private int CalculateLandingScore(float dotVector, float relativeVelocity, float multiplier)
         {
-            // Счёт за угол
+            // РЎС‡С‘С‚ Р·Р° СѓРіРѕР»
             float anglePercentage = (dotVector - MIN_DOT_VECTOR) / (1f - MIN_DOT_VECTOR);
             anglePercentage = Mathf.Clamp01(anglePercentage);
             float angleScore = anglePercentage * MAX_SCORE_PER_CATEGORY;
 
-            // Счёт за скорость
+            // РЎС‡С‘С‚ Р·Р° СЃРєРѕСЂРѕСЃС‚СЊ
             float speedPercentage = 1f - (relativeVelocity / SOFT_LANDING_VELOCITY);
             speedPercentage = Mathf.Clamp01(speedPercentage);
             float speedScore = speedPercentage * MAX_SCORE_PER_CATEGORY;
@@ -340,11 +339,11 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Private Methods — Triggers
+        #region Private Methods вЂ” Triggers
 
         private void HandleTrigger(Collider2D other)
         {
-            if (TryHandleFuelPickup(other)) return;
+            if (TryHandleEnergyBookPickup(other)) return;
             if (TryHandleCoinPickup(other)) return;
         }
 
@@ -359,21 +358,20 @@ namespace My.Scripts.Gameplay.Player
             return true;
         }
 
-        private bool TryHandleFuelPickup(Collider2D other)
+        private bool TryHandleEnergyBookPickup(Collider2D other)
         {
-            if (!other.TryGetComponent(out FuelPickup fuelPickup))
+            if (!other.TryGetComponent(out EnergyBookPickup energyBookPickup))
                 return false;
 
-            AddFuel(FUEL_PICKUP_AMOUNT);
-            EventManager.Instance?.Broadcast(GameEvents.FuelPickup, new PickupEventData(transform.position));
-
-            fuelPickup.DestroySelf();
+            // Р’СЃСЋ СЂР°Р±РѕС‚Сѓ (Р°РЅРёРјР°С†РёСЏ в†’ РЅР°С‡РёСЃР»РµРЅРёРµ СЌРЅРµСЂРіРёРё в†’ СѓРЅРёС‡С‚РѕР¶РµРЅРёРµ)
+            // РґРµР»Р°РµС‚ СЃР°Рј EnergyBookPickup
+            energyBookPickup.Pickup();
             return true;
         }
 
         #endregion
 
-        #region Private Methods — Event Broadcasting
+        #region Private Methods вЂ” Event Broadcasting
 
         private void BroadcastEvent(GameEvents gameEvent)
         {

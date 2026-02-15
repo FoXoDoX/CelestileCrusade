@@ -70,6 +70,33 @@ namespace My.Scripts.Gameplay.Pickups
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// Останавливает все анимации и возвращает объект к исходному состоянию.
+        /// </summary>
+        public void Stop()
+        {
+            _isAlive = false;
+
+            StopAllAnimationCoroutines();
+            KillAllTweens();
+
+            // Возвращаем к исходным значениям
+            if (_cachedTransform != null)
+            {
+                _cachedTransform.localPosition = _localCircleCenter;
+                _cachedTransform.localScale = _originalScale;
+            }
+
+            if (_spriteRenderer != null)
+            {
+                _spriteRenderer.color = _originalColor;
+            }
+        }
+
+        #endregion
+
         #region Private Methods — Initialization
 
         private void CacheComponents()

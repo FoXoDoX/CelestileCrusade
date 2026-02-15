@@ -31,13 +31,19 @@ namespace My.Scripts.Managers
         [Tooltip("—корость возврата освещени€ при выходе из всех пещер")]
         [SerializeField] private float _exitTransitionSpeed = 6f;
 
+        [Header("Flashlight")]
+        [Tooltip("»нтенсивность фонарика во включЄнном состо€нии")]
+        [SerializeField] private float _flashlightActiveIntensity = 1f;
+
         #endregion
 
         #region Private Fields
 
         private Light2D _globalLight;
         private Light2D _flashlight;
+        private Light2D _outerLight;
         private float _currentIntensity;
+        private float _outerLightIntensity;
         private bool _isInitialized;
         private bool _isGameOver;
         private float _frozenIntensity;
@@ -86,7 +92,6 @@ namespace My.Scripts.Managers
         {
             if (!_isInitialized || _globalLight == null) return;
 
-            // ≈сли игра окончена Ч примен€ем замороженное значение
             if (_isGameOver)
             {
                 _globalLight.intensity = _frozenIntensity;
@@ -143,9 +148,6 @@ namespace My.Scripts.Managers
 
         #region Public Methods Ч Zone Registration
 
-        /// <summary>
-        /// –егистрирует вход игрока в пещерную зону.
-        /// </summary>
         public void RegisterZoneEntry(CaveZone zone)
         {
             if (zone == null) return;
@@ -156,9 +158,6 @@ namespace My.Scripts.Managers
             Debug.Log($"[LightingManager] Player entered {zone.name}. Active zones: {_activeZones.Count}");
         }
 
-        /// <summary>
-        /// –егистрирует выход игрока из пещерной зоны.
-        /// </summary>
         public void RegisterZoneExit(CaveZone zone)
         {
             if (zone == null) return;
@@ -169,17 +168,11 @@ namespace My.Scripts.Managers
             Debug.Log($"[LightingManager] Player exited {zone.name}. Active zones: {_activeZones.Count}");
         }
 
-        /// <summary>
-        /// ”дал€ет зону из списка активных (при уничтожении зоны).
-        /// </summary>
         public void UnregisterZone(CaveZone zone)
         {
             _activeZones.Remove(zone);
         }
 
-        /// <summary>
-        /// —брасывает состо€ние менеджера.
-        /// </summary>
         public void ResetManager()
         {
             _activeZones.Clear();
@@ -205,46 +198,21 @@ namespace My.Scripts.Managers
             _currentIntensity = _defaultOutsideIntensity;
             _isInitialized = true;
 
-            SetFlashlightActive(false);
-
-            Debug.Log("[LightingManager] Initialized");
-        }
-
-        private void FindGlobalLight()
-        {
-            Light2D[] allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
-
-            foreach (Light2D light in allLights)
+            if (_flashlight != null)
             {
-                if (light.lightType == Light2D.LightType.Global)
-                {
-                    _globalLight = light;
-                    Debug.Log($"[LightingManager] Found Global Light: {light.gameObject.name}");
-                    return;
-                }
+                _flashlight.gameObject.SetActive(true);
+                _flashlight.intensity = 0f;
             }
 
-            Debug.LogError("[LightingManager] Global Light 2D не найден на сцене!");
-        }
-
-        private void FindFlashlight()
-        {
-            if (!Lander.HasInstance)
+            // CHANGED: прогреваем OuterLight тоже
+            if (_outerLight != null)
             {
-                return;
+                _outerLight.gameObject.SetActive(true);
+                _outerLightIntensity = _outerLight.intensity; // запоминаем оригинальную
+                _outerLight.intensity = 0f;
             }
 
-            Light2D[] landerLights = Lander.Instance.GetComponentsInChildren<Light2D>(true);
-
-            foreach (Light2D light in landerLights)
-            {
-                if (light.lightType == Light2D.LightType.Freeform)
-                {
-                    _flashlight = light;
-                    Debug.Log($"[LightingManager] Found Flashlight: {light.gameObject.name}");
-                    return;
-                }
-            }
+            Debug.Log("[LightingManager] Initialized (flashlight shader warmed up)");
         }
 
         #endregion
@@ -290,16 +258,82 @@ namespace My.Scripts.Managers
             SetFlashlightActive(shouldBeActive);
         }
 
+        // CHANGED: управл€ем intensity вместо SetActive
         private void SetFlashlightActive(bool active)
         {
             if (_flashlight == null && Lander.HasInstance)
             {
                 FindFlashlight();
+
+                if (_flashlight != null)
+                {
+                    _flashlight.gameObject.SetActive(true);
+                    _flashlight.intensity = 0f;
+                }
+
+                if (_outerLight != null)
+                {
+                    _outerLight.gameObject.SetActive(true);
+                    _outerLight.intensity = 0f;
+                }
             }
 
             if (_flashlight != null)
             {
-                _flashlight.gameObject.SetActive(active);
+                _flashlight.intensity = active ? _flashlightActiveIntensity : 0f;
+            }
+
+            if (_outerLight != null)
+            {
+                _outerLight.intensity = active ? _outerLightIntensity : 0f;
+            }
+        }
+
+        private void FindGlobalLight()
+        {
+            Light2D[] allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
+
+            foreach (Light2D light in allLights)
+            {
+                if (light.lightType == Light2D.LightType.Global)
+                {
+                    _globalLight = light;
+                    Debug.Log($"[LightingManager] Found Global Light: {light.gameObject.name}");
+                    return;
+                }
+            }
+
+            Debug.LogError("[LightingManager] Global Light 2D не найден на сцене!");
+        }
+
+        private void FindFlashlight()
+        {
+            if (!Lander.HasInstance) return;
+
+            Light2D[] landerLights = Lander.Instance.GetComponentsInChildren<Light2D>(true);
+
+            foreach (Light2D light in landerLights)
+            {
+                if (light.lightType == Light2D.LightType.Freeform)
+                {
+                    _flashlight = light;
+                    Debug.Log($"[LightingManager] Found Flashlight: {light.gameObject.name}");
+
+                    // »щем OuterLight среди дочерних объектов фонарика
+                    Light2D[] childLights = _flashlight.GetComponentsInChildren<Light2D>(true);
+                    foreach (Light2D childLight in childLights)
+                    {
+                        if (childLight != _flashlight)
+                        {
+                            _outerLight = childLight;
+                            _outerLightIntensity = childLight.intensity;
+                            Debug.Log($"[LightingManager] Found OuterLight: {childLight.gameObject.name}");
+                            break;
+                        }
+                    }
+
+                    return;
+                }
             }
         }
 

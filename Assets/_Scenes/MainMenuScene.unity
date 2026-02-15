@@ -5356,7 +5356,8 @@ MonoBehaviour:
   _mainAudioSource: {fileID: 136460471}
   _windAudioSource: {fileID: 445972479}
   _progressBarAudioSource: {fileID: 2079024077}
-  _fuelPickupClip: {fileID: 8300000, guid: fbd9c5bf252a6c14b9bb3a84dba2510c, type: 3}
+  _energyBookPickupClip: {fileID: 8300000, guid: fe442a5ed41908148af9e456a61c8a25, type: 3}
+  _energyBookParticleClip: {fileID: 8300000, guid: a2868a5057fddac4e9c8925c0b3875c9, type: 3}
   _coinPickupClip: {fileID: 8300000, guid: 4286836a473df634692d7fc2988b47bd, type: 3}
   _crashClip: {fileID: 8300000, guid: 4c9f9d63f11fa4d4ca1c537cd058256d, type: 3}
   _landingSuccessClip: {fileID: 8300000, guid: 438ca400aebd65f4898f71270f34b7bd, type: 3}

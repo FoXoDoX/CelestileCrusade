@@ -374,15 +374,15 @@ namespace My.Scripts.Gameplay.Crate
 
         private bool TryHandleFuelPickup(Collider2D other)
         {
-            if (!other.TryGetComponent(out FuelPickup fuelPickup)) return false;
+            if (!other.TryGetComponent(out EnergyBookPickup EnergyBookPickup)) return false;
 
             if (Lander.HasInstance)
             {
                 Lander.Instance.AddFuel(FUEL_PICKUP_AMOUNT);
             }
 
-            EventManager.Instance?.Broadcast(GameEvents.FuelPickup, new PickupEventData(transform.position));
-            fuelPickup.DestroySelf();
+            EventManager.Instance?.Broadcast(GameEvents.EnergyBookPickup, new PickupEventData(transform.position));
+            EnergyBookPickup.Pickup();
             return true;
         }
 

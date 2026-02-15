@@ -1,4 +1,4 @@
-using My.Scripts.EventBus;
+﻿using My.Scripts.EventBus;
 using My.Scripts.Gameplay.Player;
 using UnityEngine;
 using DG.Tweening;
@@ -97,6 +97,15 @@ namespace My.Scripts.Environment.Hazards
             }
         }
 
+        private void OnDestroy()
+        {
+            CleanupTween();
+            if (_rotatingPivot != null)
+            {
+                DOTween.Kill(_rotatingPivot);
+            }
+        }
+
         #endregion
 
         #region Events
@@ -105,7 +114,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods � Initialization
+        #region Private Methods — Initialization
 
         private void InitializeTriggerCollider()
         {
@@ -137,7 +146,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods � Activation
+        #region Private Methods — Activation
 
         private bool IsLander(Collider2D other)
         {
@@ -192,7 +201,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods � Targeting
+        #region Private Methods — Targeting
 
         private bool IsTargetInFiringArc(Transform target)
         {
@@ -217,9 +226,12 @@ namespace My.Scripts.Environment.Hazards
             float targetAngle = CalculateTargetAngle();
             targetAngle = ClampAngleToFiringArc(targetAngle);
 
+            CleanupTween();   // ← убиваем предыдущий перед созданием нового
+
             _rotationTween = _rotatingPivot
                 .DORotate(new Vector3(0, 0, targetAngle), _rotationSpeed, RotateMode.Fast)
                 .SetEase(_rotationEase)
+                .SetLink(gameObject)        // ← добавить
                 .OnComplete(OnAimingComplete);
         }
 
@@ -259,14 +271,17 @@ namespace My.Scripts.Environment.Hazards
         {
             if (_rotatingPivot == null) return;
 
+            CleanupTween();   // ← убиваем предыдущий
+
             _rotationTween = _rotatingPivot
                 .DORotate(new Vector3(0, 0, _initialRotation), _rotationSpeed, RotateMode.Fast)
-                .SetEase(_rotationEase);
+                .SetEase(_rotationEase)
+                .SetLink(gameObject);       // ← добавить
         }
 
         #endregion
 
-        #region Private Methods � Combat
+        #region Private Methods — Combat
 
         private float GetRandomFireInterval()
         {
@@ -307,7 +322,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods � Cleanup
+        #region Private Methods — Cleanup
 
         private void CleanupTween()
         {
@@ -330,7 +345,7 @@ namespace My.Scripts.Environment.Hazards
                 _triggerRadius = 25f;
             }
 
-            // ����������� ���������� �������� ����������
+            // Гарантируем корректный диапазон интервалов
             _minFireInterval = Mathf.Max(0.1f, _minFireInterval);
             _maxFireInterval = Mathf.Max(_minFireInterval, _maxFireInterval);
 

@@ -20,7 +20,6 @@ namespace My.Scripts.Gameplay.Crate
 
         private const int INITIAL_HEALTH = 3;
         private const float DELIVERY_TIME = 3f;
-        private const float FUEL_PICKUP_AMOUNT = 15f;
 
         #endregion
 
@@ -152,7 +151,7 @@ namespace My.Scripts.Gameplay.Crate
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (TryHandleFuelPickup(other)) return;
+            if (TryHandleEnergyBookPickup(other)) return;
             if (TryHandleCoinPickup(other)) return;
             if (TryHandleKeyPickup(other)) return;
             if (TryHandleLandingAreaEnter(other)) return;
@@ -372,17 +371,11 @@ namespace My.Scripts.Gameplay.Crate
             return true;
         }
 
-        private bool TryHandleFuelPickup(Collider2D other)
+        private bool TryHandleEnergyBookPickup(Collider2D other)
         {
-            if (!other.TryGetComponent(out EnergyBookPickup EnergyBookPickup)) return false;
+            if (!other.TryGetComponent(out EnergyBookPickup energyBookPickup)) return false;
 
-            if (Lander.HasInstance)
-            {
-                Lander.Instance.AddFuel(FUEL_PICKUP_AMOUNT);
-            }
-
-            EventManager.Instance?.Broadcast(GameEvents.EnergyBookPickup, new PickupEventData(transform.position));
-            EnergyBookPickup.Pickup();
+            energyBookPickup.Pickup();
             return true;
         }
 

@@ -44,6 +44,9 @@ namespace My.Scripts.EventBus
         // === Turret ===
         TurretShoot,
 
+        // === HotZone ===
+        HotZoneStateChanged,
+
         // === Levels ===
         LevelCompleted,
 

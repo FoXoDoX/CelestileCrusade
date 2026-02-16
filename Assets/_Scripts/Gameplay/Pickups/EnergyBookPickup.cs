@@ -231,7 +231,7 @@ namespace My.Scripts.Gameplay.Pickups
                 elapsed += dt;
                 float t = elapsed / _beamDuration;
 
-                Lander.Instance.AddFuel(energyPerSecond * dt);
+                Lander.Instance.AddEnergy(energyPerSecond * dt);
 
                 Vector3 origin = _beamOriginPoint != null
                     ? _beamOriginPoint.position

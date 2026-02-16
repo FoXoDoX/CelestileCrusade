@@ -1,8 +1,7 @@
-using My.Scripts.Gameplay.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace My.Scripts.UI.Indicators
+namespace My.Scripts.Gameplay.Player
 {
     public class EnergyIndicator : MonoBehaviour
     {
@@ -29,7 +28,7 @@ namespace My.Scripts.UI.Indicators
             if (_barImage == null) return;
             if (!Lander.HasInstance) return;
 
-            float targetFill = Lander.Instance.GetFuelNormalized();
+            float targetFill = Lander.Instance.GetEnergyNormalized();
 
             _currentFillAmount = Mathf.MoveTowards(
                 _currentFillAmount,

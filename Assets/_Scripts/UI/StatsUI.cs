@@ -13,7 +13,7 @@ namespace My.Scripts.UI
     {
         #region Constants
 
-        private const float LOW_FUEL_THRESHOLD = 0.25f;
+        private const float LOW_ENERGY_THRESHOLD = 0.25f;
         private const float BLINK_FADE_HIGH = 0.5f;
         private const float BLINK_FADE_LOW = 0.2f;
         private const float BLINK_DURATION = 0.5f;
@@ -24,11 +24,11 @@ namespace My.Scripts.UI
 
         [Header("Stats Display")]
         [SerializeField] private TextMeshProUGUI _statsText;
-        [SerializeField] private Image _fuelFillImage;
+        [SerializeField] private Image _energyFillImage;
 
-        [Header("Low Fuel Warning")]
-        [SerializeField] private RectTransform _lowFuelWarning;
-        [SerializeField] private Image _lowFuelBackgroundImage;
+        [Header("Low Energy Warning")]
+        [SerializeField] private RectTransform _lowEnergyWarning;
+        [SerializeField] private Image _lowEnergyBackgroundImage;
 
         #endregion
 
@@ -79,9 +79,9 @@ namespace My.Scripts.UI
 
         private void CacheComponents()
         {
-            if (_lowFuelBackgroundImage == null && _lowFuelWarning != null)
+            if (_lowEnergyBackgroundImage == null && _lowEnergyWarning != null)
             {
-                _lowFuelBackgroundImage = _lowFuelWarning.GetComponentInChildren<Image>();
+                _lowEnergyBackgroundImage = _lowEnergyWarning.GetComponentInChildren<Image>();
             }
         }
 
@@ -193,17 +193,17 @@ namespace My.Scripts.UI
 
         private void UpdateFuelIndicator()
         {
-            if (_fuelFillImage == null) return;
+            if (_energyFillImage == null) return;
             if (!Lander.HasInstance) return;
 
-            _fuelFillImage.fillAmount = Lander.Instance.GetFuelNormalized();
+            _energyFillImage.fillAmount = Lander.Instance.GetEnergyNormalized();
         }
 
         private void UpdateLowFuelWarning()
         {
             if (!Lander.HasInstance) return;
 
-            bool isLowFuel = Lander.Instance.GetFuelNormalized() < LOW_FUEL_THRESHOLD;
+            bool isLowFuel = Lander.Instance.GetEnergyNormalized() < LOW_ENERGY_THRESHOLD;
 
             if (isLowFuel && !_isLowFuelWarningActive)
             {
@@ -223,9 +223,9 @@ namespace My.Scripts.UI
         {
             _isLowFuelWarningActive = true;
 
-            if (_lowFuelWarning != null)
+            if (_lowEnergyWarning != null)
             {
-                _lowFuelWarning.gameObject.SetActive(true);
+                _lowEnergyWarning.gameObject.SetActive(true);
             }
 
             StartBlinking();
@@ -235,9 +235,9 @@ namespace My.Scripts.UI
         {
             _isLowFuelWarningActive = false;
 
-            if (_lowFuelWarning != null)
+            if (_lowEnergyWarning != null)
             {
-                _lowFuelWarning.gameObject.SetActive(false);
+                _lowEnergyWarning.gameObject.SetActive(false);
             }
 
             StopBlinking();
@@ -245,12 +245,12 @@ namespace My.Scripts.UI
 
         private void StartBlinking()
         {
-            if (_lowFuelBackgroundImage == null) return;
+            if (_lowEnergyBackgroundImage == null) return;
             if (_blinkSequence != null) return;
 
             _blinkSequence = DOTween.Sequence()
-                .Append(_lowFuelBackgroundImage.DOFade(BLINK_FADE_HIGH, BLINK_DURATION))
-                .Append(_lowFuelBackgroundImage.DOFade(BLINK_FADE_LOW, BLINK_DURATION))
+                .Append(_lowEnergyBackgroundImage.DOFade(BLINK_FADE_HIGH, BLINK_DURATION))
+                .Append(_lowEnergyBackgroundImage.DOFade(BLINK_FADE_LOW, BLINK_DURATION))
                 .SetLoops(-1, LoopType.Restart)
                 .SetLink(gameObject);
         }
@@ -262,12 +262,12 @@ namespace My.Scripts.UI
             _blinkSequence.Kill();
             _blinkSequence = null;
 
-            if (_lowFuelBackgroundImage != null)
+            if (_lowEnergyBackgroundImage != null)
             {
-                _lowFuelBackgroundImage.DOKill();
-                var color = _lowFuelBackgroundImage.color;
+                _lowEnergyBackgroundImage.DOKill();
+                var color = _lowEnergyBackgroundImage.color;
                 color.a = BLINK_FADE_LOW;
-                _lowFuelBackgroundImage.color = color;
+                _lowEnergyBackgroundImage.color = color;
             }
         }
 

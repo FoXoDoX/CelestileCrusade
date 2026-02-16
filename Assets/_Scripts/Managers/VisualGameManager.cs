@@ -15,13 +15,17 @@ namespace My.Scripts.Managers
     {
         #region Constants
 
-        private const float LOW_FUEL_THRESHOLD = 0.25f;
+        private const float LOW_ENERGY_THRESHOLD = 0.25f;
         private const float CHROMATIC_ABERRATION_MAX = 0.8f;
         private const float VFX_LIFETIME = 1.5f;
 
         #endregion
 
         #region Serialized Fields
+
+        [Header("Post Processing")]
+        [Tooltip("Основной Volume сцены с ChromaticAberration")]
+        [SerializeField] private Volume _sceneVolume;
 
         [Header("Prefabs")]
         [SerializeField] private ScorePopup _scorePopupPrefab;
@@ -121,17 +125,39 @@ namespace My.Scripts.Managers
 
         private void FindGlobalVolume()
         {
-            // Ищем Volume на текущей сцене
-            _globalVolume = FindFirstObjectByType<Volume>();
+            // Если назначен через инспектор — используем его
+            if (_sceneVolume != null)
+            {
+                _globalVolume = _sceneVolume;
+                Debug.Log($"[VisualGameManager] Using assigned Volume: {_globalVolume.gameObject.name}");
+                return;
+            }
 
-            if (_globalVolume == null)
+            // Иначе ищем Volume с ChromaticAberration
+            Volume[] allVolumes = FindObjectsByType<Volume>(FindObjectsSortMode.None);
+
+            foreach (var volume in allVolumes)
             {
-                Debug.LogWarning("[VisualGameManager] No Volume found on scene!");
+                if (volume.profile != null && volume.profile.TryGet<ChromaticAberration>(out _))
+                {
+                    _globalVolume = volume;
+                    Debug.Log($"[VisualGameManager] Found Volume with ChromaticAberration: {volume.gameObject.name}");
+                    return;
+                }
             }
-            else
+
+            // Fallback — берём первый попавшийся с профилем
+            foreach (var volume in allVolumes)
             {
-                Debug.Log($"[VisualGameManager] Found Volume: {_globalVolume.gameObject.name}");
+                if (volume.profile != null)
+                {
+                    _globalVolume = volume;
+                    Debug.Log($"[VisualGameManager] Fallback Volume: {volume.gameObject.name}");
+                    return;
+                }
             }
+
+            Debug.LogWarning("[VisualGameManager] No suitable Volume found on scene!");
         }
 
         private void FindCameraEffects()
@@ -244,7 +270,6 @@ namespace My.Scripts.Managers
         private void OnEnergyBookPickup(PickupEventData data)
         {
             SpawnScorePopup(data.Position + _energyBookPopupOffset, "+ENERGY");
-            SpawnPickupVfx(data.Position);
             GeneratePickupImpulse();
         }
 
@@ -386,10 +411,10 @@ namespace My.Scripts.Managers
                 return;
             }
 
-            float fuelNormalized = Lander.Instance.GetFuelNormalized();
-            bool isLowFuel = fuelNormalized < LOW_FUEL_THRESHOLD;
+            float energyNormalized = Lander.Instance.GetEnergyNormalized();
+            bool isLowEnergy = energyNormalized < LOW_ENERGY_THRESHOLD;
 
-            if (isLowFuel)
+            if (isLowEnergy)
             {
                 _chromaticAberration.intensity.value = Mathf.PingPong(Time.time, CHROMATIC_ABERRATION_MAX);
             }

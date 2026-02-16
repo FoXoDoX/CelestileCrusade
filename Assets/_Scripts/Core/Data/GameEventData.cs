@@ -107,4 +107,14 @@ namespace My.Scripts.Core.Data
             ScoreMultiplier = scoreMultiplier;
         }
     }
+
+    public readonly struct HotZoneStateData
+    {
+        public bool IsPlayerInside { get; }
+
+        public HotZoneStateData(bool isPlayerInside)
+        {
+            IsPlayerInside = isPlayerInside;
+        }
+    }
 }

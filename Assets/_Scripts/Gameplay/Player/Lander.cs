@@ -6,7 +6,9 @@ using My.Scripts.Gameplay.Crate;
 using My.Scripts.Gameplay.KeyDoor;
 using My.Scripts.Gameplay.LandingPads;
 using My.Scripts.Gameplay.Pickups;
+using My.Scripts.Environment.Hazards;
 using My.Scripts.Input;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace My.Scripts.Gameplay.Player
@@ -22,7 +24,7 @@ namespace My.Scripts.Gameplay.Player
         private const float SOFT_LANDING_VELOCITY = 5f;
         private const float MIN_DOT_VECTOR = 0.90f;
         private const float MAX_SCORE_PER_CATEGORY = 100f;
-        private const float FUEL_CONSUMPTION_RATE = 1f;
+        private const float ENERGY_CONSUMPTION_RATE = 1f;
 
         #endregion
 
@@ -32,7 +34,7 @@ namespace My.Scripts.Gameplay.Player
         [SerializeField] private RopeWithCrate _ropeWithCratePrefab;
 
         [Header("Settings")]
-        [SerializeField] private float _fuelAmountMax = 30f;
+        [SerializeField] private float _energyAmountMax = 30f;
 
         [Header("Rope")]
         [SerializeField] private RopeAttachPoint _ropeAttachPoint;
@@ -45,7 +47,7 @@ namespace My.Scripts.Gameplay.Player
         private RopeWithCrate _currentRopeWithCrate;
 
         private State _currentState;
-        private float _fuelAmount;
+        private float _energyAmount;
 
         #endregion
 
@@ -84,7 +86,7 @@ namespace My.Scripts.Gameplay.Player
             _rigidbody = GetComponent<Rigidbody2D>();
             _rigidbody.gravityScale = 0f;
 
-            _fuelAmount = _fuelAmountMax;
+            _energyAmount = _energyAmountMax;
             _currentState = State.WaitingToStart;
         }
 
@@ -101,7 +103,6 @@ namespace My.Scripts.Gameplay.Player
                     HandleNormalState();
                     break;
                 case State.GameOver:
-                    // Ничего не делаем
                     break;
             }
         }
@@ -118,19 +119,16 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
-        #region Public Methods — Fuel
+        #region Public Methods — Energy
 
-        public float GetFuel() => _fuelAmount;
+        public float GetEnergy() => _energyAmount;
 
-        public float GetFuelNormalized() => _fuelAmount / _fuelAmountMax;
+        public float GetEnergyNormalized() => _energyAmount / _energyAmountMax;
 
-        public void AddFuel(float amount)
+        public void AddEnergy(float amount)
         {
-            _fuelAmount = Mathf.Min(_fuelAmount + amount, _fuelAmountMax);
+            _energyAmount = Mathf.Clamp(_energyAmount + amount, 0f, _energyAmountMax);
         }
-
-        // Для обратной совместимости
-        public void SetFuel(float addAmount) => AddFuel(addAmount);
 
         #endregion
 
@@ -152,8 +150,6 @@ namespace My.Scripts.Gameplay.Player
 
             BroadcastEvent(GameEvents.CratePickup);
 
-            // Спавним верёвку с ящиком в позиции лендера
-            // RopeWithCrate сам найдёт Lander.Instance и настроит всё в Start()
             _currentRopeWithCrate = Instantiate(
                 _ropeWithCratePrefab,
                 transform.position,
@@ -194,10 +190,10 @@ namespace My.Scripts.Gameplay.Player
 
         private void HandleNormalState()
         {
-            if (_fuelAmount <= 0f) return;
+            if (_energyAmount <= 0f) return;
             if (!IsAnyMovementInput()) return;
 
-            ConsumeFuel();
+            ConsumeEnergy();
             ApplyForces();
         }
 
@@ -229,21 +225,18 @@ namespace My.Scripts.Gameplay.Player
             var input = GameInput.Instance;
             Vector2 movementInput = input.GetMovementInputVector2();
 
-            // Thrust up
             if (input.IsUpActionPressed() || movementInput.y > GAMEPAD_DEAD_ZONE)
             {
                 _rigidbody.AddForce(FORCE_UP * transform.up);
                 BroadcastEvent(GameEvents.LanderUpForce);
             }
 
-            // Turn left
             if (input.IsLeftActionPressed() || movementInput.x < -GAMEPAD_DEAD_ZONE)
             {
                 _rigidbody.AddTorque(TURN_SPEED);
                 BroadcastEvent(GameEvents.LanderLeftForce);
             }
 
-            // Turn right
             if (input.IsRightActionPressed() || movementInput.x > GAMEPAD_DEAD_ZONE)
             {
                 _rigidbody.AddTorque(-TURN_SPEED);
@@ -251,10 +244,10 @@ namespace My.Scripts.Gameplay.Player
             }
         }
 
-        private void ConsumeFuel()
+        private void ConsumeEnergy()
         {
-            _fuelAmount -= FUEL_CONSUMPTION_RATE * Time.deltaTime;
-            _fuelAmount = Mathf.Max(_fuelAmount, 0f);
+            _energyAmount -= ENERGY_CONSUMPTION_RATE * Time.deltaTime;
+            _energyAmount = Mathf.Max(_energyAmount, 0f);
         }
 
         #endregion
@@ -263,17 +256,14 @@ namespace My.Scripts.Gameplay.Player
 
         private void HandleCollision(Collision2D collision)
         {
-            // Проверяем, это посадочная площадка?
             if (!collision.gameObject.TryGetComponent(out LandingPad landingPad))
             {
-                // Разбились о землю
                 CrashLanding(LandingType.WrongLandingArea);
                 return;
             }
 
             float relativeVelocity = collision.relativeVelocity.magnitude;
 
-            // Проверяем скорость
             if (relativeVelocity > SOFT_LANDING_VELOCITY)
             {
                 BroadcastLanded(LanderLandedData.CrashedTooFast(relativeVelocity));
@@ -281,7 +271,6 @@ namespace My.Scripts.Gameplay.Player
                 return;
             }
 
-            // Проверяем угол
             float dotVector = Vector2.Dot(Vector2.up, transform.up);
             if (dotVector < MIN_DOT_VECTOR)
             {
@@ -290,7 +279,6 @@ namespace My.Scripts.Gameplay.Player
                 return;
             }
 
-            // Успешная посадка!
             SuccessfulLanding(landingPad, dotVector, relativeVelocity);
         }
 
@@ -303,7 +291,6 @@ namespace My.Scripts.Gameplay.Player
 
         private void SuccessfulLanding(LandingPad landingPad, float dotVector, float relativeVelocity)
         {
-            // Уничтожаем Rigidbody чтобы зафиксировать позицию
             Destroy(_rigidbody);
 
             int score = CalculateLandingScore(dotVector, relativeVelocity, landingPad.ScoreMultiplier);
@@ -322,12 +309,10 @@ namespace My.Scripts.Gameplay.Player
 
         private int CalculateLandingScore(float dotVector, float relativeVelocity, float multiplier)
         {
-            // Счёт за угол
             float anglePercentage = (dotVector - MIN_DOT_VECTOR) / (1f - MIN_DOT_VECTOR);
             anglePercentage = Mathf.Clamp01(anglePercentage);
             float angleScore = anglePercentage * MAX_SCORE_PER_CATEGORY;
 
-            // Счёт за скорость
             float speedPercentage = 1f - (relativeVelocity / SOFT_LANDING_VELOCITY);
             speedPercentage = Mathf.Clamp01(speedPercentage);
             float speedScore = speedPercentage * MAX_SCORE_PER_CATEGORY;
@@ -363,8 +348,6 @@ namespace My.Scripts.Gameplay.Player
             if (!other.TryGetComponent(out EnergyBookPickup energyBookPickup))
                 return false;
 
-            // Всю работу (анимация → начисление энергии → уничтожение)
-            // делает сам EnergyBookPickup
             energyBookPickup.Pickup();
             return true;
         }

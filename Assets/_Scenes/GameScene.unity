@@ -3088,6 +3088,104 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497105957}
   m_CullTransparentMesh: 1
+--- !u!1 &498768918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 498768919}
+  - component: {fileID: 498768922}
+  - component: {fileID: 498768921}
+  - component: {fileID: 498768920}
+  m_Layer: 5
+  m_Name: Flame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &498768919
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498768918}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1341924959}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 42, y: 97}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &498768920
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498768918}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1eb861466d5d6af45a6ac7e850b01afb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &498768921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498768918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1638995712, guid: 5976f86e9d76e5741b29eb2cbf63cfe8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &498768922
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498768918}
+  m_CullTransparentMesh: 1
 --- !u!1 &504121708
 GameObject:
   m_ObjectHideFlags: 0
@@ -4683,8 +4781,9 @@ GameObject:
   - component: {fileID: 936837251}
   - component: {fileID: 936837253}
   - component: {fileID: 936837252}
+  - component: {fileID: 936837254}
   m_Layer: 5
-  m_Name: FuelBar
+  m_Name: EnergyBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4701,7 +4800,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1341924959}
   m_Father: {fileID: 1134583478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4721,7 +4821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 445a9c22615f79f42a698026a53a214f, type: 2}
   m_Color: {r: 0, g: 0.9568628, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -4734,7 +4834,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.635
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -4747,6 +4847,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936837250}
   m_CullTransparentMesh: 1
+--- !u!114 &936837254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936837250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510b0cd11221d7a4092406c898c28032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.UI.Indicators.EnergyBarFireEffect
+  _energyBarImage: {fileID: 936837252}
+  _fireContainer: {fileID: 1341924959}
+  _flameRect: {fileID: 498768919}
+  _offset: {x: 10, y: 10}
+  _fadeSpeed: 5
 --- !u!1 &946726111
 GameObject:
   m_ObjectHideFlags: 0
@@ -5033,7 +5150,7 @@ GameObject:
   - component: {fileID: 958986902}
   - component: {fileID: 958986901}
   m_Layer: 5
-  m_Name: FuelBarBackground
+  m_Name: EnergyBarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5346,7 +5463,7 @@ GameObject:
   - component: {fileID: 1104921909}
   - component: {fileID: 1104921908}
   m_Layer: 5
-  m_Name: LowFuelBackground
+  m_Name: LowEnergyBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5422,7 +5539,7 @@ GameObject:
   - component: {fileID: 1114411230}
   - component: {fileID: 1114411232}
   m_Layer: 5
-  m_Name: LowFuelTextMesh
+  m_Name: LowEnergyTextMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5735,9 +5852,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsUI
   _statsText: {fileID: 1499436541}
-  _fuelFillImage: {fileID: 936837252}
-  _lowFuelWarning: {fileID: 1826575879}
-  _lowFuelBackgroundImage: {fileID: 1104921908}
+  _energyFillImage: {fileID: 936837252}
+  _lowEnergyWarning: {fileID: 1826575879}
+  _lowEnergyBackgroundImage: {fileID: 1104921908}
 --- !u!1 &1170046726
 GameObject:
   m_ObjectHideFlags: 0
@@ -6732,6 +6849,42 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1341924958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1341924959}
+  m_Layer: 5
+  m_Name: FlameContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1341924959
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341924958}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 498768919}
+  m_Father: {fileID: 936837251}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1343455354
 GameObject:
   m_ObjectHideFlags: 0
@@ -7650,37 +7803,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512226230}
   m_CullTransparentMesh: 1
---- !u!1 &1515151305
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1515151306}
-  m_Layer: 0
-  m_Name: EnergyBookPickupParticleSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1515151306
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515151305}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1526533348
 GameObject:
   m_ObjectHideFlags: 0
@@ -9468,7 +9590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lander
   _ropeWithCratePrefab: {fileID: 1774051119269211781, guid: 36db0e49c593d884f964844479bbeb6e, type: 3}
-  _fuelAmountMax: 30
+  _energyAmountMax: 30
   _ropeAttachPoint: {fileID: 1176570658}
 --- !u!114 &1780317554
 MonoBehaviour:
@@ -9800,7 +9922,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826575879}
   m_Layer: 5
-  m_Name: LowFuel
+  m_Name: LowEnergy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11182,6 +11304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81d3cd26e91d7bd4189d6ab358faffa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VisualGameManager
+  _sceneVolume: {fileID: 176613413}
   _scorePopupPrefab: {fileID: 1493100936580413285, guid: 2fa12c0e0df35de4983397d1ddd1335b, type: 3}
   _pickupVfxPrefab: {fileID: 77604187495552787, guid: 09673dbd0675c2548a1c63d019790671, type: 3}
   _confettiVfxPrefab: {fileID: 7393509719450474256, guid: 13d068905149e4c4cb5ab4aefd8bb386, type: 3}
@@ -11202,6 +11325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 143472141848039894}
   - component: {fileID: 7638586848971982460}
+  - component: {fileID: 8608341827408079421}
   m_Layer: 0
   m_Name: VisualGameManager
   m_TagString: Untagged
@@ -11209,6 +11333,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8608341827408079421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608341827408079420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b350d607fdfa204097433bfd9939c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.Environment.Hazards.HotZoneEffect
+  _transitionSpeed: 3
+  _vignetteIntensity: 0.4
+  _vignetteColor: {r: 1, g: 0.3, b: 0, a: 1}
+  _colorFilterTint: {r: 1, g: 0.85, b: 0.7, a: 1}
+  _pulseSpeed: 2
+  _pulseAmount: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -11234,4 +11376,3 @@ SceneRoots:
   - {fileID: 143472141848039894}
   - {fileID: 1863059794}
   - {fileID: 1343455356}
-  - {fileID: 1515151306}

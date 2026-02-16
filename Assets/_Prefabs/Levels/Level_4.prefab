@@ -177,6 +177,7 @@ Transform:
   - {fileID: 6543159997788822260}
   - {fileID: 962856077558891394}
   - {fileID: 7851717783733781501}
+  - {fileID: 3509167612757799050}
   - {fileID: 1563596941986541618}
   - {fileID: 1299346050802900441}
   - {fileID: 6181804149799660533}
@@ -2526,8 +2527,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4450706587904635532, guid: e320cc49ea08d7c42b3cda7fcf402a3d, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 4383131735148400097}
   m_SourcePrefab: {fileID: 100100000, guid: e320cc49ea08d7c42b3cda7fcf402a3d, type: 3}
+--- !u!1 &1989449031085786707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4450706587904635532, guid: e320cc49ea08d7c42b3cda7fcf402a3d, type: 3}
+  m_PrefabInstance: {fileID: 2765183052766704863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4383131735148400097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989449031085786707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb03ec7a6637cd943aa2268176a1b94c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.Environment.Hazards.HotZone
+  _energyDrainPerSecond: 1
 --- !u!4 &8666500507980042491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6780871957948818468, guid: e320cc49ea08d7c42b3cda7fcf402a3d, type: 3}
@@ -4475,19 +4497,19 @@ PrefabInstance:
       objectReference: {fileID: 7252501175965980014}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
-      value: 92.91804
+      value: 74.46343
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: 58.87133
+      value: 56.90178
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
-      value: 2.5192032
+      value: 21.625023
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
-      value: 14.048576
+      value: 19.39502
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6085,6 +6107,72 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
   m_PrefabInstance: {fileID: 7033653816813594989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7111296058402388864
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4059366961299164775}
+    m_Modifications:
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -32.226593
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 50.775726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6488528624211243037, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_Name
+      value: EnergyBookPickup5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+--- !u!4 &3509167612757799050 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5909698319542536970, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+  m_PrefabInstance: {fileID: 7111296058402388864}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7326220039392477988
 PrefabInstance:

@@ -19,7 +19,6 @@ namespace My.Scripts.Gameplay.CameraUtility
         private const float DEFAULT_ZOOM_SPEED = 5f;
         private const float DEFAULT_PAN_SPEED = 0.5f;
         private const float DEFAULT_MIN_ZOOM = 5f;
-        private const float ZOOM_SMOOTHING = 10f;
 
         // Референсное соотношение сторон (Full HD)
         private const float REFERENCE_ASPECT_RATIO = 16f / 9f;
@@ -49,7 +48,7 @@ namespace My.Scripts.Gameplay.CameraUtility
         private GameLevel _currentLevel;
 
         private float _maxZoom;
-        private float _baseMaxZoom; // Оригинальный zoom из уровня (для Full HD)
+        private float _baseMaxZoom;
         private float _targetZoom;
         private Vector3 _targetPosition;
         private Vector3 _levelCenter;
@@ -57,6 +56,10 @@ namespace My.Scripts.Gameplay.CameraUtility
 
         private bool _isInitialized;
         private bool _isPreviewActive;
+
+        // Сохранённые настройки Cinemachine
+        private CinemachinePositionComposer _positionComposer;
+        private Vector3 _savedDamping;
 
         #endregion
 
@@ -115,38 +118,31 @@ namespace My.Scripts.Gameplay.CameraUtility
 
             _currentLevel = level;
 
-            // Получаем базовый zoom (рассчитанный для Full HD)
             _baseMaxZoom = level.GetZoomedOutOrthographicSize();
-
-            // Адаптируем zoom под текущее разрешение
             _maxZoom = CalculateAdaptedZoom(_baseMaxZoom);
-
             _levelCenter = level.GetCameraStartTargetTransform().position;
 
             Log($"BaseMaxZoom: {_baseMaxZoom}, AdaptedMaxZoom: {_maxZoom}, MinZoom: {_minZoom}, LevelCenter: {_levelCenter}");
 
-            // Вычисляем границы для панорамирования
             CalculateLevelBounds();
 
-            // Устанавливаем начальные значения
             _targetZoom = _maxZoom;
             _targetPosition = _levelCenter;
 
-            // Позиционируем target
             if (_cameraTarget != null)
             {
                 _cameraTarget.position = _targetPosition;
                 Log($"CameraTarget position set to: {_targetPosition}");
             }
 
-            // Переключаем камеру на наш preview target
             if (_cinemachineCamera != null)
             {
                 _cinemachineCamera.Target.TrackingTarget = _cameraTarget;
                 _cinemachineCamera.Lens.OrthographicSize = _targetZoom;
-
                 Log($"Switched camera to preview target: {_cameraTarget.name}");
             }
+
+            DisableCinemachineSmoothing();
 
             _isInitialized = true;
             _isPreviewActive = true;
@@ -167,6 +163,11 @@ namespace My.Scripts.Gameplay.CameraUtility
             if (_cameraTarget != null)
             {
                 _cameraTarget.position = _targetPosition;
+            }
+
+            if (_cinemachineCamera != null)
+            {
+                _cinemachineCamera.Lens.OrthographicSize = _targetZoom;
             }
 
             Log("Reset to default");
@@ -210,15 +211,7 @@ namespace My.Scripts.Gameplay.CameraUtility
         private float CalculateAdaptedZoom(float baseZoom)
         {
             float currentAspect = GetAspectRatio();
-
-            // Вычисляем ширину обзора для референсного разрешения (Full HD)
-            // width = orthographicSize * 2 * aspectRatio
-            // Для Full HD: referenceWidth = baseZoom * 2 * (16/9)
             float referenceWidth = baseZoom * 2f * REFERENCE_ASPECT_RATIO;
-
-            // Вычисляем новый orthographicSize, чтобы сохранить ту же ширину
-            // referenceWidth = newZoom * 2 * currentAspect
-            // newZoom = referenceWidth / (2 * currentAspect)
             float adaptedZoom = referenceWidth / (2f * currentAspect);
 
             Log($"Aspect adaptation: CurrentAspect={currentAspect:F3}, ReferenceAspect={REFERENCE_ASPECT_RATIO:F3}, " +
@@ -231,7 +224,6 @@ namespace My.Scripts.Gameplay.CameraUtility
         {
             if (_currentLevel == null) return;
 
-            // Используем референсные границы (для Full HD), чтобы pan был консистентным
             float height = _baseMaxZoom;
             float width = height * REFERENCE_ASPECT_RATIO;
 
@@ -243,6 +235,60 @@ namespace My.Scripts.Gameplay.CameraUtility
         {
             if (Screen.height == 0) return REFERENCE_ASPECT_RATIO;
             return (float)Screen.width / Screen.height;
+        }
+
+        #endregion
+
+        #region Private Methods — Cinemachine Smoothing Control
+
+        /// <summary>
+        /// Обнуляет Damping в CinemachinePositionComposer для мгновенного отклика камеры.
+        /// Компонент остаётся включённым — меняется только Damping.
+        /// </summary>
+        private void DisableCinemachineSmoothing()
+        {
+            // Приостанавливаем CinemachineCameraZoom2D, чтобы не конфликтовал с зумом
+            if (CinemachineCameraZoom2D.HasInstance)
+            {
+                CinemachineCameraZoom2D.Instance.SetPaused(true);
+                Log("CinemachineCameraZoom2D paused");
+            }
+
+            if (_cinemachineCamera != null)
+            {
+                _positionComposer = _cinemachineCamera.GetComponent<CinemachinePositionComposer>();
+            }
+
+            if (_positionComposer != null)
+            {
+                // Сохраняем и обнуляем только Damping
+                _savedDamping = _positionComposer.Damping;
+                _positionComposer.Damping = Vector3.zero;
+
+                Log($"Cinemachine Damping disabled. Was: {_savedDamping}");
+            }
+            else
+            {
+                Log("CinemachinePositionComposer not found — skipping smoothing control");
+            }
+        }
+
+        /// <summary>
+        /// Восстанавливает оригинальный Damping в CinemachinePositionComposer.
+        /// </summary>
+        private void RestoreCinemachineSmoothing()
+        {
+            if (CinemachineCameraZoom2D.HasInstance)
+            {
+                CinemachineCameraZoom2D.Instance.SetPaused(false);
+                Log("CinemachineCameraZoom2D resumed");
+            }
+
+            if (_positionComposer != null)
+            {
+                _positionComposer.Damping = _savedDamping;
+                Log($"Cinemachine Damping restored to: {_savedDamping}");
+            }
         }
 
         #endregion
@@ -288,7 +334,10 @@ namespace My.Scripts.Gameplay.CameraUtility
 
             Log("Ending preview...");
 
-            // Переключаем камеру на Lander напрямую
+            // Сначала восстанавливаем настройки Cinemachine ДО переключения target
+            RestoreCinemachineSmoothing();
+
+            // Переключаем камеру на Lander
             if (_cinemachineCamera != null && Lander.HasInstance)
             {
                 _cinemachineCamera.Target.TrackingTarget = Lander.Instance.transform;
@@ -322,7 +371,6 @@ namespace My.Scripts.Gameplay.CameraUtility
             {
                 _targetZoom -= scrollDelta * _zoomSpeed * 0.5f;
 
-                // Адаптируем minZoom под текущее разрешение
                 float adaptedMinZoom = CalculateAdaptedZoom(_minZoom);
                 _targetZoom = Mathf.Clamp(_targetZoom, adaptedMinZoom, _maxZoom);
 
@@ -354,11 +402,6 @@ namespace My.Scripts.Gameplay.CameraUtility
 
                 _targetPosition += panMovement;
                 ClampTargetPosition();
-
-                if (_cameraTarget != null)
-                {
-                    _cameraTarget.position = _targetPosition;
-                }
             }
         }
 
@@ -371,12 +414,8 @@ namespace My.Scripts.Gameplay.CameraUtility
             if (_cinemachineCamera == null) return;
             if (_cameraTarget == null) return;
 
-            // Плавно интерполируем только зум
-            float currentZoom = _cinemachineCamera.Lens.OrthographicSize;
-            float newZoom = Mathf.Lerp(currentZoom, _targetZoom, Time.deltaTime * ZOOM_SMOOTHING);
-            _cinemachineCamera.Lens.OrthographicSize = newZoom;
-
-            // Позиция — мгновенно
+            // Мгновенно: и зум, и позиция
+            _cinemachineCamera.Lens.OrthographicSize = _targetZoom;
             _cameraTarget.position = _targetPosition;
         }
 

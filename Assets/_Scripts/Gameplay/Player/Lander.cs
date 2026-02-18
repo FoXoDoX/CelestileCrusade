@@ -119,6 +119,16 @@ namespace My.Scripts.Gameplay.Player
 
         #endregion
 
+        #region Public Methods — Kill
+
+        public void Kill()
+        {
+            if (_currentState == State.GameOver) return;
+            CrashLanding(LandingType.WrongLandingArea);
+        }
+
+        #endregion
+
         #region Public Methods — Energy
 
         public float GetEnergy() => _energyAmount;
@@ -254,9 +264,16 @@ namespace My.Scripts.Gameplay.Player
 
         #region Private Methods — Collision
 
+
         private void HandleCollision(Collision2D collision)
         {
             if (!collision.gameObject.TryGetComponent(out LandingPad landingPad))
+            {
+                CrashLanding(LandingType.WrongLandingArea);
+                return;
+            }
+
+            if (!IsBottomLanding(collision))
             {
                 CrashLanding(LandingType.WrongLandingArea);
                 return;
@@ -280,6 +297,27 @@ namespace My.Scripts.Gameplay.Player
             }
 
             SuccessfulLanding(landingPad, dotVector, relativeVelocity);
+        }
+
+        /// <summary>
+        /// Возвращает true, если ВСЕ точки контакта находятся
+        /// в нижней половине коллайдера лэндера (localY ≤ 0).
+        /// </summary>
+        private bool IsBottomLanding(Collision2D collision)
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                ContactPoint2D contact = collision.GetContact(i);
+
+                // Переводим мировую точку контакта в локальные координаты лэндера
+                Vector2 localPoint = transform.InverseTransformPoint(contact.point);
+
+                // Если хотя бы одна точка выше центра — это НЕ посадка на дно
+                if (localPoint.y > 0f)
+                    return false;
+            }
+
+            return collision.contactCount > 0;
         }
 
         private void CrashLanding(LandingType reason)
@@ -329,17 +367,17 @@ namespace My.Scripts.Gameplay.Player
         private void HandleTrigger(Collider2D other)
         {
             if (TryHandleEnergyBookPickup(other)) return;
-            if (TryHandleCoinPickup(other)) return;
+            if (TryHandleBreadPickup(other)) return;
         }
 
-        private bool TryHandleCoinPickup(Collider2D other)
+        private bool TryHandleBreadPickup(Collider2D other)
         {
-            if (!other.TryGetComponent(out CoinPickup coinPickup))
+            if (!other.TryGetComponent(out BreadPickup breadPickup))
                 return false;
 
-            EventManager.Instance?.Broadcast(GameEvents.CoinPickup, new PickupEventData(transform.position));
+            EventManager.Instance?.Broadcast(GameEvents.BreadPickup, new PickupEventData(transform.position));
 
-            coinPickup.DestroySelf();
+            breadPickup.DestroySelf();
             return true;
         }
 

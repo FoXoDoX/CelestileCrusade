@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace My.Scripts.Environment.Hazards
 {
-    public class HotZoneEffect : MonoBehaviour
+    public class AcidPoolEffect : MonoBehaviour
     {
         #region Serialized Fields
 
@@ -17,37 +17,37 @@ namespace My.Scripts.Environment.Hazards
         [SerializeField] private float _transitionSpeed = 3f;
 
         [Header("Vignette")]
-        [Tooltip("»нтенсивность виньетки в гор€чей зоне")]
-        [SerializeField, Range(0f, 1f)] private float _vignetteIntensity = 0.4f;
+        [Tooltip("»нтенсивность виньетки в кислотном озере")]
+        [SerializeField, Range(0f, 1f)] private float _vignetteIntensity = 0.5f;
 
         [Tooltip("÷вет виньетки")]
-        [SerializeField] private Color _vignetteColor = new Color(1f, 0.3f, 0f, 1f);
+        [SerializeField] private Color _vignetteColor = new Color(0.2f, 0.9f, 0.1f, 1f);
 
         [Header("Color Adjustments")]
-        [Tooltip("ќттенок цветового фильтра в гор€чей зоне")]
-        [SerializeField] private Color _colorFilterTint = new Color(1f, 0.85f, 0.7f, 1f);
+        [Tooltip("ќттенок цветового фильтра в кислотном озере")]
+        [SerializeField] private Color _colorFilterTint = new Color(0.7f, 1f, 0.5f, 1f);
 
         [Header("Pulse Animation")]
         [Tooltip("—корость пульсации виньетки")]
-        [SerializeField] private float _pulseSpeed = 2f;
+        [SerializeField] private float _pulseSpeed = 3f;
 
         [Tooltip("јмплитуда пульсации (добавл€етс€ к основной интенсивности)")]
-        [SerializeField, Range(0f, 0.3f)] private float _pulseAmount = 0.1f;
+        [SerializeField, Range(0f, 0.3f)] private float _pulseAmount = 0.15f;
 
         #endregion
 
         #region Private Fields
 
-        private Volume _hotZoneVolume;
+        private Volume _acidVolume;
         private Vignette _vignette;
         private ColorAdjustments _colorAdjustments;
 
         private float _currentWeight;
         private float _targetWeight;
-        private bool _isInHotZone;
+        private bool _isInAcid;
         private bool _isGameOver;
 
-        private readonly HashSet<HotZone> _activeZones = new();
+        private int _activeSourceCount;
 
         #endregion
 
@@ -83,9 +83,9 @@ namespace My.Scripts.Environment.Hazards
 
         private void OnDestroy()
         {
-            if (_hotZoneVolume != null)
+            if (_acidVolume != null)
             {
-                Destroy(_hotZoneVolume.gameObject);
+                Destroy(_acidVolume.gameObject);
             }
         }
 
@@ -101,37 +101,37 @@ namespace My.Scripts.Environment.Hazards
 
         #region Public Methods
 
-        public void RegisterZone(HotZone zone)
+        public void RegisterSource()
         {
             if (_isGameOver) return;
 
-            _activeZones.Add(zone);
+            _activeSourceCount++;
             _targetWeight = 1f;
-            _isInHotZone = true;
+            _isInAcid = true;
         }
 
-        public void UnregisterZone(HotZone zone)
+        public void UnregisterSource()
         {
-            _activeZones.Remove(zone);
+            _activeSourceCount = Mathf.Max(0, _activeSourceCount - 1);
 
-            if (_activeZones.Count == 0)
+            if (_activeSourceCount == 0)
             {
                 _targetWeight = 0f;
-                _isInHotZone = false;
+                _isInAcid = false;
             }
         }
 
         public void ResetEffect()
         {
-            _activeZones.Clear();
+            _activeSourceCount = 0;
             _targetWeight = 0f;
             _currentWeight = 0f;
-            _isInHotZone = false;
+            _isInAcid = false;
             _isGameOver = false;
 
-            if (_hotZoneVolume != null)
+            if (_acidVolume != null)
             {
-                _hotZoneVolume.weight = 0f;
+                _acidVolume.weight = 0f;
             }
 
             if (_vignette != null)
@@ -152,7 +152,7 @@ namespace My.Scripts.Environment.Hazards
         private void OnLanderLanded(LanderLandedData data)
         {
             _isGameOver = true;
-            _isInHotZone = false;
+            _isInAcid = false;
         }
 
         #endregion
@@ -161,16 +161,16 @@ namespace My.Scripts.Environment.Hazards
 
         private void CreateVolume()
         {
-            var volumeGo = new GameObject("HotZoneVolume");
+            var volumeGo = new GameObject("AcidPoolVolume");
             volumeGo.transform.SetParent(transform);
 
-            _hotZoneVolume = volumeGo.AddComponent<Volume>();
-            _hotZoneVolume.isGlobal = true;
-            _hotZoneVolume.priority = 10;
-            _hotZoneVolume.weight = 0f;
+            _acidVolume = volumeGo.AddComponent<Volume>();
+            _acidVolume.isGlobal = true;
+            _acidVolume.priority = 10;
+            _acidVolume.weight = 0f;
 
             var profile = ScriptableObject.CreateInstance<VolumeProfile>();
-            _hotZoneVolume.profile = profile;
+            _acidVolume.profile = profile;
 
             _vignette = profile.Add<Vignette>();
             _vignette.active = true;
@@ -202,16 +202,16 @@ namespace My.Scripts.Environment.Hazards
 
         private void ApplyEffects()
         {
-            if (_hotZoneVolume == null) return;
+            if (_acidVolume == null) return;
 
             float pulse = 0f;
-            if (_isInHotZone && _currentWeight > 0.5f)
+            if (_isInAcid && _currentWeight > 0.5f)
             {
                 pulse = Mathf.Sin(Time.time * _pulseSpeed) * _pulseAmount;
             }
 
             float finalWeight = Mathf.Clamp01(_currentWeight + pulse);
-            _hotZoneVolume.weight = finalWeight;
+            _acidVolume.weight = finalWeight;
 
             if (_vignette != null)
             {

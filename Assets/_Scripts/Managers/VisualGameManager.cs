@@ -231,10 +231,10 @@ namespace My.Scripts.Managers
             var em = EventManager.Instance;
             if (em == null) return;
 
-            em.AddHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.AddHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
             em.AddHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.AddHandler(GameEvents.KeyPickup, OnKeyPickup);
-            em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.AddHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.AddHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.AddHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
@@ -246,10 +246,10 @@ namespace My.Scripts.Managers
             var em = EventManager.Instance;
             if (em == null) return;
 
-            em.RemoveHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.RemoveHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
             em.RemoveHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.RemoveHandler(GameEvents.KeyPickup, OnKeyPickup);
-            em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.RemoveHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.RemoveHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.RemoveHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
@@ -260,9 +260,9 @@ namespace My.Scripts.Managers
 
         #region Private Methods — Event Handlers
 
-        private void OnCoinPickup(PickupEventData data)
+        private void OnBreadPickup(PickupEventData data)
         {
-            SpawnScorePopup(data.Position, $"+{GameManager.SCORE_PER_COIN}");
+            SpawnScorePopup(data.Position, $"+{GameManager.SCORE_PER_BREAD}");
             SpawnPickupVfx(data.Position);
             GeneratePickupImpulse();
         }
@@ -278,7 +278,7 @@ namespace My.Scripts.Managers
             GeneratePickupImpulse();
         }
 
-        private void OnCrateDrop()
+        private void OnCrateDrop(CrateDropData data)
         {
             if (!Lander.HasInstance) return;
 
@@ -286,7 +286,7 @@ namespace My.Scripts.Managers
 
             SpawnScorePopup(
                 popupPosition,
-                $"+{GameManager.SCORE_PER_CRATE}",
+                $"+{data.Score}",
                 backgroundColor: Color.yellow,
                 textColor: Color.black,
                 isBold: true

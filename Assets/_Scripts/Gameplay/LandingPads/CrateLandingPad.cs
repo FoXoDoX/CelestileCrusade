@@ -1,3 +1,4 @@
+using My.Scripts.Core.Data;
 using My.Scripts.EventBus;
 using UnityEngine;
 
@@ -57,16 +58,16 @@ namespace My.Scripts.Gameplay.LandingPads
 
         #region Public Methods — Delivery
 
-        public void RegisterCrateDelivery()
+        public void RegisterCrateDelivery(int score)
         {
             if (!CanAcceptCrates) return;
 
             if (TryShowNextCrate())
             {
                 _deliveredCratesCount++;
-                BroadcastCrateDelivered();
+                BroadcastCrateDelivered(score);
 
-                Debug.Log($"[CrateLandingPad] Crate delivered! Total: {_deliveredCratesCount}/{_maxCrates}");
+                Debug.Log($"[CrateLandingPad] Crate delivered! Score: {score}, Total: {_deliveredCratesCount}/{_maxCrates}");
 
                 if (!CanAcceptCrates)
                 {
@@ -171,9 +172,9 @@ namespace My.Scripts.Gameplay.LandingPads
 
         #region Private Methods — Events
 
-        private void BroadcastCrateDelivered()
+        private void BroadcastCrateDelivered(int score)
         {
-            EventManager.Instance?.Broadcast(GameEvents.CrateDrop);
+            EventManager.Instance?.Broadcast(GameEvents.CrateDrop, new CrateDropData(score));
         }
 
         #endregion

@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: -2325244912222574667}
   - component: {fileID: 1481061313754367285}
   m_Layer: 0
-  m_Name: CoinPickup
+  m_Name: BreadPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

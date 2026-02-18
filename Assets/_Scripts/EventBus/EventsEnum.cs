@@ -19,7 +19,7 @@ namespace My.Scripts.EventBus
         LanderLanded,
 
         // === Pickups ===
-        CoinPickup,
+        BreadPickup,
         EnergyBookPickup,
         EnergyBookParticle,
         CratePickup,

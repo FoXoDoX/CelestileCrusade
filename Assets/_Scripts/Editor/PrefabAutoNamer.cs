@@ -13,6 +13,7 @@ public static class PrefabAutoNamer
     private static readonly string[] SIMPLE_PREFABS =
     {
         "CoinPickup",
+        "BreadPickup",
         "FuelPickup",
         "EnergyBookPickup",
         "CratePickup",
@@ -20,8 +21,10 @@ public static class PrefabAutoNamer
         "CrateLandingPad",
         "Terrain",
         "CaveZone",
+        "HotZone",
         "AsteroidSpawner",
-        "Turret"
+        "Turret",
+        "AcidPool"
     };
 
     private static readonly string[] TYPED_PREFAB_BASES =

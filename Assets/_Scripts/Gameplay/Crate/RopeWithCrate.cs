@@ -167,7 +167,7 @@ namespace My.Scripts.Gameplay.Crate
             var em = EventManager.Instance;
             if (em == null) return;
 
-            em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.AddHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.AddHandler<LanderStateData>(GameEvents.LanderStateChanged, OnLanderStateChanged);
         }
@@ -177,7 +177,7 @@ namespace My.Scripts.Gameplay.Crate
             var em = EventManager.Instance;
             if (em == null) return;
 
-            em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.RemoveHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.RemoveHandler<LanderStateData>(GameEvents.LanderStateChanged, OnLanderStateChanged);
         }
@@ -186,7 +186,7 @@ namespace My.Scripts.Gameplay.Crate
 
         #region Private Methods — Event Handlers
 
-        private void OnCrateDrop()
+        private void OnCrateDrop(CrateDropData data)
         {
             DestroySelf();
         }

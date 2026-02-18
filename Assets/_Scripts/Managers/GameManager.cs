@@ -17,8 +17,7 @@ namespace My.Scripts.Managers
     {
         #region Constants
 
-        public const int SCORE_PER_COIN = 100;
-        public const int SCORE_PER_CRATE = 500;
+        public const int SCORE_PER_BREAD = 100;
 
         #endregion
 
@@ -235,11 +234,11 @@ namespace My.Scripts.Managers
 
             em.AddHandler(GameEvents.MenuButtonPressed, OnMenuButtonPressed);
             em.AddHandler(GameEvents.RestartButtonPressed, OnRestartButtonPressed);
-            em.AddHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.AddHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
             em.AddHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
             em.AddHandler<LanderStateData>(GameEvents.LanderStateChanged, OnLanderStateChanged);
             em.AddHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
-            em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.AddHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
 
             _isSubscribedToEvents = true;
@@ -254,11 +253,11 @@ namespace My.Scripts.Managers
 
             em.RemoveHandler(GameEvents.MenuButtonPressed, OnMenuButtonPressed);
             em.RemoveHandler(GameEvents.RestartButtonPressed, OnRestartButtonPressed);
-            em.RemoveHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.RemoveHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
             em.RemoveHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
             em.RemoveHandler<LanderStateData>(GameEvents.LanderStateChanged, OnLanderStateChanged);
             em.RemoveHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
-            em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
+            em.RemoveHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
 
             _isSubscribedToEvents = false;
@@ -278,9 +277,9 @@ namespace My.Scripts.Managers
             RetryLevel();
         }
 
-        private void OnCoinPickup(PickupEventData data)
+        private void OnBreadPickup(PickupEventData data)
         {
-            AddScore(SCORE_PER_COIN);
+            AddScore(SCORE_PER_BREAD);
         }
 
         private void OnLanderLanded(LanderLandedData data)
@@ -337,12 +336,10 @@ namespace My.Scripts.Managers
             }
         }
 
-        private void OnCrateDrop()
+        private void OnCrateDrop(CrateDropData data)
         {
-            Debug.Log($"[GameManager] OnCrateDrop called! Current score: {_score}, adding: {SCORE_PER_CRATE}");
-            Debug.Log($"[GameManager] Stack trace:\n{System.Environment.StackTrace}");
-
-            AddScore(SCORE_PER_CRATE);
+            Debug.Log($"[GameManager] Crate delivered! Score: {data.Score}");
+            AddScore(data.Score);
             ResetCameraZoom();
         }
 

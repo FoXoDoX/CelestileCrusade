@@ -39,7 +39,7 @@ namespace My.Scripts.Gameplay.LandingPads
 
         #region Public Methods
 
-        public void RegisterCrateDelivery()
+        public void RegisterCrateDelivery(int score)
         {
             if (!_hasValidReferences)
             {
@@ -47,7 +47,7 @@ namespace My.Scripts.Gameplay.LandingPads
                 return;
             }
 
-            _landingPad.RegisterCrateDelivery();
+            _landingPad.RegisterCrateDelivery(score);
         }
 
         #endregion

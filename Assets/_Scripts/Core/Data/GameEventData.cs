@@ -117,4 +117,17 @@ namespace My.Scripts.Core.Data
             IsPlayerInside = isPlayerInside;
         }
     }
+
+    /// <summary>
+    /// Данные события доставки ящика
+    /// </summary>
+    public readonly struct CrateDropData
+    {
+        public int Score { get; }
+
+        public CrateDropData(int score)
+        {
+            Score = score;
+        }
+    }
 }

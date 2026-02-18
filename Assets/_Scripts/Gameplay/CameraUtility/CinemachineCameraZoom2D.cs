@@ -30,6 +30,7 @@ namespace My.Scripts.Gameplay.CameraUtility
 
         private float _targetOrthographicSize = DEFAULT_ORTHOGRAPHIC_SIZE;
         private Lander.State _currentLanderState;
+        private bool _isPaused;
 
         #endregion
 
@@ -68,6 +69,7 @@ namespace My.Scripts.Gameplay.CameraUtility
 
         private void Update()
         {
+            if (_isPaused) return;
             UpdateCameraZoom();
         }
 
@@ -76,11 +78,20 @@ namespace My.Scripts.Gameplay.CameraUtility
         #region Public Methods
 
         /// <summary>
+        /// Приостанавливает/возобновляет управление зумом.
+        /// Используется LevelPreviewCamera для предотвращения конфликтов.
+        /// </summary>
+        public void SetPaused(bool paused)
+        {
+            _isPaused = paused;
+        }
+
+        /// <summary>
         /// Устанавливает целевой размер камеры для плавного зума.
         /// </summary>
         public void SetTargetOrthographicSize(float size)
         {
-            _targetOrthographicSize = Mathf.Max(0.1f, size); // Защита от некорректных значений
+            _targetOrthographicSize = Mathf.Max(0.1f, size);
         }
 
         /// <summary>

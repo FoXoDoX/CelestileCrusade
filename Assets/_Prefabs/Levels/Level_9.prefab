@@ -278,6 +278,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1971053207 &2500897876002731196
 SpriteShapeRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -324,8 +325,8 @@ SpriteShapeRenderer:
   m_SortingLayerID: -1671855233
   m_SortingLayer: -1
   m_SortingOrder: 5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_ShapeTexture: {fileID: 2800000, guid: 1f24163565d5e654ba872a0964b96306, type: 3}
   m_Sprites:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
@@ -2000,7 +2001,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup8
+      value: BreadPickup8
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -2124,6 +2125,10 @@ PrefabInstance:
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7354211428527366876, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_ShadowMesh.m_InitialTrim
@@ -2273,6 +2278,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -2413,6 +2422,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -2486,6 +2499,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7354211428527366876, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_ShadowMesh.m_InitialTrim
       value: 0
@@ -2510,7 +2527,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup9
+      value: BreadPickup9
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -2757,7 +2774,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup12
+      value: BreadPickup12
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -2836,7 +2853,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup11
+      value: BreadPickup11
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -4088,6 +4105,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -4162,6 +4183,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -4189,7 +4214,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup10
+      value: BreadPickup10
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -8819,7 +8844,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup0
+      value: BreadPickup0
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -8898,7 +8923,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup13
+      value: BreadPickup13
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -9093,6 +9118,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7354211428527366876, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_ShadowMesh.m_InitialTrim
       value: 0
@@ -9117,7 +9146,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup3
+      value: BreadPickup3
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -9204,7 +9233,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup6
+      value: BreadPickup6
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -9500,6 +9529,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7354211428527366876, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_ShadowMesh.m_InitialTrim
       value: 0
@@ -9757,6 +9790,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7354211428527366876, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_ShadowMesh.m_InitialTrim
       value: 0
@@ -9862,7 +9899,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup16
+      value: BreadPickup16
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -9933,7 +9970,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup2
+      value: BreadPickup2
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -11872,19 +11909,19 @@ PrefabInstance:
       objectReference: {fileID: 1328032155102895428}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
-      value: 83.59883
+      value: 90.71626
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: 48.769905
+      value: 46.17224
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
-      value: 8.531906
+      value: 25.518234
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
-      value: 31.855003
+      value: 34.452667
       objectReference: {fileID: 0}
     - target: {fileID: 7455095756162392439, guid: 7ec442a31aa596c458c98af27b61d05f, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -11931,7 +11968,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup15
+      value: BreadPickup15
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -12228,6 +12265,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -12255,7 +12296,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup5
+      value: BreadPickup5
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -12326,7 +12367,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup14
+      value: BreadPickup14
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -12444,6 +12485,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -12471,7 +12516,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup4
+      value: BreadPickup4
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -12936,6 +12981,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -13010,6 +13059,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -13037,7 +13090,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup1
+      value: BreadPickup1
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource
@@ -13154,6 +13207,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7354211428527366876, guid: cfa55ada182234f4e93e47ea0311645a, type: 3}
       propertyPath: m_ShadowMesh.m_InitialTrim
       value: 0
@@ -13178,7 +13235,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup7
+      value: BreadPickup7
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowShape2DSource

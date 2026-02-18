@@ -576,6 +576,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1971053207 &2500897876002731196
 SpriteShapeRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -622,8 +623,8 @@ SpriteShapeRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_ShapeTexture: {fileID: 2800000, guid: 1f24163565d5e654ba872a0964b96306, type: 3}
   m_Sprites:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
@@ -3339,7 +3340,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup164
+      value: BreadPickup164
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -3422,7 +3423,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup95
+      value: BreadPickup95
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -3615,7 +3616,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup75
+      value: BreadPickup75
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -3918,7 +3919,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup209
+      value: BreadPickup209
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4001,7 +4002,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup24
+      value: BreadPickup24
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4084,7 +4085,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup124
+      value: BreadPickup124
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4167,7 +4168,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup127
+      value: BreadPickup127
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4351,7 +4352,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup28
+      value: BreadPickup28
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4434,7 +4435,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup18
+      value: BreadPickup18
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4627,7 +4628,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup100
+      value: BreadPickup100
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4710,7 +4711,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup195
+      value: BreadPickup195
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4836,6 +4837,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -4863,7 +4868,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup113
+      value: BreadPickup113
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -4946,7 +4951,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup0
+      value: BreadPickup0
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5029,7 +5034,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup17
+      value: BreadPickup17
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5112,7 +5117,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup186
+      value: BreadPickup186
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5195,7 +5200,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup208
+      value: BreadPickup208
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5278,7 +5283,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup142
+      value: BreadPickup142
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5361,7 +5366,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup88
+      value: BreadPickup88
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5444,7 +5449,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup119
+      value: BreadPickup119
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5527,7 +5532,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup64
+      value: BreadPickup64
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5610,7 +5615,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup134
+      value: BreadPickup134
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5693,7 +5698,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup131
+      value: BreadPickup131
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5776,7 +5781,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup81
+      value: BreadPickup81
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5859,7 +5864,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup137
+      value: BreadPickup137
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -5942,7 +5947,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup157
+      value: BreadPickup157
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6025,7 +6030,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup129
+      value: BreadPickup129
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6108,7 +6113,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup107
+      value: BreadPickup107
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6191,7 +6196,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup167
+      value: BreadPickup167
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6274,7 +6279,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup146
+      value: BreadPickup146
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6357,7 +6362,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup159
+      value: BreadPickup159
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6483,6 +6488,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -6506,7 +6515,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup126
+      value: BreadPickup126
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6589,7 +6598,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup22
+      value: BreadPickup22
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6811,7 +6820,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup170
+      value: BreadPickup170
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -6937,6 +6946,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -6964,7 +6977,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup94
+      value: BreadPickup94
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -7047,7 +7060,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup30
+      value: BreadPickup30
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -7130,7 +7143,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup97
+      value: BreadPickup97
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -7213,7 +7226,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup188
+      value: BreadPickup188
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -7296,7 +7309,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup99
+      value: BreadPickup99
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -7379,7 +7392,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup169
+      value: BreadPickup169
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -7593,7 +7606,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup116
+      value: BreadPickup116
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -7676,7 +7689,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup98
+      value: BreadPickup98
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -8275,7 +8288,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup175
+      value: BreadPickup175
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -8358,7 +8371,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup20
+      value: BreadPickup20
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -8441,7 +8454,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup49
+      value: BreadPickup49
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -8524,7 +8537,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup153
+      value: BreadPickup153
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -8734,7 +8747,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup2
+      value: BreadPickup2
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -9079,7 +9092,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup122
+      value: BreadPickup122
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -9264,7 +9277,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup135
+      value: BreadPickup135
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -9347,7 +9360,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup114
+      value: BreadPickup114
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -9473,6 +9486,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -9500,7 +9517,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup143
+      value: BreadPickup143
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -9583,7 +9600,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup66
+      value: BreadPickup66
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -9666,7 +9683,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup149
+      value: BreadPickup149
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -10738,7 +10755,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup53
+      value: BreadPickup53
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11000,7 +11017,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup172
+      value: BreadPickup172
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11083,7 +11100,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup173
+      value: BreadPickup173
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11166,7 +11183,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup96
+      value: BreadPickup96
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11491,7 +11508,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup41
+      value: BreadPickup41
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11574,7 +11591,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup106
+      value: BreadPickup106
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11657,7 +11674,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup105
+      value: BreadPickup105
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11740,7 +11757,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup23
+      value: BreadPickup23
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11823,7 +11840,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup31
+      value: BreadPickup31
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11906,7 +11923,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup9
+      value: BreadPickup9
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -11989,7 +12006,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup86
+      value: BreadPickup86
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12072,7 +12089,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup78
+      value: BreadPickup78
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12155,7 +12172,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup29
+      value: BreadPickup29
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12238,7 +12255,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup111
+      value: BreadPickup111
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12321,7 +12338,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup104
+      value: BreadPickup104
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12404,7 +12421,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup13
+      value: BreadPickup13
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12487,7 +12504,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup51
+      value: BreadPickup51
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12570,7 +12587,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup118
+      value: BreadPickup118
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12653,7 +12670,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup174
+      value: BreadPickup174
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12736,7 +12753,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup201
+      value: BreadPickup201
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12819,7 +12836,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup165
+      value: BreadPickup165
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -12902,7 +12919,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup184
+      value: BreadPickup184
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -13243,7 +13260,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup92
+      value: BreadPickup92
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -13554,7 +13571,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup161
+      value: BreadPickup161
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -13637,7 +13654,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup110
+      value: BreadPickup110
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -13974,6 +13991,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -13997,7 +14018,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup136
+      value: BreadPickup136
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -14080,7 +14101,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup38
+      value: BreadPickup38
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -14163,7 +14184,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup85
+      value: BreadPickup85
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -14246,7 +14267,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup58
+      value: BreadPickup58
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -14456,7 +14477,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup55
+      value: BreadPickup55
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -14539,7 +14560,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup3
+      value: BreadPickup3
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -14622,7 +14643,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup128
+      value: BreadPickup128
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -14705,7 +14726,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup68
+      value: BreadPickup68
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -15136,7 +15157,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup5
+      value: BreadPickup5
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -15219,7 +15240,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup204
+      value: BreadPickup204
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -15417,7 +15438,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup45
+      value: BreadPickup45
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -15500,7 +15521,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup168
+      value: BreadPickup168
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -16353,7 +16374,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup39
+      value: BreadPickup39
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -16436,7 +16457,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup199
+      value: BreadPickup199
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -16561,6 +16582,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16581,7 +16606,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup25
+      value: BreadPickup25
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -16664,7 +16689,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup150
+      value: BreadPickup150
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -16747,7 +16772,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup33
+      value: BreadPickup33
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -16969,7 +16994,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup102
+      value: BreadPickup102
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17052,7 +17077,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup73
+      value: BreadPickup73
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17135,7 +17160,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup205
+      value: BreadPickup205
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17218,7 +17243,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup60
+      value: BreadPickup60
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17301,7 +17326,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup196
+      value: BreadPickup196
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17384,7 +17409,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup191
+      value: BreadPickup191
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17467,7 +17492,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup34
+      value: BreadPickup34
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17550,7 +17575,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup178
+      value: BreadPickup178
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17633,7 +17658,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup108
+      value: BreadPickup108
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17716,7 +17741,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup192
+      value: BreadPickup192
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17799,7 +17824,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup147
+      value: BreadPickup147
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -17882,7 +17907,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup14
+      value: BreadPickup14
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -18108,6 +18133,10 @@ PrefabInstance:
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
@@ -18480,7 +18509,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup158
+      value: BreadPickup158
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -18563,7 +18592,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup190
+      value: BreadPickup190
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -18646,7 +18675,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup130
+      value: BreadPickup130
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -18772,6 +18801,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -18838,6 +18871,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -18861,7 +18898,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup139
+      value: BreadPickup139
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -18944,7 +18981,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup148
+      value: BreadPickup148
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -19070,6 +19107,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -19093,7 +19134,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup91
+      value: BreadPickup91
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -19176,7 +19217,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup43
+      value: BreadPickup43
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -19897,7 +19938,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup11
+      value: BreadPickup11
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -19980,7 +20021,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup109
+      value: BreadPickup109
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20106,6 +20147,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -20133,7 +20178,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup151
+      value: BreadPickup151
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20216,7 +20261,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup181
+      value: BreadPickup181
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20299,7 +20344,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup180
+      value: BreadPickup180
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20497,7 +20542,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup59
+      value: BreadPickup59
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20580,7 +20625,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup138
+      value: BreadPickup138
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20663,7 +20708,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup21
+      value: BreadPickup21
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20746,7 +20791,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup101
+      value: BreadPickup101
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20829,7 +20874,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup152
+      value: BreadPickup152
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -20912,7 +20957,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup62
+      value: BreadPickup62
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -21473,7 +21518,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup160
+      value: BreadPickup160
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -21556,7 +21601,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup37
+      value: BreadPickup37
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -21639,7 +21684,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup72
+      value: BreadPickup72
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -21722,7 +21767,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup93
+      value: BreadPickup93
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -21805,7 +21850,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup40
+      value: BreadPickup40
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -21888,7 +21933,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup36
+      value: BreadPickup36
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -21971,7 +22016,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup44
+      value: BreadPickup44
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -22097,6 +22142,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -22120,7 +22169,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup35
+      value: BreadPickup35
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -22203,7 +22252,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup112
+      value: BreadPickup112
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -22428,6 +22477,10 @@ PrefabInstance:
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
@@ -22851,7 +22904,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup76
+      value: BreadPickup76
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -22934,7 +22987,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup84
+      value: BreadPickup84
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -23136,7 +23189,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup193
+      value: BreadPickup193
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -23493,7 +23546,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup70
+      value: BreadPickup70
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -23699,7 +23752,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup15
+      value: BreadPickup15
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -23825,6 +23878,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -23848,7 +23905,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup57
+      value: BreadPickup57
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -23974,6 +24031,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -23997,7 +24058,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup82
+      value: BreadPickup82
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -24123,6 +24184,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -24146,7 +24211,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup32
+      value: BreadPickup32
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -32541,19 +32606,19 @@ PrefabInstance:
       objectReference: {fileID: 4209926442965694}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
-      value: 369.6637
+      value: 221.72083
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: -93.41481
+      value: -84.46695
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
-      value: 22.768814
+      value: 170.71167
       objectReference: {fileID: 0}
     - target: {fileID: 5637881832620374385, guid: d80c9da055453b64887d20036aee315f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
-      value: 155.35683
+      value: 164.30469
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32580,7 +32645,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup177
+      value: BreadPickup177
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -32663,7 +32728,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup50
+      value: BreadPickup50
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -33174,6 +33239,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
       value: 1.4396232
       objectReference: {fileID: 0}
@@ -33340,7 +33409,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup141
+      value: BreadPickup141
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -33465,6 +33534,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33528,6 +33601,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -33555,7 +33632,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup1
+      value: BreadPickup1
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -33638,7 +33715,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup197
+      value: BreadPickup197
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -33721,7 +33798,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup121
+      value: BreadPickup121
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -33804,7 +33881,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup80
+      value: BreadPickup80
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -33887,7 +33964,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup200
+      value: BreadPickup200
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -33970,7 +34047,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup48
+      value: BreadPickup48
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34053,7 +34130,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup156
+      value: BreadPickup156
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34136,7 +34213,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup140
+      value: BreadPickup140
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34219,7 +34296,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup90
+      value: BreadPickup90
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34302,7 +34379,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup65
+      value: BreadPickup65
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34486,7 +34563,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup179
+      value: BreadPickup179
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34569,7 +34646,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup83
+      value: BreadPickup83
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34652,7 +34729,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup16
+      value: BreadPickup16
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34735,7 +34812,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup166
+      value: BreadPickup166
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34818,7 +34895,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup163
+      value: BreadPickup163
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -34901,7 +34978,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup145
+      value: BreadPickup145
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -35123,7 +35200,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup183
+      value: BreadPickup183
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -35307,7 +35384,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup79
+      value: BreadPickup79
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -35431,6 +35508,10 @@ PrefabInstance:
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
@@ -35562,7 +35643,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup125
+      value: BreadPickup125
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -35764,7 +35845,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup120
+      value: BreadPickup120
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -35847,7 +35928,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup4
+      value: BreadPickup4
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36122,7 +36203,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup27
+      value: BreadPickup27
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36205,7 +36286,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup117
+      value: BreadPickup117
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36288,7 +36369,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup133
+      value: BreadPickup133
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36371,7 +36452,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup56
+      value: BreadPickup56
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36569,7 +36650,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup12
+      value: BreadPickup12
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36652,7 +36733,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup185
+      value: BreadPickup185
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36735,7 +36816,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup54
+      value: BreadPickup54
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -36957,7 +37038,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup87
+      value: BreadPickup87
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -37040,7 +37121,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup67
+      value: BreadPickup67
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -37166,6 +37247,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -37189,7 +37274,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup155
+      value: BreadPickup155
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -37382,7 +37467,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup194
+      value: BreadPickup194
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -37465,7 +37550,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup189
+      value: BreadPickup189
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -37788,7 +37873,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup202
+      value: BreadPickup202
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -37871,7 +37956,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup63
+      value: BreadPickup63
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -37954,7 +38039,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup71
+      value: BreadPickup71
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -38080,6 +38165,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -38107,7 +38196,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup42
+      value: BreadPickup42
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -38190,7 +38279,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup206
+      value: BreadPickup206
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -38273,7 +38362,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup182
+      value: BreadPickup182
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -38629,6 +38718,10 @@ PrefabInstance:
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
@@ -39292,7 +39385,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup203
+      value: BreadPickup203
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -39375,7 +39468,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup10
+      value: BreadPickup10
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -39458,7 +39551,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup123
+      value: BreadPickup123
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -39541,7 +39634,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup7
+      value: BreadPickup7
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -39873,7 +39966,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup207
+      value: BreadPickup207
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40079,7 +40172,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup52
+      value: BreadPickup52
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40162,7 +40255,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup8
+      value: BreadPickup8
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40245,7 +40338,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup77
+      value: BreadPickup77
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40371,6 +40464,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -40437,6 +40534,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
       value: 1.422438
       objectReference: {fileID: 0}
@@ -40464,7 +40565,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup171
+      value: BreadPickup171
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40617,7 +40718,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup19
+      value: BreadPickup19
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40700,7 +40801,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup47
+      value: BreadPickup47
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40893,7 +40994,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup132
+      value: BreadPickup132
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -40976,7 +41077,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup26
+      value: BreadPickup26
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -41059,7 +41160,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup176
+      value: BreadPickup176
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -41142,7 +41243,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup61
+      value: BreadPickup61
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -41326,7 +41427,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup144
+      value: BreadPickup144
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -41409,7 +41510,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup6
+      value: BreadPickup6
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -41766,7 +41867,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup103
+      value: BreadPickup103
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -41849,7 +41950,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup69
+      value: BreadPickup69
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -41932,7 +42033,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup89
+      value: BreadPickup89
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -42056,6 +42157,10 @@ PrefabInstance:
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
@@ -42192,6 +42297,10 @@ PrefabInstance:
     - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265669100340357967, guid: 37c45f26028bb954094279dfa5ee5ecc, type: 3}
+      propertyPath: m_ShadowMesh.m_InitialTrim
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -42336,7 +42445,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup187
+      value: BreadPickup187
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -42419,7 +42528,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup46
+      value: BreadPickup46
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -42633,7 +42742,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup198
+      value: BreadPickup198
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -42716,7 +42825,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup154
+      value: BreadPickup154
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -42799,7 +42908,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup115
+      value: BreadPickup115
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -42882,7 +42991,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup74
+      value: BreadPickup74
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource
@@ -42965,7 +43074,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540992698767324065, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_Name
-      value: CoinPickup162
+      value: BreadPickup162
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_PreviousShadowCastingSource

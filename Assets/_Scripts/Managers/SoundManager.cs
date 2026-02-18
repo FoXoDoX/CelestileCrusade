@@ -43,7 +43,7 @@ namespace My.Scripts.Managers
         [Header("Sound Effects")]
         [SerializeField] private AudioClip _energyBookPickupClip;
         [SerializeField] private AudioClip _energyBookParticleClip;
-        [SerializeField] private AudioClip _coinPickupClip;
+        [SerializeField] private AudioClip _breadPickupClip;
         [SerializeField] private AudioClip _crashClip;
         [SerializeField] private AudioClip _landingSuccessClip;
         [SerializeField] private AudioClip _crateCrackedClip;
@@ -569,7 +569,7 @@ namespace My.Scripts.Managers
 
             em.AddHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.AddHandler<PickupEventData>(GameEvents.EnergyBookParticle, OnEnergyBookParticle);
-            em.AddHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.AddHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
             em.AddHandler<KeyDeliveredData>(GameEvents.KeyDelivered, OnKeyDelivered);
             em.AddHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
         }
@@ -595,7 +595,7 @@ namespace My.Scripts.Managers
 
             em.RemoveHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.RemoveHandler<PickupEventData>(GameEvents.EnergyBookParticle, OnEnergyBookParticle);
-            em.RemoveHandler<PickupEventData>(GameEvents.CoinPickup, OnCoinPickup);
+            em.RemoveHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
             em.RemoveHandler<KeyDeliveredData>(GameEvents.KeyDelivered, OnKeyDelivered);
             em.RemoveHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
         }
@@ -609,7 +609,7 @@ namespace My.Scripts.Managers
 
         private void OnEnergyBookPickup(PickupEventData data) => PlaySound(_energyBookPickupClip);
         private void OnEnergyBookParticle(PickupEventData data) => PlaySound(_energyBookParticleClip);
-        private void OnCoinPickup(PickupEventData data) => PlaySound(_coinPickupClip);
+        private void OnBreadPickup(PickupEventData data) => PlaySound(_breadPickupClip);
         private void OnTurretShoot() => PlaySound(_turretShootClip);
         private void OnCrateDrop() => PlaySound(_crateDeliveredClip);
         private void OnCrateCracked() => PlaySound(_crateCrackedClip);

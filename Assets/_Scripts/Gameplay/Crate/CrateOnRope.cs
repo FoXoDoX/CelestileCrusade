@@ -111,6 +111,13 @@ namespace My.Scripts.Gameplay.Crate
         public Rigidbody2D Rigidbody => _rigidbody;
         public bool IsDestroyed => _isDestroyed;
 
+        public int ScoreValue => _health switch
+        {
+            >= INITIAL_HEALTH => 500,
+            2 => 400,
+            _ => 300
+        };
+
         #endregion
 
         #region Events
@@ -152,7 +159,7 @@ namespace My.Scripts.Gameplay.Crate
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (TryHandleEnergyBookPickup(other)) return;
-            if (TryHandleCoinPickup(other)) return;
+            if (TryHandleBreadPickup(other)) return;
             if (TryHandleKeyPickup(other)) return;
             if (TryHandleLandingAreaEnter(other)) return;
         }
@@ -362,12 +369,12 @@ namespace My.Scripts.Gameplay.Crate
 
         #region Private Methods — Pickup Handling
 
-        private bool TryHandleCoinPickup(Collider2D other)
+        private bool TryHandleBreadPickup(Collider2D other)
         {
-            if (!other.TryGetComponent(out CoinPickup coinPickup)) return false;
+            if (!other.TryGetComponent(out BreadPickup breadPickup)) return false;
 
-            EventManager.Instance?.Broadcast(GameEvents.CoinPickup, new PickupEventData(transform.position));
-            coinPickup.DestroySelf();
+            EventManager.Instance?.Broadcast(GameEvents.BreadPickup, new PickupEventData(transform.position));
+            breadPickup.DestroySelf();
             return true;
         }
 
@@ -491,7 +498,7 @@ namespace My.Scripts.Gameplay.Crate
 
             if (landingPad.CanAcceptCrates)
             {
-                landingArea.RegisterCrateDelivery();
+                landingArea.RegisterCrateDelivery(ScoreValue);
                 landingPad.ResetDeliveryProgress();
             }
 

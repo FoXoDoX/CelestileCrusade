@@ -22,9 +22,9 @@ namespace My.Scripts.Gameplay.Levels
         [SerializeField] private float _normalOrthographicSize = 12f;
         [SerializeField] private float _zoomedOutOrthographicSize = 18f;
 
-        [Header("Star Thresholds")]
-        [Tooltip("Points required to receive 1, 2, or 3 stars")]
-        [SerializeField] private int[] _starThresholds = new int[3] { 100, 200, 300 };
+        [Header("Crest Thresholds")]
+        [Tooltip("Points required to receive 1, 2, or 3 crests")]
+        [SerializeField] private int[] _crestThresholds = new int[3] { 100, 200, 300 };
 
         #endregion
 
@@ -89,19 +89,19 @@ namespace My.Scripts.Gameplay.Levels
 
         public float GetNormalOrthographicSize() => _normalOrthographicSize;
         public float GetZoomedOutOrthographicSize() => _zoomedOutOrthographicSize;
-        public int[] GetStarThresholds() => _starThresholds;
+        public int[] GetCrestThresholds() => _crestThresholds;
 
-        public int GetEarnedStarsCount(int score)
+        public int GetEarnedCrestsCount(int score)
         {
-            int stars = 0;
-            for (int i = 0; i < _starThresholds.Length; i++)
+            int crests = 0;
+            for (int i = 0; i < _crestThresholds.Length; i++)
             {
-                if (score >= _starThresholds[i])
+                if (score >= _crestThresholds[i])
                 {
-                    stars++;
+                    crests++;
                 }
             }
-            return stars;
+            return crests;
         }
 
         #endregion
@@ -111,12 +111,12 @@ namespace My.Scripts.Gameplay.Levels
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            for (int i = 1; i < _starThresholds.Length; i++)
+            for (int i = 1; i < _crestThresholds.Length; i++)
             {
-                if (_starThresholds[i] < _starThresholds[i - 1])
+                if (_crestThresholds[i] < _crestThresholds[i - 1])
                 {
                     Debug.LogWarning(
-                        $"[GameLevel] Level {_levelNumber}: Star thresholds should be in ascending order!",
+                        $"[GameLevel] Level {_levelNumber}: Crest thresholds should be in ascending order!",
                         this
                     );
                     break;

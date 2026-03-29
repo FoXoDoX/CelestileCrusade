@@ -292,7 +292,7 @@ namespace My.Scripts.Managers
 
             if (data.LandingType == Lander.LandingType.Success && _currentGameLevel != null)
             {
-                starsEarned = _currentGameLevel.GetEarnedStarsCount(_score);
+                starsEarned = _currentGameLevel.GetEarnedCrestsCount(_score);
                 GameData.MarkLevelCompleted(GameData.CurrentLevel, starsEarned);
             }
 
@@ -300,7 +300,7 @@ namespace My.Scripts.Managers
             var completedData = new LevelCompletedData(
                 isSuccess: data.LandingType == Lander.LandingType.Success,
                 totalScore: _score,
-                starsEarned: starsEarned,
+                crestsEarned: starsEarned,
                 landingScore: data.Score,
                 landingSpeed: data.LandingSpeed,
                 dotVector: data.DotVector,

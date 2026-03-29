@@ -87,7 +87,7 @@ namespace My.Scripts.UI.Menus
                 _levelButtonsData.Add(buttonData);
 
                 bool isAvailable = GameData.IsLevelAvailable(levelNumber);
-                int starsEarned = isAvailable ? GameData.GetStarsForLevel(levelNumber) : 0;
+                int starsEarned = isAvailable ? GameData.GetCrestsForLevel(levelNumber) : 0;
 
                 Debug.Log($"[LevelsMenuUI] Level {levelNumber}: available={isAvailable}, stars={starsEarned}");
 

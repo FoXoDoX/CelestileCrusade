@@ -35,7 +35,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &8312749935653768723
 LineRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -81,6 +81,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
+  m_MaskInteraction: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -139,7 +140,6 @@ LineRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MaskInteraction: 0
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
@@ -197,6 +197,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5238346237701246919
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -242,7 +243,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1362058913294850930, guid: db93beb49b0dd1643baa4757eb6c6f2e, type: 3}
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -5281422124547630143, guid: b0a1c7f6f0e8edd4693ee9e0f627b379, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -251,7 +253,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &3156308886526727634
 MonoBehaviour:
@@ -265,9 +266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5feefe13660fefb40a15e926893b5c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.Gameplay.Crate.CrateOnRope
-  _normalSprite: {fileID: -1362058913294850930, guid: db93beb49b0dd1643baa4757eb6c6f2e, type: 3}
-  _crackedSprite: {fileID: -329623048172348665, guid: 4e6c0e05e2c990241a3770b878ba8534, type: 3}
-  _veryCrackedSprite: {fileID: -2699617827137059956, guid: cc7040538e1256c4db00c6632734e30d, type: 3}
+  _normalSprite: {fileID: -5281422124547630143, guid: b0a1c7f6f0e8edd4693ee9e0f627b379, type: 3}
+  _crackedSprite: {fileID: -5281422124547630143, guid: b0a1c7f6f0e8edd4693ee9e0f627b379, type: 3}
+  _veryCrackedSprite: {fileID: -5281422124547630143, guid: b0a1c7f6f0e8edd4693ee9e0f627b379, type: 3}
   _crackVfx: {fileID: 3895811363796752720, guid: a6636644569a9734c90e622678557245, type: 3}
   _mass: 3
   _gravityScale: 3
@@ -323,7 +324,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 1.275, y: 1.275}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -369,7 +370,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 1.275, y: 1.275}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

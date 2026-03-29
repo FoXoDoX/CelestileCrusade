@@ -49,6 +49,8 @@ namespace My.Scripts.EventBus
 
         // === Levels ===
         LevelCompleted,
+        CrestRevealed,
+        LastCrestRevealed,
 
         // === Tutorial ===
         TutorialStarted,

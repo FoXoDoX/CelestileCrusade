@@ -129,7 +129,7 @@ MonoBehaviour:
   _cameraStartTarget: {fileID: 1382785582288456747}
   _normalOrthographicSize: 12
   _zoomedOutOrthographicSize: 27
-  _starThresholds: 64000000c80000002c010000
+  _starThresholds: 64000000c800000090010000
 --- !u!1 &3037417158122525153
 GameObject:
   m_ObjectHideFlags: 0

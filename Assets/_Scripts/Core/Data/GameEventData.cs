@@ -83,7 +83,7 @@ namespace My.Scripts.Core.Data
     {
         public readonly bool IsSuccess;
         public readonly int TotalScore;
-        public readonly int StarsEarned;
+        public readonly int CrestsEarned;
         public readonly int LandingScore;
         public readonly float LandingSpeed;
         public readonly float DotVector;
@@ -92,7 +92,7 @@ namespace My.Scripts.Core.Data
         public LevelCompletedData(
             bool isSuccess,
             int totalScore,
-            int starsEarned,
+            int crestsEarned,
             int landingScore,
             float landingSpeed,
             float dotVector,
@@ -100,7 +100,7 @@ namespace My.Scripts.Core.Data
         {
             IsSuccess = isSuccess;
             TotalScore = totalScore;
-            StarsEarned = starsEarned;
+            CrestsEarned = crestsEarned;
             LandingScore = landingScore;
             LandingSpeed = landingSpeed;
             DotVector = dotVector;

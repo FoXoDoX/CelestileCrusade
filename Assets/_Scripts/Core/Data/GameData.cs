@@ -20,7 +20,7 @@ namespace My.Scripts.Core.Data
         private static int _currentLevel = 1;
         private static int _totalScore;
         private static int _highestCompletedLevel;
-        private static Dictionary<int, int> _levelStars;
+        private static Dictionary<int, int> _levelCrests;
         private static HashSet<int> _completedTutorials;
         private static bool _isInitialized;
 
@@ -175,20 +175,20 @@ namespace My.Scripts.Core.Data
 
         #region Public Methods
 
-        public static void MarkLevelCompleted(int levelNumber, int starsEarned)
+        public static void MarkLevelCompleted(int levelNumber, int crestsEarned)
         {
             EnsureInitialized();
 
-            Debug.Log($"[GameData] Level {levelNumber} completed with {starsEarned} stars");
+            Debug.Log($"[GameData] Level {levelNumber} completed with {crestsEarned} crests");
 
             if (levelNumber > _highestCompletedLevel)
             {
                 _highestCompletedLevel = levelNumber;
             }
 
-            if (!_levelStars.TryGetValue(levelNumber, out int currentStars) || starsEarned > currentStars)
+            if (!_levelCrests.TryGetValue(levelNumber, out int currentCrests) || crestsEarned > currentCrests)
             {
-                _levelStars[levelNumber] = starsEarned;
+                _levelCrests[levelNumber] = crestsEarned;
             }
 
             SaveSystem.Save();
@@ -200,10 +200,10 @@ namespace My.Scripts.Core.Data
             return levelNumber == 1 || levelNumber <= _highestCompletedLevel + 1;
         }
 
-        public static int GetStarsForLevel(int levelNumber)
+        public static int GetCrestsForLevel(int levelNumber)
         {
             EnsureInitialized();
-            return _levelStars.TryGetValue(levelNumber, out int stars) ? stars : 0;
+            return _levelCrests.TryGetValue(levelNumber, out int crests) ? crests : 0;
         }
 
         public static void SetHighestCompletedLevel(int level)
@@ -232,7 +232,7 @@ namespace My.Scripts.Core.Data
             ScreenHeight = Screen.height;
             IsFullscreen = DEFAULT_FULLSCREEN;
 
-            _levelStars = new Dictionary<int, int>();
+            _levelCrests = new Dictionary<int, int>();
             _completedTutorials = new HashSet<int>();
             _isInitialized = true;
 
@@ -263,14 +263,14 @@ namespace My.Scripts.Core.Data
 
             // Progress
             data.highestCompletedLevel = _highestCompletedLevel;
-            data.levelStarsData = new List<LevelStarData>();
+            data.levelCrestsData = new List<LevelCrestData>();
 
-            foreach (var kvp in _levelStars)
+            foreach (var kvp in _levelCrests)
             {
-                data.levelStarsData.Add(new LevelStarData
+                data.levelCrestsData.Add(new LevelCrestData
                 {
                     levelNumber = kvp.Key,
-                    starsCount = kvp.Value
+                    crestsCount = kvp.Value
                 });
             }
 
@@ -312,11 +312,14 @@ namespace My.Scripts.Core.Data
             ScreenWidth = nativeResolution.width;
             ScreenHeight = nativeResolution.height;
             IsFullscreen = DEFAULT_FULLSCREEN;
+            FullScreenMode mode = IsFullscreen
+                ? FullScreenMode.FullScreenWindow
+                : FullScreenMode.Windowed;
 
             _completedTutorials = new HashSet<int>();
 
             QualitySettings.SetQualityLevel(GraphicsQuality);
-            Screen.SetResolution(ScreenWidth, ScreenHeight, IsFullscreen);
+            Screen.SetResolution(ScreenWidth, ScreenHeight, mode);
 
             Debug.Log($"[GameData] Applied defaults: Graphics={GraphicsQuality}");
         }
@@ -353,30 +356,39 @@ namespace My.Scripts.Core.Data
             // Применяем разрешение
             if (ScreenWidth > 0 && ScreenHeight > 0)
             {
-                Screen.SetResolution(ScreenWidth, ScreenHeight, IsFullscreen);
-                Debug.Log($"[GameData] Applied resolution: {ScreenWidth}x{ScreenHeight}, Fullscreen={IsFullscreen}");
+                FullScreenMode mode = IsFullscreen
+                    ? FullScreenMode.FullScreenWindow
+                    : FullScreenMode.Windowed;
+
+                Screen.SetResolution(ScreenWidth, ScreenHeight, mode);
+                Debug.Log($"[GameData] Applied resolution: {ScreenWidth}x{ScreenHeight}, Mode={mode}");
             }
             else
             {
                 Resolution nativeResolution = Screen.currentResolution;
                 ScreenWidth = nativeResolution.width;
                 ScreenHeight = nativeResolution.height;
-                Screen.SetResolution(ScreenWidth, ScreenHeight, IsFullscreen);
+
+                FullScreenMode mode = IsFullscreen
+                    ? FullScreenMode.FullScreenWindow
+                    : FullScreenMode.Windowed;
+
+                Screen.SetResolution(ScreenWidth, ScreenHeight, mode);
             }
         }
 
         private static void LoadProgressData(GameSaveData data)
         {
             _highestCompletedLevel = data.highestCompletedLevel;
-            _levelStars = new Dictionary<int, int>();
+            _levelCrests = new Dictionary<int, int>();
 
-            if (data.levelStarsData != null)
+            if (data.levelCrestsData != null)
             {
-                foreach (var starData in data.levelStarsData)
+                foreach (var crestData in data.levelCrestsData)
                 {
-                    if (starData.starsCount > 0)
+                    if (crestData.crestsCount > 0)
                     {
-                        _levelStars[starData.levelNumber] = starData.starsCount;
+                        _levelCrests[crestData.levelNumber] = crestData.crestsCount;
                     }
                 }
             }
@@ -390,7 +402,7 @@ namespace My.Scripts.Core.Data
         {
             if (_isInitialized) return;
 
-            _levelStars ??= new Dictionary<int, int>();
+            _levelCrests ??= new Dictionary<int, int>();
             _completedTutorials ??= new HashSet<int>();
             _isInitialized = true;
 
@@ -415,7 +427,7 @@ namespace My.Scripts.Core.Data
             _totalScore = 0;
             _highestCompletedLevel = 0;
             _completedTutorials = null;
-            _levelStars = null;
+            _levelCrests = null;
             _isInitialized = false;
 
             Debug.Log("[GameData] Static fields reset (Domain Reload)");
@@ -446,17 +458,17 @@ namespace My.Scripts.Core.Data
 
         // Progress
         public int highestCompletedLevel;
-        public List<LevelStarData> levelStarsData;
+        public List<LevelCrestData> levelCrestsData;
 
         // Tutorials
         public List<int> completedTutorials;
     }
 
     [System.Serializable]
-    public struct LevelStarData
+    public struct LevelCrestData
     {
         public int levelNumber;
-        public int starsCount;
+        public int crestsCount;
     }
 
     #endregion

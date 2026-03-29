@@ -55,6 +55,8 @@ namespace My.Scripts.Managers
         [SerializeField] private AudioClip _windClip;
         [SerializeField] private AudioClip _turretShootClip;
         [SerializeField] private AudioClip _thrusterClip;
+        [SerializeField] private AudioClip _crestRevealClip;
+        [SerializeField] private AudioClip _lastCrestRevealClip;
 
         [Header("Thruster Stereo Settings")]
         [SerializeField, Range(0f, 1f)]
@@ -561,6 +563,8 @@ namespace My.Scripts.Managers
             em.AddHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.AddHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.AddHandler(GameEvents.KeyPickup, OnKeyPickup);
+            em.AddHandler(GameEvents.CrestRevealed, OnCrestRevealed);
+            em.AddHandler(GameEvents.LastCrestRevealed, OnLastCrestRevealed);
 
             em.AddHandler(GameEvents.LanderBeforeForce, OnLanderBeforeForce);
             em.AddHandler(GameEvents.LanderUpForce, OnLanderUpForce);
@@ -587,6 +591,8 @@ namespace My.Scripts.Managers
             em.RemoveHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.RemoveHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
             em.RemoveHandler(GameEvents.KeyPickup, OnKeyPickup);
+            em.RemoveHandler(GameEvents.CrestRevealed, OnCrestRevealed);
+            em.RemoveHandler(GameEvents.LastCrestRevealed, OnLastCrestRevealed);
 
             em.RemoveHandler(GameEvents.LanderBeforeForce, OnLanderBeforeForce);
             em.RemoveHandler(GameEvents.LanderUpForce, OnLanderUpForce);
@@ -606,7 +612,6 @@ namespace My.Scripts.Managers
 
         private void OnGamePaused() => PauseAllSounds();
         private void OnGameUnpaused() => ResumeAllSounds();
-
         private void OnEnergyBookPickup(PickupEventData data) => PlaySound(_energyBookPickupClip);
         private void OnEnergyBookParticle(PickupEventData data) => PlaySound(_energyBookParticleClip);
         private void OnBreadPickup(PickupEventData data) => PlaySound(_breadPickupClip);
@@ -617,6 +622,8 @@ namespace My.Scripts.Managers
         private void OnRopeWithCrateSpawned() => RefreshSubscriptions();
         private void OnKeyPickup() => PlaySound(_keyPickupClip);
         private void OnKeyDelivered(KeyDeliveredData data) => PlaySound(_keyDeliveredClip);
+        private void OnCrestRevealed() => PlaySound(_crestRevealClip);
+        private void OnLastCrestRevealed() => PlaySound(_lastCrestRevealClip);
 
         private void OnLanderLanded(LanderLandedData data)
         {

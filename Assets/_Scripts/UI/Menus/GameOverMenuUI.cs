@@ -127,7 +127,7 @@ namespace My.Scripts.UI.Menus
 
             for (int level = 1; level <= highestLevel; level++)
             {
-                totalStars += GameData.GetStarsForLevel(level);
+                totalStars += GameData.GetCrestsForLevel(level);
             }
 
             return totalStars;

@@ -394,13 +394,15 @@ namespace My.Scripts.UI.Menus
 
         private void ApplyResolution(int width, int height, bool isFullscreen)
         {
-            Screen.SetResolution(width, height, isFullscreen);
+            FullScreenMode mode = isFullscreen
+                ? FullScreenMode.FullScreenWindow
+                : FullScreenMode.Windowed;
+
+            Screen.SetResolution(width, height, mode);
 
             GameData.SetResolution(width, height);
             GameData.SetFullscreen(isFullscreen);
             _settingsChanged = true;
-
-            Debug.Log($"[SettingsMenuUI] Applied: {width}x{height}, Fullscreen={isFullscreen}");
         }
 
         #endregion

@@ -69,7 +69,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EnergyColor1: {r: 0, g: 0.8855412, b: 1, a: 1}
     - _EnergyColor2: {r: 0, g: 0.43080336, b: 0.7176471, a: 1}
-    - _PixelCount: {r: 32, g: 8, b: 0, a: 0}
+    - _PixelCount: {r: 86, g: 12, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _TwirlOffsetSpeed: {r: 0.3, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

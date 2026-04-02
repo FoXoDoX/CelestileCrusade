@@ -3,9 +3,6 @@ using UnityEngine.SceneManagement;
 
 namespace My.Scripts.Core.Scene
 {
-    /// <summary>
-    /// Статический класс для управления загрузкой сцен.
-    /// </summary>
     public static class SceneLoader
     {
         #region Enums
@@ -22,44 +19,66 @@ namespace My.Scripts.Core.Scene
 
         #region Public Methods
 
-        /// <summary>
-        /// Загружает указанную сцену.
-        /// </summary>
-        public static void LoadScene(Scene scene)
+        public static void LoadScene(Scene scene,
+            TransitionDirection direction = TransitionDirection.Right)
         {
             string sceneName = scene.ToString();
+            TransitionType type = GetTransitionType(scene);
 
-            Debug.Log($"[SceneLoader] Loading scene: {sceneName}");
+            Debug.Log($"[SceneLoader] Loading scene: {sceneName} ({type}, {direction})");
 
-            SceneManager.LoadScene(sceneName);
+            if (SceneTransitionManager.HasInstance)
+            {
+                SceneTransitionManager.Instance.TransitionToScene(sceneName, type, direction);
+            }
+            else
+            {
+                SceneManager.LoadScene(sceneName);
+            }
         }
 
-        /// <summary>
-        /// Перезагружает текущую сцену.
-        /// </summary>
         public static void ReloadCurrentScene()
         {
             string currentSceneName = SceneManager.GetActiveScene().name;
 
             Debug.Log($"[SceneLoader] Reloading scene: {currentSceneName}");
 
-            SceneManager.LoadScene(currentSceneName);
+            if (SceneTransitionManager.HasInstance)
+            {
+                SceneTransitionManager.Instance.TransitionToScene(
+                    currentSceneName, TransitionType.Circle);
+            }
+            else
+            {
+                SceneManager.LoadScene(currentSceneName);
+            }
         }
 
-        /// <summary>
-        /// Возвращает имя текущей активной сцены.
-        /// </summary>
         public static string GetCurrentSceneName()
         {
             return SceneManager.GetActiveScene().name;
         }
 
-        /// <summary>
-        /// Проверяет, является ли текущая сцена указанной.
-        /// </summary>
         public static bool IsCurrentScene(Scene scene)
         {
             return GetCurrentSceneName() == scene.ToString();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static TransitionType GetTransitionType(Scene scene)
+        {
+            string currentScene = GetCurrentSceneName();
+
+            if (currentScene == Scene.GameScene.ToString())
+                return TransitionType.Circle;
+
+            if (scene == Scene.GameScene)
+                return TransitionType.Circle;
+
+            return TransitionType.Strips;
         }
 
         #endregion

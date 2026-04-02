@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 33239879}
   - component: {fileID: 33239878}
   - component: {fileID: 33239877}
+  - component: {fileID: 33239880}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -458,6 +459,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33239875}
   m_CullTransparentMesh: 1
+--- !u!114 &33239880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33239875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff160b784ff3b4caeeae0632d34bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.UI.SelectOnHover
 --- !u!1 &46774670
 GameObject:
   m_ObjectHideFlags: 0
@@ -2344,6 +2357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 389199546}
   - component: {fileID: 389199547}
+  - component: {fileID: 389199548}
   m_Layer: 5
   m_Name: MusicVolumeSlider
   m_TagString: Untagged
@@ -2426,6 +2440,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &389199548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389199545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff160b784ff3b4caeeae0632d34bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.UI.SelectOnHover
 --- !u!1 &406228778
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,6 +4678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 762803891}
   - component: {fileID: 762803892}
+  - component: {fileID: 762803893}
   m_Layer: 5
   m_Name: SoundVolumeSlider
   m_TagString: Untagged
@@ -4734,6 +4761,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &762803893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762803890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff160b784ff3b4caeeae0632d34bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.UI.SelectOnHover
 --- !u!1 &777613688
 GameObject:
   m_ObjectHideFlags: 0
@@ -4785,7 +4824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7135,6 +7174,7 @@ GameObject:
   - component: {fileID: 1206054187}
   - component: {fileID: 1206054188}
   - component: {fileID: 1206054189}
+  - component: {fileID: 1206054190}
   m_Layer: 5
   m_Name: LandedUI
   m_TagString: Untagged
@@ -7195,6 +7235,7 @@ MonoBehaviour:
   _successOnlyElements:
   - {fileID: 875251868}
   - {fileID: 1747287798}
+  _canvasGroup: {fileID: 1206054190}
 --- !u!114 &1206054189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7246,6 +7287,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 375392a2822e5454eba47e68c2233fb6, type: 3}
   - {fileID: 21300000, guid: 77f4ccc831932ac4da4d65664bd266a0, type: 3}
   - {fileID: 21300000, guid: 78ef70f7963feab4989993d187271e02, type: 3}
+--- !u!225 &1206054190
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206054186}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1213131881
 GameObject:
   m_ObjectHideFlags: 0
@@ -8177,8 +8230,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: MAIN MENU
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 30fd7f1dc1df39b4ba461abbf37b996a, type: 2}
-  m_sharedMaterial: {fileID: -6917498455059095038, guid: 30fd7f1dc1df39b4ba461abbf37b996a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db217aa523cbe3d4aba12a9f50e31536, type: 2}
+  m_sharedMaterial: {fileID: -5416442121994260782, guid: db217aa523cbe3d4aba12a9f50e31536, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8212,7 +8265,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 10
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -9653,8 +9706,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: RESUME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 30fd7f1dc1df39b4ba461abbf37b996a, type: 2}
-  m_sharedMaterial: {fileID: -6917498455059095038, guid: 30fd7f1dc1df39b4ba461abbf37b996a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db217aa523cbe3d4aba12a9f50e31536, type: 2}
+  m_sharedMaterial: {fileID: -5416442121994260782, guid: db217aa523cbe3d4aba12a9f50e31536, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9688,7 +9741,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 10
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -10060,7 +10113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10096,6 +10149,7 @@ GameObject:
   - component: {fileID: 1730128959}
   - component: {fileID: 1730128958}
   - component: {fileID: 1730128957}
+  - component: {fileID: 1730128960}
   m_Layer: 5
   m_Name: MainMenuButton
   m_TagString: Untagged
@@ -10205,6 +10259,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730128955}
   m_CullTransparentMesh: 1
+--- !u!114 &1730128960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730128955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff160b784ff3b4caeeae0632d34bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.UI.SelectOnHover
 --- !u!1 &1737110958
 GameObject:
   m_ObjectHideFlags: 0
@@ -10424,7 +10490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -11803,6 +11869,7 @@ GameObject:
   - component: {fileID: 1994574502}
   - component: {fileID: 1994574501}
   - component: {fileID: 1994574500}
+  - component: {fileID: 1994574503}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -11912,6 +11979,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994574498}
   m_CullTransparentMesh: 1
+--- !u!114 &1994574503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994574498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff160b784ff3b4caeeae0632d34bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::My.Scripts.UI.SelectOnHover
 --- !u!1 &2015741951
 GameObject:
   m_ObjectHideFlags: 0
@@ -12700,7 +12779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

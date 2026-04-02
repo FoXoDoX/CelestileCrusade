@@ -44,6 +44,9 @@ namespace My.Scripts.UI.Menus
         [Tooltip("Ёлементы, которые остаютс€ видимыми при краше (кроме CrashBanner и NextButton, которые управл€ютс€ отдельно)")]
         [SerializeField] private List<GameObject> _successOnlyElements;
 
+        [Header("Canvas Group")]
+        [SerializeField] private CanvasGroup _canvasGroup;
+
         #endregion
 
         #region Private Fields
@@ -62,6 +65,11 @@ namespace My.Scripts.UI.Menus
         {
             _animation = GetComponent<LandedUIAnimation>();
             SetupButton();
+
+            if (_canvasGroup == null)
+            {
+                _canvasGroup = GetComponent<CanvasGroup>();
+            }
         }
 
         private void Start()
@@ -104,10 +112,16 @@ namespace My.Scripts.UI.Menus
         {
             if (_isSubscribed) return;
 
-            EventManager.Instance?.AddHandler<LevelCompletedData>(
+            var em = EventManager.Instance;
+            if (em == null) return;
+
+            em.AddHandler<LevelCompletedData>(
                 GameEvents.LevelCompleted,
                 OnLevelCompleted
             );
+
+            em.AddHandler(GameEvents.GamePaused, OnGamePaused);
+            em.AddHandler(GameEvents.GameUnpaused, OnGameUnpaused);
 
             _isSubscribed = true;
         }
@@ -121,6 +135,9 @@ namespace My.Scripts.UI.Menus
                 GameEvents.LevelCompleted,
                 OnLevelCompleted
             );
+
+            EventManager.Instance.RemoveHandler(GameEvents.GamePaused, OnGamePaused);
+            EventManager.Instance.RemoveHandler(GameEvents.GameUnpaused, OnGameUnpaused);
 
             _isSubscribed = false;
         }
@@ -148,6 +165,18 @@ namespace My.Scripts.UI.Menus
         private void OnNextButtonClicked()
         {
             _nextButtonAction?.Invoke();
+        }
+
+        private void OnGamePaused()
+        {
+            if (!gameObject.activeSelf) return;
+            SetInteractable(false);
+        }
+        private void OnGameUnpaused()
+        {
+            if (!gameObject.activeSelf) return;
+            SetInteractable(true);
+            _nextButton?.Select();
         }
 
         #endregion
@@ -198,7 +227,6 @@ namespace My.Scripts.UI.Menus
 
         private void UpdateLayout()
         {
-            // Ѕаннеры
             if (_successBanner != null)
             {
                 _successBanner.SetActive(_isSuccess);
@@ -209,7 +237,6 @@ namespace My.Scripts.UI.Menus
                 _crashBanner.SetActive(!_isSuccess);
             }
 
-            // Ёлементы, видимые только при успехе
             if (_successOnlyElements != null)
             {
                 foreach (var element in _successOnlyElements)
@@ -264,6 +291,7 @@ namespace My.Scripts.UI.Menus
         private void Show()
         {
             gameObject.SetActive(true);
+            SetInteractable(true);
 
             int totalScore = GameManager.HasInstance ? GameManager.Instance.Score : 0;
             int[] crestThresholds = GetCrestThresholds();
@@ -276,6 +304,14 @@ namespace My.Scripts.UI.Menus
         private void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        private void SetInteractable(bool interactable)
+        {
+            if (_canvasGroup == null) return;
+
+            _canvasGroup.interactable = interactable;
+            _canvasGroup.blocksRaycasts = interactable;
         }
 
         #endregion

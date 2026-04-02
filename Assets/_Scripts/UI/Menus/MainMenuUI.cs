@@ -2,6 +2,7 @@ using My.Scripts.Core.Data;
 using My.Scripts.Core.Persistence;
 using My.Scripts.Core.Scene;
 using My.Scripts.EventBus;
+using My.Scripts.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,12 @@ namespace My.Scripts.UI.Menus
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _quitButton;
 
+        [Header("Sub-Menus")]
+        [SerializeField] private SettingsMenuUI _settingsMenu;
+
+        [Header("Canvas Group")]
+        [SerializeField] private CanvasGroup _canvasGroup;
+
         #endregion
 
         #region Unity Lifecycle
@@ -27,6 +34,11 @@ namespace My.Scripts.UI.Menus
             EnsureSaveFileExists();
             ConfigurePlatformSpecificUI();
             SetupButtons();
+
+            if (_canvasGroup == null)
+            {
+                _canvasGroup = GetComponent<CanvasGroup>();
+            }
         }
 
         private void Start()
@@ -68,7 +80,6 @@ namespace My.Scripts.UI.Menus
 
         private void ConfigurePlatformSpecificUI()
         {
-            // Скрываем кнопку Quit в WebGL
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (_quitButton != null)
             {
@@ -77,55 +88,55 @@ namespace My.Scripts.UI.Menus
 #endif
         }
 
+        // >>> ИЗМЕНЕНО: используем BindButton вместо onClick.AddListener <<<
         private void SetupButtons()
         {
-            if (_playButton != null)
-            {
-                _playButton.onClick.AddListener(OnPlayClicked);
-            }
-
-            if (_levelsButton != null)
-            {
-                _levelsButton.onClick.AddListener(OnLevelsClicked);
-            }
-
-            if (_settingsButton != null)
-            {
-                _settingsButton.onClick.AddListener(OnSettingsClicked);
-            }
-
-            if (_quitButton != null)
-            {
-                _quitButton.onClick.AddListener(OnQuitClicked);
-            }
+            BindButton(_playButton, OnPlayClicked);
+            BindButton(_levelsButton, OnLevelsClicked);
+            BindButton(_settingsButton, OnSettingsClicked);
+            BindButton(_quitButton, OnQuitClicked);
         }
 
+        // >>> ИЗМЕНЕНО: используем UnbindButton вместо onClick.RemoveListener <<<
         private void CleanupButtons()
         {
-            if (_playButton != null)
-            {
-                _playButton.onClick.RemoveListener(OnPlayClicked);
-            }
-
-            if (_levelsButton != null)
-            {
-                _levelsButton.onClick.RemoveListener(OnLevelsClicked);
-            }
-
-            if (_settingsButton != null)
-            {
-                _settingsButton.onClick.RemoveListener(OnSettingsClicked);
-            }
-
-            if (_quitButton != null)
-            {
-                _quitButton.onClick.RemoveListener(OnQuitClicked);
-            }
+            UnbindButton(_playButton, OnPlayClicked);
+            UnbindButton(_levelsButton, OnLevelsClicked);
+            UnbindButton(_settingsButton, OnSettingsClicked);
+            UnbindButton(_quitButton, OnQuitClicked);
         }
 
         private void SelectDefaultButton()
         {
+            SoundManager.Instance?.SuppressHoverSound();
             _playButton?.Select();
+        }
+
+        #endregion
+
+        #region Private Methods — Button Binding
+
+        // >>> ДОБАВЛЕНО: хелперы для привязки через ButtonVisuals <<<
+        private void BindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.AddDelayedListener(action);
+            }
+        }
+
+        private void UnbindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.RemoveDelayedListener(action);
+            }
         }
 
         #endregion
@@ -166,7 +177,8 @@ namespace My.Scripts.UI.Menus
 
         private void OnSettingsClicked()
         {
-            EventManager.Instance?.Broadcast(GameEvents.SettingsButtonPressed);
+            SetInteractable(false);
+            _settingsMenu?.Show();
         }
 
         private void OnQuitClicked()
@@ -180,7 +192,16 @@ namespace My.Scripts.UI.Menus
 
         private void OnSettingsBack()
         {
-            SelectDefaultButton();
+            SetInteractable(true);
+            _settingsButton?.Select();
+        }
+
+        private void SetInteractable(bool interactable)
+        {
+            if (_canvasGroup == null) return;
+
+            _canvasGroup.interactable = interactable;
+            _canvasGroup.blocksRaycasts = interactable;
         }
 
         #endregion

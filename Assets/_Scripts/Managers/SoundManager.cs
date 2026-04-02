@@ -2,6 +2,7 @@ using My.Scripts.Core.Data;
 using My.Scripts.Core.Utility;
 using My.Scripts.EventBus;
 using My.Scripts.Gameplay.Player;
+using My.Scripts.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace My.Scripts.Managers
         private const float MIXER_INIT_DELAY = 0.05f;
         private const float VOLUME_FADE_TIME = 0.15f;
         private const float THRUSTER_FADE_TIME = 0.1f;
+        private const float UI_HOVER_COOLDOWN = 0.25f;
 
         // Ќастройки стерео-панорамировани€
         private const float SIDE_THRUSTER_PAN = 0.7f;      // Ќасколько сильно смещаетс€ звук в сторону (0-1)
@@ -37,6 +39,7 @@ namespace My.Scripts.Managers
 
         [Header("Audio Sources")]
         [SerializeField] private AudioSource _mainAudioSource;
+        [SerializeField] private AudioSource _uiAudioSource;
         [SerializeField] private AudioSource _windAudioSource;
         [SerializeField] private AudioSource _progressBarAudioSource;
 
@@ -57,6 +60,16 @@ namespace My.Scripts.Managers
         [SerializeField] private AudioClip _thrusterClip;
         [SerializeField] private AudioClip _crestRevealClip;
         [SerializeField] private AudioClip _lastCrestRevealClip;
+
+        [Header("UI Sound Effects Ч Large")]
+        [SerializeField] private AudioClip _uiLargeHoverClip;
+        [SerializeField] private AudioClip _uiLargeClickOpenClip;
+        [SerializeField] private AudioClip _uiLargeClickCloseClip;
+
+        [Header("UI Sound Effects Ч Small")]
+        [SerializeField] private AudioClip _uiSmallHoverClip;
+        [SerializeField] private AudioClip _uiSmallClickOpenClip;
+        [SerializeField] private AudioClip _uiSmallClickCloseClip;
 
         [Header("Thruster Stereo Settings")]
         [SerializeField, Range(0f, 1f)]
@@ -94,6 +107,8 @@ namespace My.Scripts.Managers
         // ÷елевые значени€ дл€ плавного перехода
         private float _targetThrusterVolume;
         private float _targetThrusterPan;
+
+        private float _lastUIClickTime = float.MinValue;
 
         private readonly List<AudioSourcePauseState> _pausedAudioStates = new();
 
@@ -201,6 +216,12 @@ namespace My.Scripts.Managers
                 _progressBarAudioSource.loop = false;
                 _progressBarAudioSource.outputAudioMixerGroup = _soundMixerGroup;
             }
+            if (_uiAudioSource != null)
+            {
+                _uiAudioSource.playOnAwake = false;
+                _uiAudioSource.loop = false;
+                _uiAudioSource.outputAudioMixerGroup = _soundMixerGroup;
+            }
         }
 
         #endregion
@@ -295,6 +316,42 @@ namespace My.Scripts.Managers
         {
             UnsubscribeFromEvents();
             SubscribeToEvents();
+        }
+
+        #endregion
+
+        #region Public Methods Ч UI Sounds
+
+        public void PlayUIHoverSound(UIElementSize size)
+        {
+            if (Time.unscaledTime - _lastUIClickTime < UI_HOVER_COOLDOWN) return;
+
+            var clip = size == UIElementSize.Large
+                ? _uiLargeHoverClip
+                : _uiSmallHoverClip;
+
+            PlayUISound(clip);
+        }
+
+        public void PlayUIClickSound(UIElementSize size, ClickSoundVariant variant)
+        {
+            _lastUIClickTime = Time.unscaledTime;
+
+            var clip = (size, variant) switch
+            {
+                (UIElementSize.Large, ClickSoundVariant.Open) => _uiLargeClickOpenClip,
+                (UIElementSize.Large, ClickSoundVariant.Close) => _uiLargeClickCloseClip,
+                (UIElementSize.Small, ClickSoundVariant.Open) => _uiSmallClickOpenClip,
+                (UIElementSize.Small, ClickSoundVariant.Close) => _uiSmallClickCloseClip,
+                _ => _uiLargeClickOpenClip
+            };
+
+            PlayUISound(clip);
+        }
+
+        public void SuppressHoverSound()
+        {
+            _lastUIClickTime = Time.unscaledTime;
         }
 
         #endregion
@@ -813,6 +870,13 @@ namespace My.Scripts.Managers
             _thrusterAudioSource = null;
             _isThrusterPlaying = false;
             ResetThrusterState();
+        }
+
+        private void PlayUISound(AudioClip clip)
+        {
+            if (clip == null || _uiAudioSource == null) return;
+
+            _uiAudioSource.PlayOneShot(clip);
         }
 
         #endregion

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 namespace My.Scripts.Managers
 {
@@ -29,6 +30,10 @@ namespace My.Scripts.Managers
         [Header("Music Tracks")]
         [SerializeField] private AudioClip[] _musicTracks;
 
+        [Header("Menu Music")]
+        [SerializeField] private AudioClip _menuTrack;
+        [SerializeField] private string[] _menuSceneNames;
+
         [Header("Settings")]
         [SerializeField] private bool _shuffleTracks = true;
         [SerializeField] private bool _loopPlaylist = true;
@@ -44,6 +49,7 @@ namespace My.Scripts.Managers
         private bool _isPaused;
         private bool _isMixerReady;
         private bool _isFullyInitialized;
+        private bool _isMenuMode;
 
         #endregion
 
@@ -78,11 +84,13 @@ namespace My.Scripts.Managers
         private void OnEnable()
         {
             SubscribeToEvents();
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void OnDisable()
         {
             UnsubscribeFromEvents();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         private void Update()
@@ -167,10 +175,8 @@ namespace My.Scripts.Managers
 
         private void StartPlayback()
         {
-            if (CanPlayMusic())
-            {
-                PlayNextTrack();
-            }
+            bool isMenuScene = IsMenuScene(SceneManager.GetActiveScene().name);
+            ApplyMusicMode(isMenuScene);
         }
 
         #endregion
@@ -241,6 +247,7 @@ namespace My.Scripts.Managers
 
         public void PlayNextTrack()
         {
+            if (_isMenuMode) return;
             if (!CanPlayMusic() || !_isMixerReady) return;
 
             SelectNextTrack();
@@ -380,6 +387,8 @@ namespace My.Scripts.Managers
 
         private void CheckTrackEnd()
         {
+            if (_isMenuMode) return;
+
             if (!_isApplicationFocused || _isPaused || _audioSource == null) return;
             if (_audioSource.clip == null) return;
 
@@ -457,6 +466,84 @@ namespace My.Scripts.Managers
                     _audioSource.Pause();
                 }
             }
+        }
+
+        #endregion
+
+        #region Private Methods — Scene Music Mode
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (!_isFullyInitialized) return;
+
+            bool isMenuScene = IsMenuScene(scene.name);
+            ApplyMusicMode(isMenuScene);
+        }
+
+        private bool IsMenuScene(string sceneName)
+        {
+            if (_menuSceneNames == null) return false;
+
+            foreach (var name in _menuSceneNames)
+            {
+                if (string.Equals(name, sceneName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void ApplyMusicMode(bool isMenuScene)
+        {
+            if (isMenuScene)
+            {
+                ApplyMenuMode();
+            }
+            else
+            {
+                ApplyGameplayMode();
+            }
+        }
+
+        private void ApplyMenuMode()
+        {
+            if (_menuTrack == null) return;
+
+            // Уже играет меню-трек — не перезапускаем
+            if (_isMenuMode && _audioSource.clip == _menuTrack)
+                return;
+
+            _isMenuMode = true;
+
+            _audioSource.Stop();
+            _audioSource.clip = _menuTrack;
+            _audioSource.loop = true;
+            _audioSource.Play();
+
+            _isPaused = false;
+
+            OnTrackChanged?.Invoke(_menuTrack);
+            Debug.Log($"[{nameof(MusicManager)}] Menu mode: {_menuTrack.name} (loop)");
+        }
+
+        private void ApplyGameplayMode()
+        {
+            if (!CanPlayMusic()) return;
+
+            // Уже в игровом режиме и играет — не трогаем
+            if (!_isMenuMode && _audioSource.isPlaying)
+                return;
+
+            _isMenuMode = false;
+
+            _audioSource.Stop();
+            _audioSource.loop = false;
+
+            InitializeTrackList();
+            SelectNextTrack();
+            PlayCurrentTrack();
+
+            Debug.Log($"[{nameof(MusicManager)}] Gameplay mode: playlist shuffle");
         }
 
         #endregion

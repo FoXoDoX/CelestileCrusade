@@ -12,6 +12,8 @@ namespace My.Scripts.Core.Data
         private const float DEFAULT_SOUND_VOLUME = 0.7f;
         private const bool DEFAULT_FULLSCREEN = true;
         private const int DEFAULT_GRAPHICS_QUALITY = 2;
+        private const int DEFAULT_TARGET_FPS = 0; // 0 = не задано, будет использована частота монитора
+        private const bool DEFAULT_VSYNC = false;
 
         #endregion
 
@@ -84,6 +86,32 @@ namespace My.Scripts.Core.Data
             GraphicsQuality = Mathf.Clamp(qualityLevel, 0, maxQuality);
 
             Debug.Log($"[GameData] Graphics quality set: {GraphicsQuality}");
+        }
+
+        #endregion
+
+        #region FPS & VSync Settings
+
+        /// <summary>
+        /// Целевой FPS. 0 = не задано (первый запуск), -1 = безлимитно, >0 = конкретное значение.
+        /// </summary>
+        public static int TargetFPS { get; private set; } = DEFAULT_TARGET_FPS;
+
+        /// <summary>
+        /// Включена ли вертикальная синхронизация.
+        /// </summary>
+        public static bool IsVSyncEnabled { get; private set; } = DEFAULT_VSYNC;
+
+        public static void SetTargetFPS(int fps)
+        {
+            TargetFPS = fps;
+            Debug.Log($"[GameData] Target FPS set: {fps}");
+        }
+
+        public static void SetVSync(bool enabled)
+        {
+            IsVSyncEnabled = enabled;
+            Debug.Log($"[GameData] VSync set: {enabled}");
         }
 
         #endregion
@@ -228,6 +256,9 @@ namespace My.Scripts.Core.Data
             SoundVolume = DEFAULT_SOUND_VOLUME;
             GraphicsQuality = DEFAULT_GRAPHICS_QUALITY;
 
+            TargetFPS = DEFAULT_TARGET_FPS;
+            IsVSyncEnabled = DEFAULT_VSYNC;
+
             ScreenWidth = Screen.width;
             ScreenHeight = Screen.height;
             IsFullscreen = DEFAULT_FULLSCREEN;
@@ -256,6 +287,10 @@ namespace My.Scripts.Core.Data
             // Graphics
             data.graphicsQuality = GraphicsQuality;
 
+            // FPS & VSync
+            data.targetFPS = TargetFPS;
+            data.isVSyncEnabled = IsVSyncEnabled;
+
             // Display
             data.screenWidth = ScreenWidth;
             data.screenHeight = ScreenHeight;
@@ -277,7 +312,8 @@ namespace My.Scripts.Core.Data
             // Tutorials
             data.completedTutorials = new List<int>(_completedTutorials);
 
-            Debug.Log($"[GameData] Saved: Tutorials={_completedTutorials.Count}, Graphics={GraphicsQuality}, Resolution={ScreenWidth}x{ScreenHeight}");
+            Debug.Log($"[GameData] Saved: Tutorials={_completedTutorials.Count}, Graphics={GraphicsQuality}, " +
+                      $"FPS={TargetFPS}, VSync={IsVSyncEnabled}, Resolution={ScreenWidth}x{ScreenHeight}");
         }
 
         public static void Load(GameSaveData data)
@@ -297,7 +333,8 @@ namespace My.Scripts.Core.Data
 
             _isInitialized = true;
 
-            Debug.Log($"[GameData] Loaded: Tutorials={_completedTutorials.Count}, Graphics={GraphicsQuality}, Fullscreen={IsFullscreen}");
+            Debug.Log($"[GameData] Loaded: Tutorials={_completedTutorials.Count}, Graphics={GraphicsQuality}, " +
+                      $"FPS={TargetFPS}, VSync={IsVSyncEnabled}, Fullscreen={IsFullscreen}");
         }
 
         private static void LoadDefaults()
@@ -307,6 +344,9 @@ namespace My.Scripts.Core.Data
             MusicVolume = DEFAULT_MUSIC_VOLUME;
             SoundVolume = DEFAULT_SOUND_VOLUME;
             GraphicsQuality = DEFAULT_GRAPHICS_QUALITY;
+
+            TargetFPS = DEFAULT_TARGET_FPS;
+            IsVSyncEnabled = DEFAULT_VSYNC;
 
             Resolution nativeResolution = Screen.currentResolution;
             ScreenWidth = nativeResolution.width;
@@ -319,7 +359,10 @@ namespace My.Scripts.Core.Data
             _completedTutorials = new HashSet<int>();
 
             QualitySettings.SetQualityLevel(GraphicsQuality);
+            QualitySettings.vSyncCount = IsVSyncEnabled ? 1 : 0;
             Screen.SetResolution(ScreenWidth, ScreenHeight, mode);
+
+            // FPS не применяем здесь — SettingsMenuUI сам определит частоту монитора
 
             Debug.Log($"[GameData] Applied defaults: Graphics={GraphicsQuality}");
         }
@@ -333,6 +376,10 @@ namespace My.Scripts.Core.Data
             // Graphics
             int maxQuality = QualitySettings.names.Length - 1;
             GraphicsQuality = Mathf.Clamp(data.graphicsQuality, 0, maxQuality);
+
+            // FPS & VSync
+            TargetFPS = data.targetFPS;
+            IsVSyncEnabled = data.isVSyncEnabled;
 
             // Display
             ScreenWidth = data.screenWidth;
@@ -352,6 +399,17 @@ namespace My.Scripts.Core.Data
             // Применяем настройки графики
             QualitySettings.SetQualityLevel(GraphicsQuality);
             Debug.Log($"[GameData] Applied graphics quality: {GraphicsQuality} ({QualitySettings.names[GraphicsQuality]})");
+
+            // Применяем VSync
+            QualitySettings.vSyncCount = IsVSyncEnabled ? 1 : 0;
+            Debug.Log($"[GameData] Applied VSync: {IsVSyncEnabled}");
+
+            // Применяем FPS
+            if (TargetFPS != 0)
+            {
+                Application.targetFrameRate = TargetFPS;
+                Debug.Log($"[GameData] Applied target FPS: {TargetFPS}");
+            }
 
             // Применяем разрешение
             if (ScreenWidth > 0 && ScreenHeight > 0)
@@ -420,6 +478,8 @@ namespace My.Scripts.Core.Data
             MusicVolume = DEFAULT_MUSIC_VOLUME;
             SoundVolume = DEFAULT_SOUND_VOLUME;
             GraphicsQuality = DEFAULT_GRAPHICS_QUALITY;
+            TargetFPS = DEFAULT_TARGET_FPS;
+            IsVSyncEnabled = DEFAULT_VSYNC;
             ScreenWidth = 0;
             ScreenHeight = 0;
             IsFullscreen = DEFAULT_FULLSCREEN;
@@ -450,6 +510,10 @@ namespace My.Scripts.Core.Data
 
         // Graphics
         public int graphicsQuality;
+
+        // FPS & VSync
+        public int targetFPS;
+        public bool isVSyncEnabled;
 
         // Display
         public int screenWidth;

@@ -16,6 +16,7 @@ namespace My.Scripts.UI.Menus
         private const string SOUND_VOLUME_FORMAT = "{0}%";
         private const string MUSIC_VOLUME_FORMAT = "{0}%";
         private const string RESOLUTION_FORMAT = "{0} x {1}";
+        private const string FPS_UNLIMITED_TEXT = "∞";
 
         #endregion
 
@@ -32,14 +33,33 @@ namespace My.Scripts.UI.Menus
         [SerializeField] private TextMeshProUGUI _soundVolumeText;
         [SerializeField] private TextMeshProUGUI _musicVolumeText;
 
-        [Header("Graphic Settings")]
-        [SerializeField] private TMP_Dropdown _graphicsDropdown;
+        [Header("Graphics Settings")]
+        [SerializeField] private Button _graphicsLeftButton;
+        [SerializeField] private Button _graphicsRightButton;
+        [SerializeField] private TextMeshProUGUI _graphicsValueText;
 
-        [Header("Display Settings")]
-        [SerializeField] private TMP_Dropdown _resolutionDropdown;
+        [Header("FPS Settings")]
+        [SerializeField] private Button _fpsLeftButton;
+        [SerializeField] private Button _fpsRightButton;
+        [SerializeField] private TextMeshProUGUI _fpsValueText;
+        [SerializeField] private int[] _predefinedFpsValues = { 30, 60, 90, 120, 144, 165, 240 };
+        [SerializeField] private bool _includeMonitorRefreshRate = true;
+
+        [Header("VSync Settings")]
+        [SerializeField] private Toggle _vsyncToggle;
+
+        [Header("Resolution Settings")]
+        [SerializeField] private Button _resolutionLeftButton;
+        [SerializeField] private Button _resolutionRightButton;
+        [SerializeField] private TextMeshProUGUI _resolutionValueText;
+
+        [Header("Fullscreen Settings")]
         [SerializeField] private Toggle _fullscreenToggle;
 
-        [Header("Display Settings Containers (для скрытия в WebGL)")]
+        [Header("Animation")]
+        [SerializeField] private SettingsMenuUIAnimation _animation;
+
+        [Header("Containers (для скрытия в WebGL)")]
         [SerializeField] private GameObject _resolutionContainer;
 
         #endregion
@@ -53,6 +73,13 @@ namespace My.Scripts.UI.Menus
         private List<Resolution> _availableResolutions = new();
         private int _currentResolutionIndex;
 
+        private List<int> _fpsOptions = new();
+        private int _currentFpsIndex;
+
+        private int _currentGraphicsIndex;
+
+        private Color _fpsTextOriginalColor;
+
         #endregion
 
         #region Unity Lifecycle
@@ -64,34 +91,15 @@ namespace My.Scripts.UI.Menus
             ConfigurePlatformSpecificUI();
         }
 
-        private void Start()
-        {
-            SubscribeToUIEvents();
-            SubscribeToVolumeChanges();
-
-            InitializeGraphicsSettings();
-            InitializeDisplaySettings();
-            SyncSlidersWithoutNotify();
-
-            SubscribeToSliderEvents();
-            SubscribeToGraphicsEvents();
-            SubscribeToDisplayEvents();
-
-            _isInitialized = true;
-
-            Debug.Log($"[SettingsMenuUI] Initialized. Graphics={GameData.GraphicsQuality}, Music={GameData.MusicVolume:F3}, Sound={GameData.SoundVolume:F3}");
-
-            Hide();
-        }
-
         private void OnEnable()
         {
-            SubscribeToVolumeChanges();
-
             if (_isInitialized)
             {
+                SubscribeToVolumeChanges();
                 SyncSlidersWithoutNotify();
                 SyncGraphicsSettings();
+                SyncFpsSettings();
+                SyncVSyncSettings();
                 SyncDisplaySettings();
             }
         }
@@ -107,20 +115,46 @@ namespace My.Scripts.UI.Menus
             CleanupButtons();
             UnsubscribeFromSliderEvents();
             UnsubscribeFromGraphicsEvents();
+            UnsubscribeFromFpsEvents();
+            UnsubscribeFromVSyncEvents();
             UnsubscribeFromDisplayEvents();
             UnsubscribeFromVolumeChanges();
-            UnsubscribeFromUIEvents();
         }
 
         #endregion
 
         #region Private Methods — Initialization
 
+        private void EnsureInitialized()
+        {
+            if (_isInitialized) return;
+
+            SubscribeToVolumeChanges();
+
+            InitializeGraphicsSettings();
+            InitializeFpsSettings();
+            InitializeVSyncSettings();
+            InitializeDisplaySettings();
+            SyncSlidersWithoutNotify();
+
+            SubscribeToSliderEvents();
+            SubscribeToGraphicsEvents();
+            SubscribeToFpsEvents();
+            SubscribeToVSyncEvents();
+            SubscribeToDisplayEvents();
+
+            _isInitialized = true;
+
+            Debug.Log($"[SettingsMenuUI] Initialized. Graphics={GameData.GraphicsQuality}, " +
+                      $"Music={GameData.MusicVolume:F3}, Sound={GameData.SoundVolume:F3}, " +
+                      $"FPS={Application.targetFrameRate}, VSync={QualitySettings.vSyncCount}");
+        }
+
         private void SetupButtons()
         {
             if (_backButton != null)
             {
-                _backButton.onClick.AddListener(OnBackClicked);
+                BindButton(_backButton, OnBackClicked);
             }
         }
 
@@ -142,14 +176,15 @@ namespace My.Scripts.UI.Menus
         private void ConfigurePlatformSpecificUI()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            // Скрываем настройку разрешения в WebGL
             if (_resolutionContainer != null)
             {
                 _resolutionContainer.SetActive(false);
             }
-            else if (_resolutionDropdown != null)
+            else
             {
-                _resolutionDropdown.gameObject.SetActive(false);
+                if (_resolutionLeftButton != null) _resolutionLeftButton.gameObject.SetActive(false);
+                if (_resolutionRightButton != null) _resolutionRightButton.gameObject.SetActive(false);
+                if (_resolutionValueText != null) _resolutionValueText.gameObject.SetActive(false);
             }
 #endif
         }
@@ -158,7 +193,7 @@ namespace My.Scripts.UI.Menus
         {
             if (_backButton != null)
             {
-                _backButton.onClick.RemoveListener(OnBackClicked);
+                UnbindButton(_backButton, OnBackClicked);
             }
         }
 
@@ -168,14 +203,121 @@ namespace My.Scripts.UI.Menus
 
         private void InitializeGraphicsSettings()
         {
-            if (_graphicsDropdown == null) return;
+            _currentGraphicsIndex = GameData.GraphicsQuality;
+            QualitySettings.SetQualityLevel(_currentGraphicsIndex);
+            UpdateGraphicsText();
 
-            int qualityLevel = GameData.GraphicsQuality;
-            _graphicsDropdown.SetValueWithoutNotify(qualityLevel);
+            Debug.Log($"[SettingsMenuUI] Graphics initialized: {_currentGraphicsIndex} ({QualitySettings.names[_currentGraphicsIndex]})");
+        }
 
-            QualitySettings.SetQualityLevel(qualityLevel);
+        #endregion
 
-            Debug.Log($"[SettingsMenuUI] Graphics initialized: {qualityLevel} ({QualitySettings.names[qualityLevel]})");
+        #region Private Methods — FPS Initialization
+
+        private void InitializeFpsSettings()
+        {
+            BuildFpsOptions();
+
+            if (_fpsValueText != null)
+            {
+                _fpsTextOriginalColor = _fpsValueText.color;
+            }
+
+            int savedFps = GetSavedOrDefaultFps();
+            _currentFpsIndex = FindFpsIndex(savedFps);
+
+            int actualFps = _fpsOptions[_currentFpsIndex];
+            Application.targetFrameRate = actualFps;
+
+            UpdateFpsInteractability();
+
+            Debug.Log($"[SettingsMenuUI] FPS initialized: {FormatFpsValue(actualFps)}");
+        }
+
+        private void BuildFpsOptions()
+        {
+            _fpsOptions.Clear();
+
+            HashSet<int> added = new();
+
+            if (_predefinedFpsValues != null)
+            {
+                foreach (int fps in _predefinedFpsValues)
+                {
+                    if (fps > 0 && added.Add(fps))
+                    {
+                        _fpsOptions.Add(fps);
+                    }
+                }
+            }
+
+            if (_includeMonitorRefreshRate)
+            {
+                int monitorHz = GetMonitorRefreshRate();
+                if (monitorHz > 0 && added.Add(monitorHz))
+                {
+                    _fpsOptions.Add(monitorHz);
+                }
+            }
+
+            _fpsOptions.Sort();
+            _fpsOptions.Add(-1);
+        }
+
+        private int GetSavedOrDefaultFps()
+        {
+            int saved = GameData.TargetFPS;
+            if (saved != 0) return saved;
+
+            return GetMonitorRefreshRate();
+        }
+
+        private int FindFpsIndex(int fps)
+        {
+            for (int i = 0; i < _fpsOptions.Count; i++)
+            {
+                if (_fpsOptions[i] == fps) return i;
+            }
+
+            if (fps <= 0) return _fpsOptions.Count - 1;
+
+            int closestIndex = 0;
+            int closestDiff = int.MaxValue;
+
+            for (int i = 0; i < _fpsOptions.Count; i++)
+            {
+                if (_fpsOptions[i] == -1) continue;
+
+                int diff = Mathf.Abs(_fpsOptions[i] - fps);
+                if (diff < closestDiff)
+                {
+                    closestDiff = diff;
+                    closestIndex = i;
+                }
+            }
+
+            return closestIndex;
+        }
+
+        private int GetMonitorRefreshRate()
+        {
+            int hz = (int)System.Math.Round(Screen.currentResolution.refreshRateRatio.value);
+            return hz > 0 ? hz : 60;
+        }
+
+        #endregion
+
+        #region Private Methods — VSync Initialization
+
+        private void InitializeVSyncSettings()
+        {
+            if (_vsyncToggle == null) return;
+
+            bool isVSync = GameData.IsVSyncEnabled;
+            _vsyncToggle.SetIsOnWithoutNotify(isVSync);
+            ApplyVSyncSetting(isVSync);
+
+            Debug.Log($"[SettingsMenuUI] VSync initialized: {isVSync}");
         }
 
         #endregion
@@ -184,26 +326,21 @@ namespace My.Scripts.UI.Menus
 
         private void InitializeDisplaySettings()
         {
-            InitializeResolutionDropdown();
+            InitializeResolutionSelector();
             InitializeFullscreenToggle();
         }
 
-        private void InitializeResolutionDropdown()
+        private void InitializeResolutionSelector()
         {
-            // Пропускаем для WebGL
 #if UNITY_WEBGL && !UNITY_EDITOR
             return;
 #endif
 
-            if (_resolutionDropdown == null) return;
-
-            _resolutionDropdown.ClearOptions();
             _availableResolutions.Clear();
-
             PopulateResolutionList();
 
             _currentResolutionIndex = FindCurrentResolutionIndex();
-            _resolutionDropdown.SetValueWithoutNotify(_currentResolutionIndex);
+            UpdateResolutionText();
 
             Debug.Log($"[SettingsMenuUI] Resolutions: {_availableResolutions.Count}, current index: {_currentResolutionIndex}");
         }
@@ -212,7 +349,6 @@ namespace My.Scripts.UI.Menus
         {
             Resolution[] allResolutions = Screen.resolutions;
             HashSet<string> addedResolutions = new();
-            List<string> options = new();
 
             for (int i = allResolutions.Length - 1; i >= 0; i--)
             {
@@ -223,10 +359,7 @@ namespace My.Scripts.UI.Menus
 
                 addedResolutions.Add(key);
                 _availableResolutions.Add(res);
-                options.Add(string.Format(RESOLUTION_FORMAT, res.width, res.height));
             }
-
-            _resolutionDropdown.AddOptions(options);
         }
 
         private int FindCurrentResolutionIndex()
@@ -323,34 +456,148 @@ namespace My.Scripts.UI.Menus
 
         private void SubscribeToGraphicsEvents()
         {
-            _graphicsDropdown?.onValueChanged.AddListener(OnGraphicsChanged);
+            _graphicsLeftButton?.onClick.AddListener(OnGraphicsLeftClicked);
+            _graphicsRightButton?.onClick.AddListener(OnGraphicsRightClicked);
         }
 
         private void UnsubscribeFromGraphicsEvents()
         {
-            _graphicsDropdown?.onValueChanged.RemoveListener(OnGraphicsChanged);
+            _graphicsLeftButton?.onClick.RemoveListener(OnGraphicsLeftClicked);
+            _graphicsRightButton?.onClick.RemoveListener(OnGraphicsRightClicked);
         }
 
-        private void OnGraphicsChanged(int index)
+        private void OnGraphicsLeftClicked()
         {
             if (!_isInitialized) return;
 
-            QualitySettings.SetQualityLevel(index);
+            int count = QualitySettings.names.Length;
+            if (count == 0) return;
 
-            GameData.SetGraphicsQuality(index);
+            _currentGraphicsIndex--;
+            if (_currentGraphicsIndex < 0)
+                _currentGraphicsIndex = count - 1;
+
+            ApplyCurrentGraphics();
+        }
+
+        private void OnGraphicsRightClicked()
+        {
+            if (!_isInitialized) return;
+
+            int count = QualitySettings.names.Length;
+            if (count == 0) return;
+
+            _currentGraphicsIndex++;
+            if (_currentGraphicsIndex >= count)
+                _currentGraphicsIndex = 0;
+
+            ApplyCurrentGraphics();
+        }
+
+        private void ApplyCurrentGraphics()
+        {
+            QualitySettings.SetQualityLevel(_currentGraphicsIndex);
+
+            // SetQualityLevel сбрасывает vSyncCount — восстанавливаем
+            ApplyVSyncSetting(GameData.IsVSyncEnabled);
+
+            GameData.SetGraphicsQuality(_currentGraphicsIndex);
             _settingsChanged = true;
+            UpdateGraphicsText();
 
-            Debug.Log($"[SettingsMenuUI] Graphics changed: {index} ({QualitySettings.names[index]})");
+            Debug.Log($"[SettingsMenuUI] Graphics changed: {_currentGraphicsIndex} ({QualitySettings.names[_currentGraphicsIndex]})");
         }
 
         #endregion
 
-        #region Private Methods — Display Events
+        #region Private Methods — FPS Events
+
+        private void SubscribeToFpsEvents()
+        {
+            _fpsLeftButton?.onClick.AddListener(OnFpsLeftClicked);
+            _fpsRightButton?.onClick.AddListener(OnFpsRightClicked);
+        }
+
+        private void UnsubscribeFromFpsEvents()
+        {
+            _fpsLeftButton?.onClick.RemoveListener(OnFpsLeftClicked);
+            _fpsRightButton?.onClick.RemoveListener(OnFpsRightClicked);
+        }
+
+        private void OnFpsLeftClicked()
+        {
+            if (!_isInitialized || _fpsOptions.Count == 0) return;
+
+            _currentFpsIndex--;
+            if (_currentFpsIndex < 0)
+                _currentFpsIndex = _fpsOptions.Count - 1;
+
+            ApplyCurrentFps();
+        }
+
+        private void OnFpsRightClicked()
+        {
+            if (!_isInitialized || _fpsOptions.Count == 0) return;
+
+            _currentFpsIndex++;
+            if (_currentFpsIndex >= _fpsOptions.Count)
+                _currentFpsIndex = 0;
+
+            ApplyCurrentFps();
+        }
+
+        private void ApplyCurrentFps()
+        {
+            int fps = _fpsOptions[_currentFpsIndex];
+            Application.targetFrameRate = fps;
+            GameData.SetTargetFPS(fps);
+            _settingsChanged = true;
+            UpdateFpsText();
+
+            Debug.Log($"[SettingsMenuUI] FPS limit changed: {FormatFpsValue(fps)}");
+        }
+
+        #endregion
+
+        #region Private Methods — VSync Events
+
+        private void SubscribeToVSyncEvents()
+        {
+            _vsyncToggle?.onValueChanged.AddListener(OnVSyncChanged);
+        }
+
+        private void UnsubscribeFromVSyncEvents()
+        {
+            _vsyncToggle?.onValueChanged.RemoveListener(OnVSyncChanged);
+        }
+
+        private void OnVSyncChanged(bool enabled)
+        {
+            if (!_isInitialized) return;
+
+            ApplyVSyncSetting(enabled);
+            GameData.SetVSync(enabled);
+            _settingsChanged = true;
+
+            UpdateFpsInteractability();
+
+            Debug.Log($"[SettingsMenuUI] VSync changed: {enabled}");
+        }
+
+        private void ApplyVSyncSetting(bool enabled)
+        {
+            QualitySettings.vSyncCount = enabled ? 1 : 0;
+        }
+
+        #endregion
+
+        #region Private Methods — Resolution Events
 
         private void SubscribeToDisplayEvents()
         {
 #if !UNITY_WEBGL || UNITY_EDITOR
-            _resolutionDropdown?.onValueChanged.AddListener(OnResolutionChanged);
+            _resolutionLeftButton?.onClick.AddListener(OnResolutionLeftClicked);
+            _resolutionRightButton?.onClick.AddListener(OnResolutionRightClicked);
 #endif
             _fullscreenToggle?.onValueChanged.AddListener(OnFullscreenChanged);
         }
@@ -358,21 +605,41 @@ namespace My.Scripts.UI.Menus
         private void UnsubscribeFromDisplayEvents()
         {
 #if !UNITY_WEBGL || UNITY_EDITOR
-            _resolutionDropdown?.onValueChanged.RemoveListener(OnResolutionChanged);
+            _resolutionLeftButton?.onClick.RemoveListener(OnResolutionLeftClicked);
+            _resolutionRightButton?.onClick.RemoveListener(OnResolutionRightClicked);
 #endif
             _fullscreenToggle?.onValueChanged.RemoveListener(OnFullscreenChanged);
         }
 
-        private void OnResolutionChanged(int index)
+        private void OnResolutionLeftClicked()
         {
-            if (!_isInitialized) return;
-            if (index < 0 || index >= _availableResolutions.Count) return;
+            if (!_isInitialized || _availableResolutions.Count == 0) return;
 
-            _currentResolutionIndex = index;
-            Resolution selected = _availableResolutions[index];
+            _currentResolutionIndex--;
+            if (_currentResolutionIndex < 0)
+                _currentResolutionIndex = _availableResolutions.Count - 1;
+
+            ApplyCurrentResolution();
+        }
+
+        private void OnResolutionRightClicked()
+        {
+            if (!_isInitialized || _availableResolutions.Count == 0) return;
+
+            _currentResolutionIndex++;
+            if (_currentResolutionIndex >= _availableResolutions.Count)
+                _currentResolutionIndex = 0;
+
+            ApplyCurrentResolution();
+        }
+
+        private void ApplyCurrentResolution()
+        {
+            Resolution selected = _availableResolutions[_currentResolutionIndex];
             bool isFullscreen = _fullscreenToggle != null && _fullscreenToggle.isOn;
 
             ApplyResolution(selected.width, selected.height, isFullscreen);
+            UpdateResolutionText();
         }
 
         private void OnFullscreenChanged(bool isFullscreen)
@@ -380,7 +647,6 @@ namespace My.Scripts.UI.Menus
             if (!_isInitialized) return;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-            // В WebGL используем Screen.fullScreen напрямую
             Screen.fullScreen = isFullscreen;
             GameData.SetFullscreen(isFullscreen);
             _settingsChanged = true;
@@ -407,29 +673,33 @@ namespace My.Scripts.UI.Menus
 
         #endregion
 
+        #region Private Methods — Button Binding
+
+        private void BindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.AddDelayedListener(action);
+            }
+        }
+
+        private void UnbindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.RemoveDelayedListener(action);
+            }
+        }
+
+        #endregion
+
         #region Private Methods — Event Subscription
-
-        private void SubscribeToUIEvents()
-        {
-            if (_isSubscribedToEvents) return;
-
-            var em = EventManager.Instance;
-            if (em == null) return;
-
-            em.AddHandler(GameEvents.SettingsButtonPressed, OnSettingsButtonPressed);
-            _isSubscribedToEvents = true;
-        }
-
-        private void UnsubscribeFromUIEvents()
-        {
-            if (!_isSubscribedToEvents) return;
-
-            var em = EventManager.Instance;
-            if (em == null) return;
-
-            em.RemoveHandler(GameEvents.SettingsButtonPressed, OnSettingsButtonPressed);
-            _isSubscribedToEvents = false;
-        }
 
         private void SubscribeToVolumeChanges()
         {
@@ -460,11 +730,6 @@ namespace My.Scripts.UI.Menus
         #endregion
 
         #region Private Methods — Event Handlers
-
-        private void OnSettingsButtonPressed()
-        {
-            Show();
-        }
 
         private void OnBackClicked()
         {
@@ -527,28 +792,41 @@ namespace My.Scripts.UI.Menus
 
         private void SyncGraphicsSettings()
         {
-            if (_graphicsDropdown == null) return;
+            _currentGraphicsIndex = GameData.GraphicsQuality;
+            UpdateGraphicsText();
+        }
 
-            int qualityLevel = GameData.GraphicsQuality;
-            _graphicsDropdown.SetValueWithoutNotify(qualityLevel);
+        private void SyncFpsSettings()
+        {
+            if (_fpsOptions.Count == 0) return;
+
+            int savedFps = GetSavedOrDefaultFps();
+            _currentFpsIndex = FindFpsIndex(savedFps);
+            UpdateFpsInteractability();
+        }
+
+        private void SyncVSyncSettings()
+        {
+            if (_vsyncToggle == null) return;
+
+            _vsyncToggle.SetIsOnWithoutNotify(GameData.IsVSyncEnabled);
+            UpdateFpsInteractability();
         }
 
         private void SyncDisplaySettings()
         {
-            SyncResolutionDropdown();
+            SyncResolutionSelector();
             SyncFullscreenToggle();
         }
 
-        private void SyncResolutionDropdown()
+        private void SyncResolutionSelector()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
             return;
 #endif
 
-            if (_resolutionDropdown == null) return;
-
             _currentResolutionIndex = FindCurrentResolutionIndex();
-            _resolutionDropdown.SetValueWithoutNotify(_currentResolutionIndex);
+            UpdateResolutionText();
         }
 
         private void SyncFullscreenToggle()
@@ -574,23 +852,100 @@ namespace My.Scripts.UI.Menus
             _musicVolumeText.text = string.Format(MUSIC_VOLUME_FORMAT, percentage);
         }
 
+        private void UpdateGraphicsText()
+        {
+            if (_graphicsValueText == null) return;
+
+            string[] names = QualitySettings.names;
+            if (_currentGraphicsIndex >= 0 && _currentGraphicsIndex < names.Length)
+            {
+                _graphicsValueText.text = names[_currentGraphicsIndex];
+            }
+        }
+
+        private void UpdateFpsInteractability()
+        {
+            bool vsyncOn = _vsyncToggle != null && _vsyncToggle.isOn;
+
+            if (_fpsLeftButton != null) _fpsLeftButton.interactable = !vsyncOn;
+            if (_fpsRightButton != null) _fpsRightButton.interactable = !vsyncOn;
+
+            if (_fpsValueText != null)
+            {
+                _fpsValueText.color = vsyncOn
+                    ? new Color32(0xC8, 0xC8, 0xC8, 0xFF)
+                    : _fpsTextOriginalColor;
+            }
+
+            if (vsyncOn)
+            {
+                int monitorHz = GetMonitorRefreshRate();
+
+                if (_fpsValueText != null)
+                {
+                    _fpsValueText.text = monitorHz.ToString();
+                }
+            }
+            else
+            {
+                UpdateFpsText();
+            }
+        }
+
+        private void UpdateFpsText()
+        {
+            if (_fpsValueText == null || _fpsOptions.Count == 0) return;
+
+            int fps = _fpsOptions[_currentFpsIndex];
+            _fpsValueText.text = FormatFpsValue(fps);
+        }
+
+        private void UpdateResolutionText()
+        {
+            if (_resolutionValueText == null) return;
+
+            if (_currentResolutionIndex >= 0 && _currentResolutionIndex < _availableResolutions.Count)
+            {
+                Resolution res = _availableResolutions[_currentResolutionIndex];
+                _resolutionValueText.text = string.Format(RESOLUTION_FORMAT, res.width, res.height);
+            }
+        }
+
+        private string FormatFpsValue(int fps)
+        {
+            return fps == -1 ? FPS_UNLIMITED_TEXT : fps.ToString();
+        }
+
         #endregion
 
         #region Private Methods — Visibility
 
-        private void Show()
+        public void Show()
         {
             _settingsChanged = false;
             gameObject.SetActive(true);
+            EnsureInitialized();
+
             SyncSlidersWithoutNotify();
             SyncGraphicsSettings();
+            SyncFpsSettings();
+            SyncVSyncSettings();
             SyncDisplaySettings();
-            _soundVolumeSlider?.Select();
+
+            _backButton?.Select();
+            _animation?.PlayShow();
         }
 
         private void Hide()
         {
-            gameObject.SetActive(false);
+            if (_animation != null)
+            {
+                _animation.PlayHide();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         #endregion

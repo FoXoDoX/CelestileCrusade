@@ -1,5 +1,6 @@
 ﻿using My.Scripts.Core.Data;
 using My.Scripts.Core.Scene;
+using My.Scripts.Managers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -82,7 +83,6 @@ namespace My.Scripts.UI.Menus
                     continue;
                 }
 
-                // Создаём данные для кнопки и автоматически находим звёзды
                 var buttonData = new LevelButtonData(button, levelNumber, _starsPerLevel);
                 _levelButtonsData.Add(buttonData);
 
@@ -95,38 +95,66 @@ namespace My.Scripts.UI.Menus
 
                 if (isAvailable)
                 {
-                    buttonData.OnLevelSelected += HandleLevelSelected;
+                    BindButton(button, () => HandleLevelSelected(levelNumber));
                 }
             }
         }
 
         private void InitializeBackButton()
         {
-            if (_backButton != null)
-            {
-                _backButton.onClick.AddListener(OnBackButtonClicked);
-            }
+            BindButton(_backButton, OnBackButtonClicked);
         }
 
         private void CleanupButtons()
         {
             foreach (var buttonData in _levelButtonsData)
             {
-                buttonData.OnLevelSelected -= HandleLevelSelected;
                 buttonData.Cleanup();
             }
 
             _levelButtonsData.Clear();
 
-            if (_backButton != null)
-            {
-                _backButton.onClick.RemoveListener(OnBackButtonClicked);
-            }
+            UnbindButton(_backButton, OnBackButtonClicked);
         }
 
         private void SelectDefaultButton()
         {
+            SoundManager.Instance?.SuppressHoverSound();
             _backButton?.Select();
+        }
+
+        #endregion
+
+        #region Private Methods — Button Binding
+
+        private void BindButton(Button button, Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.AddDelayedListener(action);
+            }
+            else
+            {
+                button.onClick.AddListener(() => action());
+            }
+        }
+
+        private void UnbindButton(Button button, Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.RemoveDelayedListener(action);
+            }
+            else
+            {
+                button.onClick.RemoveAllListeners();
+            }
         }
 
         #endregion
@@ -142,7 +170,7 @@ namespace My.Scripts.UI.Menus
 
         private void OnBackButtonClicked()
         {
-            SceneLoader.LoadScene(SceneLoader.Scene.MainMenuScene);
+            SceneLoader.LoadScene(SceneLoader.Scene.MainMenuScene, TransitionDirection.Left);
         }
 
         #endregion
@@ -159,29 +187,8 @@ namespace My.Scripts.UI.Menus
         #endregion
     }
 
-    /// <summary>
-    /// Внутренние данные кнопки уровня с автопоиском звёзд.
-    /// Структура иерархии кнопки:
-    /// Button
-    ///   ├── Text (или любой другой объект)
-    ///   ├── Star1
-    ///   │     ├── UnearnedImage (index 0)
-    ///   │     └── EarnedImage (index 1)
-    ///   ├── Star2
-    ///   │     ├── UnearnedImage
-    ///   │     └── EarnedImage
-    ///   └── Star3
-    ///         ├── UnearnedImage
-    ///         └── EarnedImage
-    /// </summary>
     public class LevelButtonData
     {
-        #region Events
-
-        public event Action<int> OnLevelSelected;
-
-        #endregion
-
         #region Private Fields
 
         private readonly Button _button;
@@ -208,25 +215,18 @@ namespace My.Scripts.UI.Menus
         {
             if (_button == null) return;
 
-            _button.interactable = isAvailable;
+            if (!isAvailable)
+            {
+                _button.gameObject.SetActive(false);
+                return;
+            }
 
-            if (isAvailable)
-            {
-                _button.onClick.AddListener(OnButtonClicked);
-                DisplayStars(starsEarned);
-            }
-            else
-            {
-                HideAllStars();
-            }
+            DisplayStars(starsEarned);
         }
 
         public void Cleanup()
         {
-            if (_button != null)
-            {
-                _button.onClick.RemoveListener(OnButtonClicked);
-            }
+            // Привязка через ButtonVisuals управляется LevelsMenuUI
         }
 
         #endregion
@@ -240,12 +240,10 @@ namespace My.Scripts.UI.Menus
             Transform buttonTransform = _button.transform;
             int foundStars = 0;
 
-            // Проходим по всем дочерним объектам кнопки
             for (int i = 0; i < buttonTransform.childCount && foundStars < expectedCount; i++)
             {
                 Transform child = buttonTransform.GetChild(i);
 
-                // Проверяем, является ли это звездой (имеет минимум 2 дочерних Image)
                 if (TryParseAsStar(child, out StarImages starImages))
                 {
                     _stars.Add(starImages);
@@ -268,8 +266,6 @@ namespace My.Scripts.UI.Menus
             if (starTransform.childCount < 2)
                 return false;
 
-            // Первый дочерний объект — UnearnedImage (index 0)
-            // Второй дочерний объект — EarnedImage (index 1)
             var unearnedImage = starTransform.GetChild(0).GetComponent<Image>();
             var earnedImage = starTransform.GetChild(1).GetComponent<Image>();
 
@@ -297,25 +293,9 @@ namespace My.Scripts.UI.Menus
             }
         }
 
-        private void HideAllStars()
-        {
-            foreach (var star in _stars)
-            {
-                star.SetState(earned: false, visible: false);
-            }
-        }
-
-        private void OnButtonClicked()
-        {
-            OnLevelSelected?.Invoke(_levelNumber);
-        }
-
         #endregion
     }
 
-    /// <summary>
-    /// Структура для хранения ссылок на Image звезды.
-    /// </summary>
     public readonly struct StarImages
     {
         private readonly Image _unearnedImage;
@@ -327,20 +307,13 @@ namespace My.Scripts.UI.Menus
             _earnedImage = earnedImage;
         }
 
-        /// <summary>
-        /// Устанавливает состояние звезды.
-        /// </summary>
-        /// <param name="earned">Звезда заработана</param>
-        /// <param name="visible">Звезда видима</param>
         public void SetState(bool earned, bool visible)
         {
-            // Фон (unearned) виден всегда, когда звезда отображается
             if (_unearnedImage != null)
             {
                 _unearnedImage.enabled = visible;
             }
 
-            // Заработанная звезда накладывается поверх
             if (_earnedImage != null)
             {
                 _earnedImage.enabled = earned && visible;

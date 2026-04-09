@@ -21,6 +21,14 @@ namespace My.Scripts.Gameplay.KeyDoor
         [Header("Settings")]
         [SerializeField] private float _deliverDuration = DELIVER_TIME;
 
+        [Header("Sprites")]
+        [SerializeField] private Sprite _goldenKeySprite;
+        [SerializeField] private Sprite _silverKeySprite;
+        [SerializeField] private Sprite _bronzeKeySprite;
+
+        [Header("References")]
+        [SerializeField] private SpriteRenderer _keySpriteRenderer;
+
         #endregion
 
         #region Private Fields
@@ -75,6 +83,35 @@ namespace My.Scripts.Gameplay.KeyDoor
         {
             CancelDelivery();
             Destroy(gameObject);
+        }
+
+        #endregion
+
+        #region Private Methods — Sprites
+
+        private void ApplySprite()
+        {
+            if (_keySpriteRenderer == null)
+            {
+                // Ищем в дочернем объекте KeySprite
+                var keySprite = transform.Find("KeySprite");
+                if (keySprite != null)
+                {
+                    _keySpriteRenderer = keySprite.GetComponent<SpriteRenderer>();
+                }
+            }
+
+            if (_keySpriteRenderer == null) return;
+
+            _keySpriteRenderer.sprite = _requiredKeyType switch
+            {
+                Key.KeyType.Golden => _goldenKeySprite,
+                Key.KeyType.Silver => _silverKeySprite,
+                Key.KeyType.Bronze => _bronzeKeySprite,
+                _ => _keySpriteRenderer.sprite
+            };
+
+            _keySpriteRenderer.color = Color.white;
         }
 
         #endregion
@@ -220,11 +257,17 @@ namespace My.Scripts.Gameplay.KeyDoor
             {
                 _deliverDuration = DELIVER_TIME;
             }
+
+            UnityEditor.EditorApplication.delayCall += () =>
+            {
+                if (this == null) return;
+
+                ApplySprite();
+            };
         }
 
         private void OnDrawGizmosSelected()
         {
-            // Визуализация зоны доставки
             Gizmos.color = GetGizmoColor();
 
             if (TryGetComponent(out CircleCollider2D circle))
@@ -247,9 +290,9 @@ namespace My.Scripts.Gameplay.KeyDoor
         {
             return _requiredKeyType switch
             {
-                Key.KeyType.Red => new Color(1f, 0f, 0f, 0.5f),
-                Key.KeyType.Green => new Color(0f, 1f, 0f, 0.5f),
-                Key.KeyType.Blue => new Color(0f, 0f, 1f, 0.5f),
+                Key.KeyType.Golden => new Color(1f, 0.84f, 0f, 0.5f),
+                Key.KeyType.Silver => new Color(0.75f, 0.75f, 0.75f, 0.5f),
+                Key.KeyType.Bronze => new Color(0.8f, 0.5f, 0.2f, 0.5f),
                 _ => new Color(1f, 1f, 0f, 0.5f)
             };
         }

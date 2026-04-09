@@ -2,6 +2,7 @@
 using My.Scripts.Core.Data;
 using My.Scripts.Core.Scene;
 using My.Scripts.Core.Utility;
+using My.Scripts.Environment.Terrain;
 using My.Scripts.EventBus;
 using My.Scripts.Gameplay.CameraUtility;
 using My.Scripts.Gameplay.Levels;
@@ -298,14 +299,15 @@ namespace My.Scripts.Managers
 
             // Отправляем событие с полными данными
             var completedData = new LevelCompletedData(
-                isSuccess: data.LandingType == Lander.LandingType.Success,
-                totalScore: _score,
-                crestsEarned: starsEarned,
-                landingScore: data.Score,
-                landingSpeed: data.LandingSpeed,
-                dotVector: data.DotVector,
-                scoreMultiplier: data.ScoreMultiplier
-            );
+    isSuccess: data.LandingType == Lander.LandingType.Success,
+    landingType: data.LandingType,
+    totalScore: _score,
+    crestsEarned: starsEarned,
+    landingScore: data.Score,
+    landingSpeed: data.LandingSpeed,
+    dotVector: data.DotVector,
+    scoreMultiplier: data.ScoreMultiplier
+    );
 
             EventManager.Instance?.Broadcast(GameEvents.LevelCompleted, completedData);
         }
@@ -387,6 +389,12 @@ namespace My.Scripts.Managers
             else
             {
                 Debug.LogWarning("[GameManager] Lander not found!");
+            }
+
+            var terrainGenerator = FindFirstObjectByType<EndlessTerrainGenerator>();
+            if (terrainGenerator != null)
+            {
+                terrainGenerator.InitializeWithSeed(_currentGameLevel.GetTerrainSeed());
             }
 
             // Настраиваем камеру

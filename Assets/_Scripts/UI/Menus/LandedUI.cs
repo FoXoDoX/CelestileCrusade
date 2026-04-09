@@ -1,5 +1,6 @@
 using My.Scripts.Core.Data;
 using My.Scripts.EventBus;
+using My.Scripts.Gameplay.Player;
 using My.Scripts.Managers;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,13 @@ namespace My.Scripts.UI.Menus
         #region Constants
 
         private const string SUCCESS_TITLE = "<wave amplitude=5>SUCCESSFUL LANDING!</wave>";
+
         private const string CRASH_TITLE = "<color=#ff0000><shake minx=2 miny=2 maxx=2 maxy=2>CRASH!</shake></color>";
+
+        private const string TOO_FAST_TITLE = "<color=#ff0000><shake minx=2 miny=2 maxx=2 maxy=2>LANDED TOO FAST!</shake></color>";
+
+        private const string TOO_STEEP_TITLE = "<color=#ff0000><shake minx=2 miny=2 maxx=2 maxy=2>TOO STEEP ANGLE!</shake></color>";
+
         private const string CONTINUE_BUTTON_TEXT = "CONTINUE";
         private const string RESTART_BUTTON_TEXT = "RESTART";
 
@@ -92,7 +99,7 @@ namespace My.Scripts.UI.Menus
         {
             if (_nextButton != null)
             {
-                _nextButton.onClick.AddListener(OnNextButtonClicked);
+                BindButton(_nextButton, OnNextButtonClicked);
             }
         }
 
@@ -100,7 +107,7 @@ namespace My.Scripts.UI.Menus
         {
             if (_nextButton != null)
             {
-                _nextButton.onClick.RemoveListener(OnNextButtonClicked);
+                UnbindButton(_nextButton, OnNextButtonClicked);
             }
         }
 
@@ -204,7 +211,7 @@ namespace My.Scripts.UI.Menus
         {
             if (_crashTitleText != null)
             {
-                _crashTitleText.text = CRASH_TITLE;
+                _crashTitleText.text = GetCrashTitle(data.LandingType);
             }
 
             _nextButtonText.text = RESTART_BUTTON_TEXT;
@@ -213,6 +220,16 @@ namespace My.Scripts.UI.Menus
             _currentEarnedCrests = 0;
             _isSuccess = false;
             HideAllCrests();
+        }
+
+        private string GetCrashTitle(Lander.LandingType landingType)
+        {
+            return landingType switch
+            {
+                Lander.LandingType.TooFastLanding => TOO_FAST_TITLE,
+                Lander.LandingType.TooSteepAngle => TOO_STEEP_TITLE,
+                _ => CRASH_TITLE
+            };
         }
 
         private void UpdateStats(LevelCompletedData data)
@@ -286,6 +303,33 @@ namespace My.Scripts.UI.Menus
 
         #endregion
 
+        #region Private Methods Ч Button Binding
+
+        // >>> ƒќЅј¬Ћ≈Ќќ: хелперы дл€ прив€зки через ButtonVisuals <<<
+        private void BindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.AddDelayedListener(action);
+            }
+        }
+
+        private void UnbindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.RemoveDelayedListener(action);
+            }
+        }
+
+        #endregion
+
         #region Private Methods Ч Visibility
 
         private void Show()
@@ -298,6 +342,7 @@ namespace My.Scripts.UI.Menus
 
             _animation?.PlayEnterAnimation(_currentEarnedCrests, totalScore, crestThresholds, _isSuccess);
 
+            SoundManager.Instance?.SuppressHoverSound();
             _nextButton?.Select();
         }
 

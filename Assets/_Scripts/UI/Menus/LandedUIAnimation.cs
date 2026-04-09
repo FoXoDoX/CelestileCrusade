@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using DG.Tweening;
+﻿using DG.Tweening;
 using My.Scripts.EventBus;          // ← добавлено
+using My.Scripts.Managers;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,9 @@ namespace My.Scripts.UI.Menus
         private const float RANK_DELAY_AFTER_SCORE = 0.3f;
         private const float RANK_FLASH_FADE_IN = 0.3f;
         private const float RANK_FLASH_FADE_OUT = 0.4f;
+
+        private const float SCORE_SOUND_INTERVAL = 0.08f;
+        private const int SCORE_SOUND_STEP = 10; 
 
         #endregion
 
@@ -94,6 +98,7 @@ namespace My.Scripts.UI.Menus
         private bool[] _crestAnimationTriggered;
         private bool _isSuccess;
         private bool _rankAnimationTriggered;
+        private float _lastScoreSoundTime;
 
         #endregion
 
@@ -386,6 +391,7 @@ namespace My.Scripts.UI.Menus
             if (_totalScoreText == null) return;
 
             float scoreDelay = _flashDuration + SCORE_DELAY_AFTER_FLASH;
+            int lastSoundScore = 0;
 
             sequence.Insert(
                 scoreDelay,
@@ -398,11 +404,26 @@ namespace My.Scripts.UI.Menus
                         _progressBarImage.fillAmount = Mathf.Clamp01((float)value / _maxScore);
                     }
 
+                    if (value > 0 && value - lastSoundScore >= SCORE_SOUND_STEP)
+                    {
+                        float now = Time.unscaledTime;
+                        if (now - _lastScoreSoundTime >= SCORE_SOUND_INTERVAL)
+                        {
+                            _lastScoreSoundTime = now;
+                            lastSoundScore = value;
+                            SoundManager.Instance?.PlayScoreCountSound();
+                        }
+                    }
+
                     TryTriggerCrestAnimations(value);
                     TryTriggerRankAnimation(value);
                 })
                 .SetEase(Ease.OutCubic)
-                .OnComplete(() => TryTriggerRankAnimation(_totalScore))
+                .OnComplete(() =>
+                {
+                    SoundManager.Instance?.PlayScoreCountSound();
+                    TryTriggerRankAnimation(_totalScore);
+                })
             );
         }
 

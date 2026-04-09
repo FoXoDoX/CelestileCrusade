@@ -415,7 +415,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03600931, y: 0.17693287}
+  m_Offset: {x: 0.0033175945, y: 0.14424098}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -425,7 +425,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5.969306, y: 1.1892513}
+  m_Size: {x: 5.8167443, y: 0.98220253}
   m_EdgeRadius: 0
 --- !u!114 &1462975516394112876
 MonoBehaviour:
@@ -1701,7 +1701,7 @@ Transform:
   m_GameObject: {fileID: 8040886738956563995}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.7939, z: 0}
+  m_LocalPosition: {x: 0, y: -0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1756,11 +1756,11 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2114453951145616757, guid: 88b155990ff07334ebc951db524ae669, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77804657768cf8f4eb28212addcc0008, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
+  m_DrawMode: 0
   m_Size: {x: 5.7448254, y: 1.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -2025,7 +2025,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0021169186, y: -0.9074472}
+  m_Offset: {x: 0.009289026, y: -0.6743577}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2035,7 +2035,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5.190661, y: 1.550216}
+  m_Size: {x: 5.5349164, y: 1.2131327}
   m_EdgeRadius: 0
 --- !u!114 &2013480398302036642
 MonoBehaviour:
@@ -2127,11 +2127,11 @@ MonoBehaviour:
   m_AlphaCutoff: 0.1
   m_ApplyToSortingLayers: 21a4872a7f83599c00000000
   m_ShapePath:
-  - {x: -2.783193, y: -1.6580223, z: 0}
-  - {x: -2.3643336, y: -0.03383957, z: 0}
-  - {x: 2.3971858, y: -0.042053044, z: 0}
-  - {x: 2.8078318, y: -1.6662352, z: 0}
-  m_ShapePathHash: -1006752757
+  - {x: -3, y: -1.23, z: 0}
+  - {x: -2.5, y: 0.3, z: 0}
+  - {x: 2.5, y: 0.3, z: 0}
+  - {x: 3, y: -1.23, z: 0}
+  m_ShapePathHash: -1825311915
   m_InstanceId: 0
   m_ShadowShape2DComponent: {fileID: 0}
   m_ShadowShape2DProvider:
@@ -2140,8 +2140,8 @@ MonoBehaviour:
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0.012319326, y: -0.8500374, z: 0}
-      m_Extent: {x: 2.7955124, y: 0.8161978, z: 0}
+      m_Center: {x: 0, y: -0.46500003, z: 0}
+      m_Extent: {x: 3, y: 0.765, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0

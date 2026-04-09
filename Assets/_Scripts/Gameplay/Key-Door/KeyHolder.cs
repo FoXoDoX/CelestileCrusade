@@ -22,9 +22,9 @@ namespace My.Scripts.Gameplay.KeyDoor
         #region Serialized Fields
 
         [Header("UI Destinations")]
-        [SerializeField] private RectTransform _redKeyDestination;
-        [SerializeField] private RectTransform _greenKeyDestination;
-        [SerializeField] private RectTransform _blueKeyDestination;
+        [SerializeField] private RectTransform _goldenKeyDestination;
+        [SerializeField] private RectTransform _silverKeyDestination;
+        [SerializeField] private RectTransform _bronzeKeyDestination;
 
         [Header("UI Setup")]
         [SerializeField] private Canvas _targetCanvas;
@@ -92,9 +92,9 @@ namespace My.Scripts.Gameplay.KeyDoor
 
         private void InitializeDestinations()
         {
-            _keyDestinations[Key.KeyType.Red] = _redKeyDestination;
-            _keyDestinations[Key.KeyType.Green] = _greenKeyDestination;
-            _keyDestinations[Key.KeyType.Blue] = _blueKeyDestination;
+            _keyDestinations[Key.KeyType.Golden] = _goldenKeyDestination;
+            _keyDestinations[Key.KeyType.Silver] = _silverKeyDestination;
+            _keyDestinations[Key.KeyType.Bronze] = _bronzeKeyDestination;
         }
 
         private void CacheCamera()
@@ -354,8 +354,7 @@ namespace My.Scripts.Gameplay.KeyDoor
                 return destination;
             }
 
-            // Fallback
-            return _redKeyDestination;
+            return _goldenKeyDestination;
         }
 
         private void KillAllAnimations()

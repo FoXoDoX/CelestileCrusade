@@ -103,7 +103,7 @@ namespace My.Scripts.UI
         {
             _button?.onClick.RemoveListener(HandleClick);
             _isProcessingClick = false;
-            StopCrestRotations();
+            SetCrestsActive(false);
         }
 
         private void OnDestroy()

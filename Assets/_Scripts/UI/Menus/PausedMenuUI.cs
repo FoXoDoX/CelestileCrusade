@@ -93,8 +93,8 @@ namespace My.Scripts.UI.Menus
 
         private void SetupButtons()
         {
-            _resumeButton?.onClick.AddListener(OnResumeClicked);
-            _mainMenuButton?.onClick.AddListener(OnMainMenuClicked);
+            BindButton(_resumeButton, OnResumeClicked);
+            BindButton(_mainMenuButton, OnMainMenuClicked);
         }
 
         private void ConfigureSliderRanges()
@@ -114,8 +114,8 @@ namespace My.Scripts.UI.Menus
 
         private void CleanupButtons()
         {
-            _resumeButton?.onClick.RemoveListener(OnResumeClicked);
-            _mainMenuButton?.onClick.RemoveListener(OnMainMenuClicked);
+            UnbindButton(_resumeButton, OnResumeClicked);
+            UnbindButton(_mainMenuButton, OnMainMenuClicked);
         }
 
         #endregion
@@ -231,7 +231,6 @@ namespace My.Scripts.UI.Menus
         private void OnMainMenuClicked()
         {
             SaveIfNeeded();
-            GameManager.Instance?.UnpauseGame();
             SceneLoader.LoadScene(SceneLoader.Scene.MainMenuScene);
         }
 
@@ -319,6 +318,33 @@ namespace My.Scripts.UI.Menus
 
         #endregion
 
+        #region Private Methods Ч Button Binding
+
+        // >>> ƒќЅј¬Ћ≈Ќќ: хелперы дл€ прив€зки через ButtonVisuals <<<
+        private void BindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.AddDelayedListener(action);
+            }
+        }
+
+        private void UnbindButton(Button button, System.Action action)
+        {
+            if (button == null) return;
+
+            var visuals = button.GetComponent<ButtonVisuals>();
+            if (visuals != null)
+            {
+                visuals.RemoveDelayedListener(action);
+            }
+        }
+
+        #endregion
+
         #region Private Methods Ч Visibility
 
         private void Show()
@@ -326,6 +352,16 @@ namespace My.Scripts.UI.Menus
             _volumeChanged = false;
             gameObject.SetActive(true);
             SyncSlidersWithoutNotify();
+
+            // —брасываем выбор перед Select(), чтобы гарантировать вызов OnSelect
+            // даже если кнопка уже была выбрана до скрыти€ меню
+            var eventSystem = UnityEngine.EventSystems.EventSystem.current;
+            if (eventSystem != null)
+            {
+                eventSystem.SetSelectedGameObject(null);
+            }
+
+            SoundManager.Instance?.SuppressHoverSound();
             _resumeButton?.Select();
         }
 

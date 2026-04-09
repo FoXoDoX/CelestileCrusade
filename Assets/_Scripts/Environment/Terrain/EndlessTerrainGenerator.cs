@@ -10,6 +10,7 @@ namespace My.Scripts.Environment.Terrain
 
         private const float DEFAULT_SPAWN_DISTANCE = 100f;
         private const int DEFAULT_INITIAL_PARTS = 3;
+        private const int DEFAULT_SEED = 1;
 
         #endregion
 
@@ -35,6 +36,7 @@ namespace My.Scripts.Environment.Terrain
         private Vector3 _lastRightEndPosition;
         private Vector3 _lastLeftEndPosition;
         private Transform _trackedTransform;
+        private System.Random _seededRandom;
 
         #endregion
 
@@ -44,6 +46,13 @@ namespace My.Scripts.Environment.Terrain
         {
             ValidateReferences();
             InitializeSpawnPositions();
+
+            // Инициализируем дефолтным сидом — GameManager может переопределить
+            // через InitializeWithSeed() до вызова Start()
+            if (_seededRandom == null)
+            {
+                _seededRandom = new System.Random(DEFAULT_SEED);
+            }
         }
 
         private void Start()
@@ -62,6 +71,17 @@ namespace My.Scripts.Environment.Terrain
 
             CheckAndSpawnTerrain(Side.Right);
             CheckAndSpawnTerrain(Side.Left);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void InitializeWithSeed(int seed)
+        {
+            _seededRandom = new System.Random(seed);
+
+            Debug.Log($"[{nameof(EndlessTerrainGenerator)}] Seed initialized: {seed}");
         }
 
         #endregion
@@ -138,23 +158,19 @@ namespace My.Scripts.Environment.Terrain
         {
             if (_terrainPartPrefabs.Count == 0) return;
 
-            // Выбираем случайный prefab
             Transform prefab = GetRandomTerrainPrefab();
 
-            // Определяем позицию и поворот
             Vector3 spawnPosition = GetEndPosition(side);
             Quaternion rotation = GetRotationForSide(side);
 
-            // Спавним
             Transform spawnedPart = Instantiate(prefab, spawnPosition, rotation, transform);
 
-            // Обновляем конечную позицию
             UpdateEndPosition(side, spawnedPart);
         }
 
         private Transform GetRandomTerrainPrefab()
         {
-            int randomIndex = Random.Range(0, _terrainPartPrefabs.Count);
+            int randomIndex = _seededRandom.Next(0, _terrainPartPrefabs.Count);
             return _terrainPartPrefabs[randomIndex];
         }
 
@@ -172,7 +188,6 @@ namespace My.Scripts.Environment.Terrain
 
         private void UpdateEndPosition(Side side, Transform spawnedPart)
         {
-            // Предполагаем, что первый дочерний объект — это точка конца terrain part
             if (spawnedPart.childCount == 0)
             {
                 Debug.LogWarning(
@@ -224,7 +239,6 @@ namespace My.Scripts.Environment.Terrain
 
         private void OnDrawGizmosSelected()
         {
-            // Визуализация зон спавна
             Gizmos.color = Color.green;
 
             if (_rightSpawnPoint != null)

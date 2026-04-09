@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using DG.Tweening;
 
 namespace My.Scripts.Environment.Hazards
@@ -27,7 +27,7 @@ namespace My.Scripts.Environment.Hazards
         #region Private Fields
 
         private Turret _turret;
-        private Vector3 _originalGunPosition;
+        private Vector3 _originalGunLocalPosition;
         private Sequence _animationSequence;
         private bool _isAnimating;
 
@@ -59,7 +59,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods — Initialization
+        #region Private Methods вЂ” Initialization
 
         private void ValidateReferences()
         {
@@ -83,13 +83,14 @@ namespace My.Scripts.Environment.Hazards
         {
             if (_gunTransform != null)
             {
-                _originalGunPosition = _gunTransform.localPosition;
+                // Р—Р°РїРѕРјРёРЅР°РµРј Р»РѕРєР°Р»СЊРЅСѓСЋ РїРѕР·РёС†РёСЋ вЂ” РѕРЅР° РЅРµ Р·Р°РІРёСЃРёС‚ РѕС‚ РјРёСЂРѕРІРѕРіРѕ РїРѕРІРѕСЂРѕС‚Р°
+                _originalGunLocalPosition = _gunTransform.localPosition;
             }
         }
 
         #endregion
 
-        #region Private Methods — Event Subscription
+        #region Private Methods вЂ” Event Subscription
 
         private void SubscribeToTurret()
         {
@@ -109,7 +110,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods — Event Handlers
+        #region Private Methods вЂ” Event Handlers
 
         private void HandleShoot()
         {
@@ -119,7 +120,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods — Recoil Animation
+        #region Private Methods вЂ” Recoil Animation
 
         private void PlayRecoilAnimation()
         {
@@ -128,39 +129,36 @@ namespace My.Scripts.Environment.Hazards
 
             _isAnimating = true;
 
-            // Убиваем предыдущую анимацию
             CleanupAnimation();
 
-            // Вычисляем позицию отдачи
-            Vector3 recoilDirection = -_gunTransform.up;
-            Vector3 recoilPosition = _originalGunPosition + recoilDirection * _recoilDistance;
+            // вњ… РЎРјРµС‰Р°РµРј С‚РѕР»СЊРєРѕ РїРѕ Р»РѕРєР°Р»СЊРЅРѕР№ РѕСЃРё Y РІРЅРёР· вЂ” РЅРµ Р·Р°РІРёСЃРёС‚ РѕС‚ РјРёСЂРѕРІРѕРіРѕ РїРѕРІРѕСЂРѕС‚Р° С‚СѓСЂРµР»Рё
+            Vector3 recoilLocalPosition = _originalGunLocalPosition + Vector3.down * _recoilDistance;
 
-            // Создаём последовательность анимации
             _animationSequence = DOTween.Sequence();
 
-            // Отдача назад
+            // РћС‚РґР°С‡Р° РІРЅРёР· РІ Р»РѕРєР°Р»СЊРЅРѕРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ
             _animationSequence.Append(
-                _gunTransform.DOLocalMove(recoilPosition, _recoilDuration)
+                _gunTransform.DOLocalMove(recoilLocalPosition, _recoilDuration)
                     .SetEase(Ease.OutCubic)
             );
 
-            // Тряска
+            // РўСЂСЏСЃРєР° РІ Р»РѕРєР°Р»СЊРЅРѕРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ
             _animationSequence.Join(
                 _gunTransform.DOShakePosition(
                     _recoilDuration,
-                    _shakeIntensity,
+                    // вњ… РЁРµР№РєР°РµРј С‚РѕР»СЊРєРѕ РїРѕ Р»РѕРєР°Р»СЊРЅРѕР№ Y, С‡С‚РѕР±С‹ РЅРµ СѓС…РѕРґРёС‚СЊ РІ СЃС‚РѕСЂРѕРЅС‹
+                    new Vector3(0f, _shakeIntensity, 0f),
                     _shakeVibrato,
                     fadeOut: false
                 )
             );
 
-            // Возврат в исходное положение
+            // Р’РѕР·РІСЂР°С‚ РІ РёСЃС…РѕРґРЅСѓСЋ Р»РѕРєР°Р»СЊРЅСѓСЋ РїРѕР·РёС†РёСЋ
             _animationSequence.Append(
-                _gunTransform.DOLocalMove(_originalGunPosition, _returnDuration)
+                _gunTransform.DOLocalMove(_originalGunLocalPosition, _returnDuration)
                     .SetEase(Ease.Linear)
             );
 
-            // Обработка завершения
             _animationSequence.OnComplete(OnAnimationComplete);
             _animationSequence.OnKill(OnAnimationComplete);
 
@@ -177,13 +175,14 @@ namespace My.Scripts.Environment.Hazards
         {
             if (_gunTransform != null)
             {
-                _gunTransform.localPosition = _originalGunPosition;
+                // вњ… РЎР±СЂР°СЃС‹РІР°РµРј Р»РѕРєР°Р»СЊРЅСѓСЋ РїРѕР·РёС†РёСЋ
+                _gunTransform.localPosition = _originalGunLocalPosition;
             }
         }
 
         #endregion
 
-        #region Private Methods — Smoke Effect
+        #region Private Methods вЂ” Smoke Effect
 
         private void PlaySmokeEffect()
         {
@@ -191,17 +190,14 @@ namespace My.Scripts.Environment.Hazards
 
             try
             {
-                // Создаём экземпляр дыма
                 ParticleSystem smokeInstance = Instantiate(
                     _smokePrefab,
                     _firePoint.position,
                     CalculateSmokeRotation()
                 );
 
-                // Настраиваем направление
                 ConfigureSmokeDirection(smokeInstance);
 
-                // Запускаем и уничтожаем
                 smokeInstance.Play();
                 ScheduleSmokeDestruction(smokeInstance);
             }
@@ -234,7 +230,7 @@ namespace My.Scripts.Environment.Hazards
 
         #endregion
 
-        #region Private Methods — Cleanup
+        #region Private Methods вЂ” Cleanup
 
         private void CleanupAnimation()
         {

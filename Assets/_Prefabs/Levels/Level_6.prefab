@@ -132,7 +132,7 @@ Transform:
   - {fileID: 7399812457377951814}
   - {fileID: 1596587714387484755}
   - {fileID: 764177928374951430}
-  - {fileID: 4000238790816312431}
+  - {fileID: 6347328937209114605}
   - {fileID: 3191287586113084450}
   - {fileID: 1663070231235498022}
   - {fileID: 9009084045047653773}
@@ -205,7 +205,8 @@ MonoBehaviour:
   _cameraStartTarget: {fileID: 5461951159502678277}
   _normalOrthographicSize: 12
   _zoomedOutOrthographicSize: 100
-  _starThresholds: 64000000c80000002c010000
+  _crestThresholds: 64000000c80000002c010000
+  _terrainSeed: 6
 --- !u!1 &3713066075550439669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1657,10 +1658,6 @@ PrefabInstance:
       value: BreadPickup25
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 5005271527022934594}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -1716,11 +1713,6 @@ PrefabInstance:
 --- !u!4 &2747677036027438375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 61291910955799593}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &5005271527022934594 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 61291910955799593}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &224547572885273048
@@ -1802,10 +1794,6 @@ PrefabInstance:
       value: BreadPickup16
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 4669271818028076384}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -1863,89 +1851,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 388187796725719819}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &4669271818028076384 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 388187796725719819}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &590823714422351104
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4059366961299164775}
-    m_Modifications:
-    - target: {fileID: 1935866449683045951, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_Name
-      value: LandingPad_x5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3599529916877229827, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
-      value: 0.007563472
-      objectReference: {fileID: 0}
-    - target: {fileID: 3599529916877229827, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: -0.01392442
-      objectReference: {fileID: 0}
-    - target: {fileID: 3599529916877229827, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
-      value: 0.973101
-      objectReference: {fileID: 0}
-    - target: {fileID: 3599529916877229827, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
-      value: 0.34237295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 141.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 311.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
---- !u!4 &4000238790816312431 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4589366988280514927, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
-  m_PrefabInstance: {fileID: 590823714422351104}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1041225059690245877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1958,10 +1863,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup22
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 5466428664988450974}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -2020,11 +1921,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1041225059690245877}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &5466428664988450974 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 1041225059690245877}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1611742295960224509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2037,10 +1933,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup20
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 6048761255623830678}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -2099,11 +1991,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 1611742295960224509}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &6048761255623830678 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 1611742295960224509}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1777506375736031477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2112,25 +1999,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4059366961299164775}
     m_Modifications:
+    - target: {fileID: 2912861716915777442, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
+      propertyPath: _keyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534387367916408061, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d03b0952ded74c94dbc367ad09c08d27, type: 3}
     - target: {fileID: 3551133391725819572, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
       propertyPath: m_PreviousShadowCastingSource
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3551133391725819572, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: -0.004999995
+      value: 0.060000002
       objectReference: {fileID: 0}
     - target: {fileID: 3551133391725819572, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
-      value: 0.37
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: 3551133391725819572, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
-      value: 0.895
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 5301596167725454831, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
       propertyPath: m_Name
-      value: KeyGreen0
+      value: KeySilver0
       objectReference: {fileID: 0}
     - target: {fileID: 5844444362259578986, guid: 506c356d2116a4a44a8e5b82aeb4bcd6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2302,10 +2197,6 @@ PrefabInstance:
       value: BreadPickup13
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 7290465028555480835}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -2361,11 +2252,6 @@ PrefabInstance:
 --- !u!4 &466985724081127526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 2342826274579362152}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &7290465028555480835 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2342826274579362152}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2414780510107217516
@@ -2566,6 +2452,10 @@ PrefabInstance:
       propertyPath: movementSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
+      propertyPath: asteroidPrefab
+      value: 
+      objectReference: {fileID: 5762997364625397823, guid: 962d33300c519b547ab6dbdc01ce57c6, type: 3}
     - target: {fileID: 7116726352966146473, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.9
@@ -2616,10 +2506,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup21
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 7460030348375070330}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -2678,11 +2564,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2461447371846039569}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7460030348375070330 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 2461447371846039569}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2649385476995787243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2695,10 +2576,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup6
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 7019714656509724544}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -2757,11 +2634,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2649385476995787243}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7019714656509724544 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 2649385476995787243}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2875639488037146534
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2774,10 +2646,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup17
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 7081868240451690957}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -2836,11 +2704,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2875639488037146534}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7081868240451690957 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 2875639488037146534}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2957840074896759626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2853,10 +2716,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup14
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 7828329980866524449}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -2915,11 +2774,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 2957840074896759626}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7828329980866524449 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 2957840074896759626}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3189738382659023573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2932,10 +2786,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup27
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 7632389074688793790}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -2994,11 +2844,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 3189738382659023573}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7632389074688793790 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 3189738382659023573}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3330961321177502432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3011,10 +2856,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup4
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 7752516747431640203}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -3071,11 +2912,6 @@ PrefabInstance:
 --- !u!4 &630933528993866734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 3330961321177502432}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &7752516747431640203 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 3330961321177502432}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3549233666932681996
@@ -3169,10 +3005,6 @@ PrefabInstance:
       value: BreadPickup0
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 8206262028607321731}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -3230,11 +3062,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 3768937372228409576}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &8206262028607321731 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 3768937372228409576}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3774495402845237764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3247,10 +3074,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup9
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 8200554464409246831}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -3307,11 +3130,6 @@ PrefabInstance:
 --- !u!4 &1340320676521083658 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 3774495402845237764}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &8200554464409246831 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 3774495402845237764}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3901742577923431138
@@ -3773,10 +3591,6 @@ PrefabInstance:
       value: BreadPickup10
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 8731198715564722265}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -3834,11 +3648,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 4360884927334524466}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &8731198715564722265 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 4360884927334524466}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4361995244199987743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3851,10 +3660,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup3
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 8730052866511725684}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -3913,11 +3718,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 4361995244199987743}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &8730052866511725684 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 4361995244199987743}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4395985356017751257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3930,10 +3730,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup7
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 8695929882530937522}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -3990,11 +3786,6 @@ PrefabInstance:
 --- !u!4 &2015880335891899863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 4395985356017751257}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &8695929882530937522 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 4395985356017751257}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4757209291621148450
@@ -4076,10 +3867,6 @@ PrefabInstance:
       value: BreadPickup24
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 93334212656275784}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -4132,11 +3919,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &93334212656275784 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 4964125385084145443}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7069640565892677165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4152,19 +3934,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4865442580839010273, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
-      value: 0.012319326
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4865442580839010273, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: -0.8500374
+      value: -0.46500003
       objectReference: {fileID: 0}
     - target: {fileID: 4865442580839010273, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
-      value: 2.7955124
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4865442580839010273, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
-      value: 0.8161978
+      value: 0.765
       objectReference: {fileID: 0}
     - target: {fileID: 5910162254106567728, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4314,10 +4096,6 @@ PrefabInstance:
       value: BreadPickup12
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 1129463351335105028}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -4370,11 +4148,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &1129463351335105028 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 5333145602351078511}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7852965708598832481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4392,10 +4165,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup15
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 618454414511285906}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -4449,11 +4218,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &618454414511285906 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 5564965104715532537}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7764996688494361079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4534,7 +4298,7 @@ PrefabInstance:
     - target: {fileID: 7045660093902934275, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: asteroidPrefab
       value: 
-      objectReference: {fileID: 5762997364625397823, guid: 83d299e17265dfb45b6dc97b2e7143d8, type: 3}
+      objectReference: {fileID: 5762997364625397823, guid: 962d33300c519b547ab6dbdc01ce57c6, type: 3}
     - target: {fileID: 7116726352966146473, guid: 2a7abb04743311f4ea152d5d71d3363b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.9
@@ -4577,7 +4341,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2547365151651247349, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
       propertyPath: m_Name
-      value: KeyDeliverGreen0
+      value: KeyDeliverSilver0
       objectReference: {fileID: 0}
     - target: {fileID: 5981676048580390917, guid: 0ea25da18bb245644a18d608d92cc239, type: 3}
       propertyPath: _keyDeliver
@@ -4661,10 +4425,6 @@ PrefabInstance:
       value: BreadPickup19
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 1518941457354877652}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -4717,11 +4477,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &1518941457354877652 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 5817479126259614911}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8521834615529125297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -4817,10 +4572,6 @@ PrefabInstance:
       value: BreadPickup8
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 1161051108563596680}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -4873,11 +4624,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &1161051108563596680 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 6175396683794717667}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8307768638693993197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5066,15 +4812,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6647788962531713628, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
-      value: -0.11369872
+      value: -0.09000015
       objectReference: {fileID: 0}
     - target: {fileID: 6647788962531713628, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: -0.78038704
+      value: -0.785
       objectReference: {fileID: 0}
     - target: {fileID: 6647788962531713628, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
-      value: 3.373477
+      value: 3.06
       objectReference: {fileID: 0}
     - target: {fileID: 8604195205758366560, guid: 8c8b7c3069848c34f97f07d6d056086a, type: 3}
       propertyPath: m_Name
@@ -5100,19 +4846,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 353149863964447646, guid: 1aefb81694bb0a64e942982019b3ce5f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: -2.1733155
+      value: -2.0733156
       objectReference: {fileID: 0}
     - target: {fileID: 767872946695664490, guid: 1aefb81694bb0a64e942982019b3ce5f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: 2.1801076
+      value: 2.0801075
       objectReference: {fileID: 0}
     - target: {fileID: 767872946695664490, guid: 1aefb81694bb0a64e942982019b3ce5f, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
-      value: 2.6801076
+      value: 2.7801075
       objectReference: {fileID: 0}
     - target: {fileID: 4627534573198472616, guid: 1aefb81694bb0a64e942982019b3ce5f, type: 3}
       propertyPath: m_Name
-      value: DoorGreen0
+      value: DoorSilver0
       objectReference: {fileID: 0}
     - target: {fileID: 5474537344861355044, guid: 1aefb81694bb0a64e942982019b3ce5f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5177,10 +4923,6 @@ PrefabInstance:
       value: BreadPickup11
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 1894072363577067343}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -5233,11 +4975,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &1894072363577067343 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 6910372872608377124}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8727666686059649066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5255,10 +4992,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup23
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 2414432290702890955}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -5312,11 +5045,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &2414432290702890955 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 7218779975462173088}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4816097581701122222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5460,10 +5188,6 @@ PrefabInstance:
       value: BreadPickup2
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 3148944511754265925}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -5516,11 +5240,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &3148944511754265925 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 7934435574515190574}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5252518787449272864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5538,10 +5257,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreadPickup26
       objectReference: {fileID: 0}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 3882782000010124346}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
@@ -5595,11 +5310,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &3882782000010124346 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 8092373610344641105}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6248067130925744991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -5838,10 +5548,6 @@ PrefabInstance:
       value: BreadPickup5
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 3497122614218949974}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -5894,11 +5600,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &3497122614218949974 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 8441941673041570621}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6043751701020432947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
@@ -6033,10 +5734,6 @@ PrefabInstance:
       value: BreadPickup18
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 3652034348151325468}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -6089,15 +5786,88 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &3652034348151325468 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 8575182065285328247}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5906857632171826297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
   m_PrefabInstance: {fileID: 8575182065285328247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8689489034370259245
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4059366961299164775}
+    m_Modifications:
+    - target: {fileID: 426815601936933264, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_Name
+      value: LandingPad_x5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 156.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 311.75266
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3370336994292150444, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
+      value: -0.0049743652
+      objectReference: {fileID: 0}
+    - target: {fileID: 3370336994292150444, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
+      value: -0.10650635
+      objectReference: {fileID: 0}
+    - target: {fileID: 3370336994292150444, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.x
+      value: 0.9634247
+      objectReference: {fileID: 0}
+    - target: {fileID: 3370336994292150444, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+      propertyPath: m_ShadowMesh.m_LocalBounds.m_Extent.y
+      value: 0.5215759
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+--- !u!4 &6347328937209114605 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2342287649456436928, guid: 0d3c283b68636c84190e65caf356afbf, type: 3}
+  m_PrefabInstance: {fileID: 8689489034370259245}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9100831910377289746
 PrefabInstance:
@@ -6109,7 +5879,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4865442580839010273, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.y
-      value: -0.8500374
+      value: -0.46500003
       objectReference: {fileID: 0}
     - target: {fileID: 5910162254106567728, guid: c9c708d7d7c51e341a2eb9336f3a5857, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6193,10 +5963,6 @@ PrefabInstance:
       value: BreadPickup1
       objectReference: {fileID: 0}
     - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-      propertyPath: m_PreviousShadowShape2DSource
-      value: 
-      objectReference: {fileID: 4247901875830682149}
-    - target: {fileID: 1481061313754367285, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
       propertyPath: m_ShadowMesh.m_LocalBounds.m_Center.x
       value: -0.0029000044
       objectReference: {fileID: 0}
@@ -6249,11 +6015,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
---- !u!58 &4247901875830682149 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5021385235203632747, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}
-  m_PrefabInstance: {fileID: 9177244756855381070}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6459404745313856832 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2808123147122503950, guid: 94b8e6fd87a2b854c8689a46062e6bdf, type: 3}

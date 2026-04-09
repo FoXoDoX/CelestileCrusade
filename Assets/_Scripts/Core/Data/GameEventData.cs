@@ -82,6 +82,7 @@ namespace My.Scripts.Core.Data
     public readonly struct LevelCompletedData
     {
         public readonly bool IsSuccess;
+        public readonly Lander.LandingType LandingType;
         public readonly int TotalScore;
         public readonly int CrestsEarned;
         public readonly int LandingScore;
@@ -91,6 +92,7 @@ namespace My.Scripts.Core.Data
 
         public LevelCompletedData(
             bool isSuccess,
+            Lander.LandingType landingType,
             int totalScore,
             int crestsEarned,
             int landingScore,
@@ -99,6 +101,7 @@ namespace My.Scripts.Core.Data
             float scoreMultiplier)
         {
             IsSuccess = isSuccess;
+            LandingType = landingType;
             TotalScore = totalScore;
             CrestsEarned = crestsEarned;
             LandingScore = landingScore;

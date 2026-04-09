@@ -188,7 +188,7 @@ namespace My.Scripts.UI
             int score = GameManager.HasInstance ? GameManager.Instance.Score : 0;
             float time = GameManager.HasInstance ? GameManager.Instance.Time : 0f;
 
-            _statsText.text = $"{level}\n{score}\n{Mathf.Round(time)}";
+            _statsText.text = $"{level}\n{score}\n{FormatTime(time)}";
         }
 
         private void UpdateFuelIndicator()
@@ -269,6 +269,26 @@ namespace My.Scripts.UI
                 color.a = BLINK_FADE_LOW;
                 _lowEnergyBackgroundImage.color = color;
             }
+        }
+
+        #endregion
+
+        #region Private Methods — Utility
+
+        private string FormatTime(float totalSeconds)
+        {
+            int seconds = Mathf.FloorToInt(totalSeconds);
+            int hours = seconds / 3600;
+            int minutes = (seconds % 3600) / 60;
+            int secs = seconds % 60;
+
+            if (hours > 0)
+                return $"{hours}:{minutes:D2}:{secs:D2}";
+
+            if (minutes > 0)
+                return $"{minutes}:{secs:D2}";
+
+            return secs.ToString();
         }
 
         #endregion

@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 namespace My.Scripts.Managers
 {
@@ -70,6 +71,9 @@ namespace My.Scripts.Managers
         [SerializeField] private AudioClip _uiSmallHoverClip;
         [SerializeField] private AudioClip _uiSmallClickOpenClip;
         [SerializeField] private AudioClip _uiSmallClickCloseClip;
+
+        [Header("Score Count Sound")]
+        [SerializeField] private AudioClip _scoreCountClip;
 
         [Header("Thruster Stereo Settings")]
         [SerializeField, Range(0f, 1f)]
@@ -147,11 +151,13 @@ namespace My.Scripts.Managers
         private void OnEnable()
         {
             SubscribeToEvents();
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void OnDisable()
         {
             UnsubscribeFromEvents();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         protected override void OnDestroy()
@@ -401,6 +407,17 @@ namespace My.Scripts.Managers
 
         #endregion
 
+        #region Public Methods Ч Score Count Sound
+
+        public void PlayScoreCountSound()
+        {
+            if (_scoreCountClip == null || _uiAudioSource == null) return;
+
+            _uiAudioSource.PlayOneShot(_scoreCountClip);
+        }
+
+        #endregion
+
         #region Private Methods Ч Thruster Stereo Control
 
         private void ResetThrusterState()
@@ -615,7 +632,6 @@ namespace My.Scripts.Managers
             em.AddHandler(GameEvents.GamePaused, OnGamePaused);
             em.AddHandler(GameEvents.GameUnpaused, OnGameUnpaused);
             em.AddHandler(GameEvents.TurretShoot, OnTurretShoot);
-            em.AddHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.AddHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.AddHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
@@ -631,6 +647,7 @@ namespace My.Scripts.Managers
             em.AddHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.AddHandler<PickupEventData>(GameEvents.EnergyBookParticle, OnEnergyBookParticle);
             em.AddHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
+            em.AddHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.AddHandler<KeyDeliveredData>(GameEvents.KeyDelivered, OnKeyDelivered);
             em.AddHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
         }
@@ -643,7 +660,6 @@ namespace My.Scripts.Managers
             em.RemoveHandler(GameEvents.GamePaused, OnGamePaused);
             em.RemoveHandler(GameEvents.GameUnpaused, OnGameUnpaused);
             em.RemoveHandler(GameEvents.TurretShoot, OnTurretShoot);
-            em.RemoveHandler(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler(GameEvents.CrateCracked, OnCrateCracked);
             em.RemoveHandler(GameEvents.CrateDestroyed, OnCrateDestroyed);
             em.RemoveHandler(GameEvents.RopeWithCrateSpawned, OnRopeWithCrateSpawned);
@@ -659,8 +675,24 @@ namespace My.Scripts.Managers
             em.RemoveHandler<PickupEventData>(GameEvents.EnergyBookPickup, OnEnergyBookPickup);
             em.RemoveHandler<PickupEventData>(GameEvents.EnergyBookParticle, OnEnergyBookParticle);
             em.RemoveHandler<PickupEventData>(GameEvents.BreadPickup, OnBreadPickup);
+            em.RemoveHandler<CrateDropData>(GameEvents.CrateDrop, OnCrateDrop);
             em.RemoveHandler<KeyDeliveredData>(GameEvents.KeyDelivered, OnKeyDelivered);
             em.RemoveHandler<LanderLandedData>(GameEvents.LanderLanded, OnLanderLanded);
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // —брасываем состо€ние паузы при загрузке новой сцены.
+            // Ёто нужно потому что SoundManager Ч PersistentSingleton и живЄт
+            // между сценами, но _isPaused мог остатьс€ true если переход
+            // произошЄл без €вного вызова ResumeAllSounds().
+            if (_isPaused)
+            {
+                _isPaused = false;
+                _pausedAudioStates.Clear();
+
+                Debug.Log("[SoundManager] Scene loaded Ч pause state reset.");
+            }
         }
 
         #endregion
@@ -673,7 +705,7 @@ namespace My.Scripts.Managers
         private void OnEnergyBookParticle(PickupEventData data) => PlaySound(_energyBookParticleClip);
         private void OnBreadPickup(PickupEventData data) => PlaySound(_breadPickupClip);
         private void OnTurretShoot() => PlaySound(_turretShootClip);
-        private void OnCrateDrop() => PlaySound(_crateDeliveredClip);
+        private void OnCrateDrop(CrateDropData data) => PlaySound(_crateDeliveredClip);
         private void OnCrateCracked() => PlaySound(_crateCrackedClip);
         private void OnCrateDestroyed() => PlaySound(_crateDestroyedClip);
         private void OnRopeWithCrateSpawned() => RefreshSubscriptions();

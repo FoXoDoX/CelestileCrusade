@@ -3,11 +3,8 @@ guid: 0ac5b40fa24edf647a6a40e74959ff4b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -539579915749326718
-    second: Turret_0
-  - first:
-      213: 8195469170884960449
-    second: Turret_1
+      213: -3435479544506830833
+    second: TurretStaticPart_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -49,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 140
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,35 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Turret_0
+      name: TurretStaticPart_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 210
-        width: 512
-        height: 633
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 28083d9ece60388f0800000000000000
-      internalID: -539579915749326718
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Turret_1
-      rect:
-        serializedVersion: 2
-        x: 195
         y: 0
-        width: 7
-        height: 91
+        width: 445
+        height: 480
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1c0634a1ac72cb170800000000000000
-      internalID: 8195469170884960449
+      spriteID: f00bc846e89b250d0800000000000000
+      internalID: -3435479544506830833
       vertices: []
       indices: 
       edges: []
@@ -163,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Turret_0: -539579915749326718
-      Turret_1: 8195469170884960449
+      TurretStaticPart_0: -3435479544506830833
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

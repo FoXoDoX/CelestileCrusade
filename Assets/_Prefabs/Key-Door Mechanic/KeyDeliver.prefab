@@ -190,6 +190,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KeyDeliver
   _requiredKeyType: 1
   _deliverDuration: 3
+  _goldenKeySprite: {fileID: 21300000, guid: 18f188a58aba65b4fb6606aab7eb61d1, type: 3}
+  _silverKeySprite: {fileID: 21300000, guid: d03b0952ded74c94dbc367ad09c08d27, type: 3}
+  _bronzeKeySprite: {fileID: 21300000, guid: aa9531df589c60c4d9f234408db5ef16, type: 3}
+  _keySpriteRenderer: {fileID: 4561109146736924091}
 --- !u!114 &5981676048580390917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,9 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyDeliverUI
   _progressFillImage: {fileID: 5820218507030190608}
-  _keySpriteRenderer: {fileID: 4561109146736924091}
   _crossSpriteRenderer: {fileID: 7835859883770258134}
-  _requiredKeyType: 0
   _keyDeliver: {fileID: 8470617930786534676}
 --- !u!1 &3540610607951918887
 GameObject:
@@ -400,7 +402,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8426265553033904442}
@@ -454,12 +456,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2627438401199300823, guid: 533201d03053f3440938a1cea2e60fa0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d03b0952ded74c94dbc367ad09c08d27, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.71428573, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

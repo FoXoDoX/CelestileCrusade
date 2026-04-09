@@ -251,6 +251,8 @@ namespace My.Scripts.Core.Scene
                 while (!asyncOp.isDone) yield return null;
             }
 
+            Time.timeScale = 1f;
+
             if (_stripsHoldDuration > 0f)
                 yield return new WaitForSecondsRealtime(_stripsHoldDuration);
 
@@ -311,6 +313,8 @@ namespace My.Scripts.Core.Scene
             {
                 while (!asyncOp.isDone) yield return null;
             }
+
+            Time.timeScale = 1f;
 
             if (_circleHoldDuration > 0f)
                 yield return new WaitForSecondsRealtime(_circleHoldDuration);

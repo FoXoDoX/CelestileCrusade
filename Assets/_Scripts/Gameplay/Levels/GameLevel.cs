@@ -26,6 +26,10 @@ namespace My.Scripts.Gameplay.Levels
         [Tooltip("Points required to receive 1, 2, or 3 crests")]
         [SerializeField] private int[] _crestThresholds = new int[3] { 100, 200, 300 };
 
+        [Header("Terrain Generation")]
+        [Tooltip("Сид для генерации бесконечного ландшафта. 0 = случайный при каждом запуске.")]
+        [SerializeField] private int _terrainSeed = 1;
+
         #endregion
 
         #region Properties
@@ -33,6 +37,7 @@ namespace My.Scripts.Gameplay.Levels
         public int LevelNumber => _levelNumber;
         public float NormalOrthographicSize => _normalOrthographicSize;
         public float ZoomedOutOrthographicSize => _zoomedOutOrthographicSize;
+        public int GetTerrainSeed() => _terrainSeed;
 
         #endregion
 

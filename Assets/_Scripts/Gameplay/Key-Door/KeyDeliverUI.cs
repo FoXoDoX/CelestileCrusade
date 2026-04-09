@@ -14,13 +14,10 @@ namespace My.Scripts.Gameplay.KeyDoor
         [SerializeField] private Image _progressFillImage;
 
         [Header("Visual Indicators")]
-        [SerializeField] private SpriteRenderer _keySpriteRenderer;
         [SerializeField] private SpriteRenderer _crossSpriteRenderer;
 
-        [Header("Configuration")]
-        [SerializeField] private Key.KeyType _requiredKeyType;
-
         [Header("References")]
+        // KeyDeliver подхватываетс€ автоматически Ч мен€ть не нужно
         [SerializeField] private KeyDeliver _keyDeliver;
 
         #endregion
@@ -107,7 +104,8 @@ namespace My.Scripts.Gameplay.KeyDoor
 
         private void OnKeyDelivered(KeyDeliveredData data)
         {
-            if (data.KeyType == _requiredKeyType)
+            // “ип берЄм напр€мую из KeyDeliver Ч единый источник истины
+            if (_keyDeliver != null && data.KeyType == _keyDeliver.RequiredKeyType)
             {
                 _isDelivered = true;
             }
@@ -134,17 +132,15 @@ namespace My.Scripts.Gameplay.KeyDoor
 
         private void UpdateVisuals()
         {
+            if (_keyDeliver == null) return;
+
             CacheKeyHolder();
 
-            _hasRequiredKey = _keyHolder != null && _keyHolder.ContainsKey(_requiredKeyType);
+            _hasRequiredKey = _keyHolder != null
+                && _keyHolder.ContainsKey(_keyDeliver.RequiredKeyType);
 
-            bool showKey = _hasRequiredKey && !_isDelivered;
+            // —прайт ключа управл€етс€ через KeyDeliver Ч здесь только крестик
             bool showCross = !_hasRequiredKey && !_isDelivered;
-
-            if (_keySpriteRenderer != null)
-            {
-                _keySpriteRenderer.gameObject.SetActive(showKey);
-            }
 
             if (_crossSpriteRenderer != null)
             {
@@ -159,9 +155,10 @@ namespace My.Scripts.Gameplay.KeyDoor
 #if UNITY_EDITOR
         private void OnValidate()
         {
+            // јвтоматически подхватываем KeyDeliver с того же объекта
             if (_keyDeliver == null)
             {
-                _keyDeliver = GetComponentInParent<KeyDeliver>();
+                _keyDeliver = GetComponent<KeyDeliver>();
             }
         }
 #endif

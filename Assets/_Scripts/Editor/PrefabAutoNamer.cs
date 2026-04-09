@@ -36,9 +36,9 @@ public static class PrefabAutoNamer
 
     private static readonly string[] TYPED_PREFAB_FULL_NAMES =
     {
-        "KeyRed", "KeyGreen", "KeyBlue",
-        "KeyDeliverRed", "KeyDeliverGreen", "KeyDeliverBlue",
-        "DoorRed", "DoorGreen", "DoorBlue"
+        "KeyGolden", "KeySilver", "KeyBronze",
+        "KeyDeliverGolden", "KeyDeliverSilver", "KeyDeliverBronze",
+        "DoorGolden", "DoorSilver", "DoorBronze"
     };
 
     #endregion
@@ -425,9 +425,9 @@ public static class PrefabAutoNamer
     {
         return keyType switch
         {
-            Key.KeyType.Red => "Red",
-            Key.KeyType.Green => "Green",
-            Key.KeyType.Blue => "Blue",
+            Key.KeyType.Golden => "Golden",
+            Key.KeyType.Silver => "Silver",
+            Key.KeyType.Bronze => "Bronze",
             _ => "Unknown"
         };
     }

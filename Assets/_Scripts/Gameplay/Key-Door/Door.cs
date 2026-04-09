@@ -3,6 +3,10 @@ using My.Scripts.EventBus;
 using UnityEngine;
 using DG.Tweening;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace My.Scripts.Gameplay.KeyDoor
 {
     public class Door : MonoBehaviour
@@ -22,6 +26,11 @@ namespace My.Scripts.Gameplay.KeyDoor
         [Header("Door Parts")]
         [SerializeField] private Transform _leftDoor;
         [SerializeField] private Transform _rightDoor;
+
+        [Header("Sprites")]
+        [SerializeField] private Sprite _goldenDoorSprite;
+        [SerializeField] private Sprite _silverDoorSprite;
+        [SerializeField] private Sprite _bronzeDoorSprite;
 
         [Header("Animation Settings")]
         [SerializeField] private float _openDuration = DOOR_OPEN_DURATION;
@@ -46,6 +55,11 @@ namespace My.Scripts.Gameplay.KeyDoor
 
         #region Unity Lifecycle
 
+        private void Awake()
+        {
+            ApplySprites();
+        }
+
         private void OnEnable()
         {
             SubscribeToEvents();
@@ -60,6 +74,38 @@ namespace My.Scripts.Gameplay.KeyDoor
         {
             KillTweens();
             UnsubscribeFromEvents();
+        }
+
+        #endregion
+
+        #region Private Methods — Sprites
+
+        private void ApplySprites()
+        {
+            Sprite sprite = _requiredKeyType switch
+            {
+                Key.KeyType.Golden => _goldenDoorSprite,
+                Key.KeyType.Silver => _silverDoorSprite,
+                Key.KeyType.Bronze => _bronzeDoorSprite,
+                _ => null
+            };
+
+            if (sprite == null) return;
+
+            ApplySpriteToChild(_leftDoor, sprite);
+            ApplySpriteToChild(_rightDoor, sprite);
+        }
+
+        private void ApplySpriteToChild(Transform doorPart, Sprite sprite)
+        {
+            if (doorPart == null) return;
+
+            var spriteRenderer = doorPart.GetComponentInChildren<SpriteRenderer>();
+
+            if (spriteRenderer == null) return;
+
+            spriteRenderer.sprite = sprite;
+            spriteRenderer.color = Color.white;
         }
 
         #endregion
@@ -99,7 +145,6 @@ namespace My.Scripts.Gameplay.KeyDoor
 
             KillTweens();
 
-            // Левая дверь открывается против часовой стрелки
             if (_leftDoor != null)
             {
                 _leftDoorTween = _leftDoor
@@ -107,7 +152,6 @@ namespace My.Scripts.Gameplay.KeyDoor
                     .SetEase(_openEase);
             }
 
-            // Правая дверь открывается по часовой стрелке
             if (_rightDoor != null)
             {
                 _rightDoorTween = _rightDoor
@@ -136,6 +180,13 @@ namespace My.Scripts.Gameplay.KeyDoor
             {
                 _openDuration = DOOR_OPEN_DURATION;
             }
+
+            EditorApplication.delayCall += () =>
+            {
+                if (this == null) return;
+
+                ApplySprites();
+            };
         }
 #endif
 
